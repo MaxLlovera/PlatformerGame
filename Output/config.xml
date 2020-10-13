@@ -1,4 +1,5 @@
 <!-- Config file for the game -->
+<!-- L01: DONE 1: Create configuration file-->
 <config>
   <app>
     <title>Game Development Testbed</title>
@@ -14,8 +15,4 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
-  <audio>
-    <volume_music value="100"/>
-    <volume_fx value="100"/>
-  </audio>
 </config>
