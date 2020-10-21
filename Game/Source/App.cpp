@@ -295,7 +295,31 @@ bool App::LoadGame()
 {
 	bool ret = false;
 
-	//...
+	pugi::xml_document data;
+	pugi::xml_node root;
+
+	pugi::xml_parse_result result = data.load_file(loadedGame.GetString());
+
+	if (result != NULL) {
+		LOG("Loading new Game State from %s...", loadedGame.GetString());
+
+		root = data.child("save_state");
+
+		ListItem<Module*>* item = modules.start;
+		ret = true;
+
+		while (item != NULL && ret == true) {
+			ret = item->data->LoadState(root.child(item->data->name.GetString()));
+			item = item->next;
+		}
+
+		data.reset();
+		if (ret == true) LOG("...finished loading");
+
+		else LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : 0);
+	}
+
+	else LOG("Could not parse game state xml file %s. pugi error: %s", loadedGame.GetString(), result.description());
 
 	loadGameRequested = false;
 
@@ -307,8 +331,27 @@ bool App::SaveGame() const
 {
 	bool ret = true;
 
-	//...
+	LOG("Saving Game State to %s...", savedGame.GetString());
 
+	//xml object were we will store all data
+	pugi::xml_document data;
+	pugi::xml_node root;
+
+	root = data.append_child("save_state");
+	ListItem<Module*>* item = modules.start;
+	while (item!= NULL && ret == true)
+	{
+		ret = item->data->SaveState(root.append_child(item->data->name.GetString()));
+		item = item->next;
+	}
+	if (ret == true) {
+		data.save_file(savedGame.GetString());
+		LOG("... finished saving", );
+	}
+	else LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : 0);
+	
+	data.reset();
+	
 	saveGameRequested = false;
 
 	return ret;
