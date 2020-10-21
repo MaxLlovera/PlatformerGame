@@ -15,8 +15,8 @@ struct TileSet
 	int	firstgid;
 	int margin;
 	int	spacing;
-	int	tile_width;
-	int	tile_height;
+	int	tileWidth;
+	int	tileHeight;
 
 	SDL_Texture* texture;
 	int	texWidth;
@@ -26,7 +26,7 @@ struct TileSet
 	int	offsetX;
 	int	offsetY;
 
-	// L04: TODO 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
+	// L04: DONE 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int id) const;
 };
 
@@ -56,11 +56,10 @@ struct MapLayer
 		RELEASE(data);
 	}
 
-	// L04: TODO 6: Short function to get the value of x,y
+	// L04: DONE 6: Short function to get the value of x,y
 	inline uint Get(int x, int y) const
 	{
-		//...
-		return 0;
+		return data[(y * width) + x];
 	}
 };
 
@@ -75,7 +74,8 @@ struct MapData
 	MapTypes type;
 	List<TileSet*> tilesets;
 
-	// L04: TODO 2: Add a list/array of layers to the map
+	// L04: DONE 2: Add a list/array of layers to the map
+	List<MapLayer*> layers;
 };
 
 class Map : public Module
@@ -101,6 +101,9 @@ public:
 
 	// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
+
+	// L05: TODO 2: Add orthographic world to map coordinates
+	iPoint WorldToMap(int x, int y) const;
 
 private:
 

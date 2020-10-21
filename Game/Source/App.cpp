@@ -339,7 +339,7 @@ bool App::SaveGame() const
 
 	root = data.append_child("save_state");
 	ListItem<Module*>* item = modules.start;
-	while (item!= NULL && ret == true)
+	while (item != NULL && ret == true)
 	{
 		ret = item->data->SaveState(root.append_child(item->data->name.GetString()));
 		item = item->next;
@@ -349,9 +349,9 @@ bool App::SaveGame() const
 		LOG("... finished saving", );
 	}
 	else LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : 0);
-	
+
 	data.reset();
-	
+
 	saveGameRequested = false;
 
 	return ret;
