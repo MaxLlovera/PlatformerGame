@@ -32,10 +32,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	// L03: DONE: Load map
-	//app->map->Load("hello2.tmx");
-	app->map->Load("iso.tmx");
-	
-	// Load music
+	app->map->Load("hello2.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
 	return true;

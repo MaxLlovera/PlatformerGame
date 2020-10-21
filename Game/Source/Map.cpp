@@ -34,20 +34,10 @@ void Map::Draw()
 {
 	if (mapLoaded == false) return;
 
-	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
-	MapLayer* layer = data.layers.start->data;
+	// L04: TODO 5: Prepare the loop to draw all tilesets + DrawTexture()
+	
+	// L04: TODO 9: Complete the draw function
 
-	for (int y = 0; y < data.height; ++y)
-	{
-		for (int x = 0; x < data.width; ++x)
-		{
-			int tileId = layer->Get(x, y);
-			if (tileId > 0)
-			{
-				// L04: TODO 9: Complete the draw function
-			}
-		}
-	}
 }
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
@@ -58,18 +48,6 @@ iPoint Map::MapToWorld(int x, int y) const
 	ret.x = x * data.tileWidth;
 	ret.y = y * data.tileHeight;
 
-	// L05: TODO 1: Add isometric map to world coordinates
-
-	return ret;
-}
-
-// L05: TODO 2: Add orthographic world to map coordinates
-iPoint Map::WorldToMap(int x, int y) const
-{
-	iPoint ret(0, 0);
-
-	// L05: TODO 3: Add the case for isometric maps to WorldToMap
-
 	return ret;
 }
 
@@ -77,14 +55,9 @@ iPoint Map::WorldToMap(int x, int y) const
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	SDL_Rect rect = { 0 };
-
-	// L04: DONE 7: Get relative Tile rectangle
-	int relativeId = id - firstgid;
-	rect.w = tileWidth;
-	rect.h = tileHeight;
-	rect.x = margin + ((rect.w + spacing) * (relativeId % numTilesWidth));
-	rect.y = margin + ((rect.h + spacing) * (relativeId / numTilesWidth));
 	
+	// L04: TODO 7: Get relative Tile rectangle
+
 	return rect;
 }
 
@@ -105,17 +78,8 @@ bool Map::CleanUp()
 	}
 	data.tilesets.clear();
 
-	// L04: DONE 2: clean up all layer data
+	// L04: TODO 2: clean up all layer data
 	// Remove all layers
-	ListItem<MapLayer*>* item2;
-	item2 = data.layers.start;
-
-	while (item2 != NULL)
-	{
-		RELEASE(item2->data);
-		item2 = item2->next;
-	}
-	data.layers.clear();
 
 	// Clean up the pugui tree
 	mapFile.reset();
@@ -137,7 +101,6 @@ bool Map::Load(const char* filename)
         ret = false;
     }
 
-	// Load general info
     if(ret == true)
     {
         // L03: DONE 3: Create and call a private function to load and fill all your map data
@@ -157,20 +120,9 @@ bool Map::Load(const char* filename)
 
 		data.tilesets.add(set);
 	}
-
-	// L04: DONE 4: Iterate all layers and load each of them
-	// Load layer info
-	pugi::xml_node layer;
-	for (layer = mapFile.child("map").child("layer"); layer && ret; layer = layer.next_sibling("layer"))
-	{
-		MapLayer* lay = new MapLayer();
-
-		ret = LoadLayer(layer, lay);
-
-		if (ret == true)
-			data.layers.add(lay);
-	}
+	// L04: TODO 4: Iterate all layers and load each of them
     
+
     if(ret == true)
     {
         // L03: TODO 5: LOG all the data loaded iterate all tilesets and LOG everything
