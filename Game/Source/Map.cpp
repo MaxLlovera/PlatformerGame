@@ -54,12 +54,17 @@ void Map::Draw()
 iPoint Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
-
-	ret.x = x * data.tileWidth;
-	ret.y = y * data.tileHeight;
-
+	if (MAPTYPE_ORTHOGONAL)
+	{
+		ret.x = x * data.tileWidth;
+		ret.y = y * data.tileHeight;
+	}
 	// L05: TODO 1: Add isometric map to world coordinates
-
+	if (MAPTYPE_ISOMETRIC)
+	{
+		ret.x = (x - y) * (data.tileWidth * 0.5f);
+		ret.y = (x + y) * (data.tileHeight * 0.5f);
+	}
 	return ret;
 }
 
@@ -67,8 +72,17 @@ iPoint Map::MapToWorld(int x, int y) const
 iPoint Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
-
+	if (MAPTYPE_ORTHOGONAL)
+	{
+		ret.x = x / data.tileWidth;
+		ret.y = y / data.tileHeight;
+	}
 	// L05: TODO 3: Add the case for isometric maps to WorldToMap
+	if (MAPTYPE_ISOMETRIC)
+	{
+		ret.x = (x / (data.tileWidth * 0.5f)) - (y / (data.tileWidth * 0.5f));
+		ret.y = (x / (data.tileHeight * 0.5f)) + (y / (data.tileHeight * 0.5f));
+	}
 
 	return ret;
 }
