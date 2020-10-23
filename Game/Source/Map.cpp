@@ -45,6 +45,9 @@ void Map::Draw()
 			if (tileId > 0)
 			{
 				// L04: TODO 9: Complete the draw function
+				SDL_Rect rect = data.tilesets.start->data->GetTileRect(tileId);
+				iPoint coords = MapToWorld(x, y);
+				app->render->DrawTexture(data.tilesets.start->data->texture, coords.x, coords.y, &rect);
 			}
 		}
 	}
@@ -54,13 +57,13 @@ void Map::Draw()
 iPoint Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
-	if (MAPTYPE_ORTHOGONAL)
+	if (data.type == MapTypes::MAPTYPE_ORTHOGONAL)
 	{
 		ret.x = x * data.tileWidth;
 		ret.y = y * data.tileHeight;
 	}
 	// L05: TODO 1: Add isometric map to world coordinates
-	if (MAPTYPE_ISOMETRIC)
+	else if (data.type == MapTypes::MAPTYPE_ISOMETRIC)
 	{
 		ret.x = (x - y) * (data.tileWidth * 0.5f);
 		ret.y = (x + y) * (data.tileHeight * 0.5f);
@@ -72,13 +75,13 @@ iPoint Map::MapToWorld(int x, int y) const
 iPoint Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
-	if (MAPTYPE_ORTHOGONAL)
+	if (data.type == MapTypes::MAPTYPE_ORTHOGONAL)
 	{
 		ret.x = x / data.tileWidth;
 		ret.y = y / data.tileHeight;
 	}
 	// L05: TODO 3: Add the case for isometric maps to WorldToMap
-	if (MAPTYPE_ISOMETRIC)
+	else if (data.type == MapTypes::MAPTYPE_ISOMETRIC)
 	{
 		ret.x = (x / (data.tileWidth * 0.5f)) - (y / (data.tileWidth * 0.5f));
 		ret.y = (x / (data.tileHeight * 0.5f)) + (y / (data.tileHeight * 0.5f));
@@ -199,7 +202,7 @@ bool Map::Load(const char* filename)
     return ret;
 }
 
-// L03: TODO: Load map general properties
+// L03: DONE: Load map general properties
 bool Map::LoadMap()
 {
 	bool ret = true;
@@ -212,24 +215,54 @@ bool Map::LoadMap()
 	}
 	else
 	{
-		// L03: TODO: Load map general properties
-		
+		// L03: DONE: Load map general properties
+		data.height = map.attribute("height").as_int();
+		data.width = map.attribute("width").as_int();
+		data.tileHeight = map.attribute("tileheight").as_int();
+		data.tileWidth = map.attribute("tilewidth").as_int();
+
+		SString tmp("%s", map.attribute("orientation").value());
+
+
+		if (tmp == "orthogonal")
+		{
+			data.type = MapTypes::MAPTYPE_ORTHOGONAL;
+		}
+		else if (tmp == "isometric")
+		{
+			data.type = MapTypes::MAPTYPE_ISOMETRIC;
+		}
+		else if (tmp == "staggered")
+		{
+			data.type = MapTypes::MAPTYPE_STAGGERED;
+		}
+		else
+		{
+			data.type = MapTypes::MAPTYPE_UNKNOWN;
+		}
 	}
 
 	return ret;
 }
 
-// L03: TODO: Load Tileset attributes
+// L03: DONE: Load Tileset attributes
 bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
-	
-	// L03: TODO: Load Tileset attributes
+
+	// L03: DONE: Load Tileset attributes
+
+	set->name = tileset_node.attribute("name").value();
+	set->firstgid = tileset_node.attribute("firstgid").as_int();
+	set->margin = tileset_node.attribute("margin").as_int();
+	set->spacing = tileset_node.attribute("spacing").as_int();
+	set->tileWidth = tileset_node.attribute("tilewidth").as_int();
+	set->tileHeight = tileset_node.attribute("tileheight").as_int();
 
 	return ret;
 }
 
-// L03: TODO: Load Tileset image
+// L03: DONE: Load Tileset image
 bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
@@ -242,7 +275,14 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	}
 	else
 	{
-		// L03: TODO: Load Tileset image
+		// L03: DONE: Load Tileset image
+		SString imageSource;
+		imageSource.Create("%s%s", folder.GetString(), tileset_node.child("image").attribute("source").value());
+		set->texture = app->tex->Load(imageSource.GetString());
+		set->texWidth = tileset_node.child("image").attribute("width").as_int();
+		set->texHeight = tileset_node.child("image").attribute("height").as_int();
+		set->numTilesWidth = set->texWidth / set->tileWidth;
+		set->numTilesHeight = set->texHeight / set->tileHeight;
 	}
 
 	return ret;
@@ -254,6 +294,21 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	bool ret = true;
 	
 	// L04: TODO 3: Load a single layer
+	layer->height = node.attribute("height").as_int();
+	layer->width = node.attribute("width").as_int();
+	layer->name = node.attribute("name").value();
+
+	int newSize = layer->width * layer->height;
+
+	layer->data = new uint[newSize];
+
+	pugi::xml_node sibling = node.child("data").child("tile");
+
+	for (int i = 0; i < newSize; i++)
+	{
+		layer->data[i] = sibling.attribute("gid").as_int();
+		sibling = sibling.next_sibling("tile");
+	}
 
 	return ret;
 }
