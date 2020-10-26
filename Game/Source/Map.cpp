@@ -18,6 +18,14 @@ Map::Map() : Module(), mapLoaded(false)
 Map::~Map()
 {}
 
+// L06: TODO 7: Ask for the value of a custom property
+int Properties::GetProperty(const char* value, int defaultValue) const
+{
+	//...
+
+	return defaultValue;
+}
+
 // Called before render is available
 bool Map::Awake(pugi::xml_node& config)
 {
@@ -36,6 +44,8 @@ void Map::Draw()
 
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
 	MapLayer* layer = data.layers.start->data;
+
+	// L06: TODO 4: Make sure we draw all the layers and not just the first one
 
 	for (int y = 0; y < data.height; ++y)
 	{
@@ -57,17 +67,24 @@ void Map::Draw()
 iPoint Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
-	if (data.type == MapTypes::MAPTYPE_ORTHOGONAL)
+
+	// L05: DONE 1: Add isometric map to world coordinates
+	if (data.type == MAPTYPE_ORTHOGONAL)
 	{
 		ret.x = x * data.tileWidth;
 		ret.y = y * data.tileHeight;
 	}
-	// L05: TODO 1: Add isometric map to world coordinates
-	else if (data.type == MapTypes::MAPTYPE_ISOMETRIC)
+	else if (data.type == MAPTYPE_ISOMETRIC)
 	{
-		ret.x = (x - y) * (data.tileWidth * 0.5f);
-		ret.y = (x + y) * (data.tileHeight * 0.5f);
+		ret.x = (x - y) * (data.tileWidth / 2);
+		ret.y = (x + y) * (data.tileHeight / 2);
 	}
+	else
+	{
+		LOG("Unknown map type");
+		ret.x = x; ret.y = y;
+	}
+
 	return ret;
 }
 
@@ -75,19 +92,39 @@ iPoint Map::MapToWorld(int x, int y) const
 iPoint Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
-	if (data.type == MapTypes::MAPTYPE_ORTHOGONAL)
+
+	// L05: DONE 3: Add the case for isometric maps to WorldToMap
+	if (data.type == MAPTYPE_ORTHOGONAL)
 	{
 		ret.x = x / data.tileWidth;
 		ret.y = y / data.tileHeight;
 	}
-	// L05: TODO 3: Add the case for isometric maps to WorldToMap
-	else if (data.type == MapTypes::MAPTYPE_ISOMETRIC)
+	else if (data.type == MAPTYPE_ISOMETRIC)
 	{
-		ret.x = (x / (data.tileWidth * 0.5f)) - (y / (data.tileWidth * 0.5f));
-		ret.y = (x / (data.tileHeight * 0.5f)) + (y / (data.tileHeight * 0.5f));
+
+		float half_width = data.tileWidth * 0.5f;
+		float half_height = data.tileHeight * 0.5f;
+		ret.x = int((x / half_width + y / half_height) / 2);
+		ret.y = int((y / half_height - (x / half_width)) / 2);
+	}
+	else
+	{
+		LOG("Unknown map type");
+		ret.x = x; ret.y = y;
 	}
 
 	return ret;
+}
+
+// L06: TODO 3: Pick the right Tileset based on a tile id
+TileSet* Map::GetTilesetFromTileId(int id) const
+{
+	ListItem<TileSet*>* item = data.tilesets.start;
+	TileSet* set = item->data;
+
+	//...
+
+	return set;
 }
 
 // Get relative Tile rectangle
@@ -310,5 +347,14 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		sibling = sibling.next_sibling("tile");
 	}
 
+	return ret;
+}
+
+// L06: TODO 6: Load a group of properties from a node and fill a list with it
+bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
+{
+	bool ret = false;
+
+	//...
 	return ret;
 }
