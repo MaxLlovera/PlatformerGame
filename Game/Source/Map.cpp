@@ -54,7 +54,7 @@ void Map::Draw()
 			int tileId = layer->Get(x, y);
 			if (tileId > 0)
 			{
-				// L04: TODO 9: Complete the draw function
+				// L04: TODO 9: Complete the draw function DONE?
 				SDL_Rect rect = data.tilesets.start->data->GetTileRect(tileId);
 				iPoint coords = MapToWorld(x, y);
 				app->render->DrawTexture(data.tilesets.start->data->texture, coords.x, coords.y, &rect);
@@ -88,7 +88,7 @@ iPoint Map::MapToWorld(int x, int y) const
 	return ret;
 }
 
-// L05: TODO 2: Add orthographic world to map coordinates
+// L05: DONE 2: Add orthographic world to map coordinates
 iPoint Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
@@ -325,12 +325,12 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-// L04: TODO 3: Create the definition for a function that loads a single layer
+// L04: DONE 3: Create the definition for a function that loads a single layer
 bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
 	
-	// L04: TODO 3: Load a single layer
+	// L04: DONE 3: Load a single layer
 	layer->height = node.attribute("height").as_int();
 	layer->width = node.attribute("width").as_int();
 	layer->name = node.attribute("name").value();
