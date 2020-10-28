@@ -45,12 +45,15 @@ struct Properties
 {
 	struct Property
 	{
-		//...
+		SString name;
+		int value;
+		bool condition;
+
 	};
 
 	~Properties()
 	{
-		//...
+		list.clear();
 	}
 
 	// L06: TODO 7: Method to ask for the value of a custom property

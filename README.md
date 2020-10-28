@@ -19,11 +19,11 @@ This is a platformer game by Fake Xeics.
 
 ## Developers
 
- - {Dev01} - {Role(s)}
- - {Dev02} - {Role(s)}
- - {Dev03} - {Role(s)}
- - {Dev04} - {Role(s)}
- - {Dev05} - {Role(s)}
+
+
+ - Arnau Bonada Campos - {Role(s)}
+ - Max Llovera Martí - {Role(s)}
+ - Arnau Ustrell Vacas - {Role(s)}
 
 ## License
 

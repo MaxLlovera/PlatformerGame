@@ -43,23 +43,28 @@ void Map::Draw()
 	if (mapLoaded == false) return;
 
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
-	MapLayer* layer = data.layers.start->data;
+	ListItem<MapLayer*>* layer = data.layers.start;
 
-	// L06: TODO 4: Make sure we draw all the layers and not just the first one
-
-	for (int y = 0; y < data.height; ++y)
+	// L06: TODO 4: Make sure we draw all the layers and not just the first one	
+	while (layer != NULL)
 	{
-		for (int x = 0; x < data.width; ++x)
+
+
+		for (int y = 0; y < data.height; ++y)
 		{
-			int tileId = layer->Get(x, y);
-			if (tileId > 0)
+			for (int x = 0; x < data.width; ++x)
 			{
-				// L04: TODO 9: Complete the draw function DONE?
-				SDL_Rect rect = data.tilesets.start->data->GetTileRect(tileId);
-				iPoint coords = MapToWorld(x, y);
-				app->render->DrawTexture(data.tilesets.start->data->texture, coords.x, coords.y, &rect);
+				int tileId = layer->data->Get(x,y);
+				if (tileId > 0)
+				{
+					// L04: TODO 9: Complete the draw function DONE?
+					SDL_Rect rect = data.tilesets.start->data->GetTileRect(tileId);
+					iPoint coords = MapToWorld(x, y);
+					app->render->DrawTexture(data.tilesets.start->data->texture, coords.x, coords.y, &rect);
+				}
 			}
 		}
+		layer = layer->next;
 	}
 }
 
@@ -122,7 +127,15 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 	ListItem<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
-	//...
+	
+	while (item != NULL) 
+	{
+		if (item->data->firstgid == id) 
+		{
+			return item->data;
+		}
+		item=item->next;
+	}
 
 	return set;
 }
@@ -353,8 +366,14 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 // L06: TODO 6: Load a group of properties from a node and fill a list with it
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
-	bool ret = false;
+	bool ret = true;
 
-	//...
+	//Properties::Property* property = new Properties::Property;
+
+	//for(pugi::xml_node p_node = node.child("properties").first_child())
+
+
+	////properties.list = node.attribute(name)
+
 	return ret;
 }

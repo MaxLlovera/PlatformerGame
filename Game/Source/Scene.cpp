@@ -31,10 +31,14 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
+
+	background = app->tex->Load("Assets/maps/background.png");
+
 	// L03: DONE: Load map
 	app->map->Load("world1Meta.tmx");
 	//app->map->Load("iso.tmx");
-	
+
+
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
@@ -72,8 +76,9 @@ bool Scene::Update(float dt)
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
 	// Draw map
+	app->render->DrawTexture(background, 0, 0);
 	app->map->Draw();
-
+	
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->data.width, app->map->data.height,
