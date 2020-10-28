@@ -32,7 +32,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 
-	background = app->tex->Load("Assets/maps/background.png");
+	background = app->tex->Load("Assets/textures/background.png");
 
 	// L03: DONE: Load map
 	app->map->Load("world1Meta.tmx");
