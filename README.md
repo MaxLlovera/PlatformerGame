@@ -3,6 +3,8 @@
 ## Description
 
 {project description}
+This is a platformer game by Fake Xeics.
+
 
 ## Key Features
 
