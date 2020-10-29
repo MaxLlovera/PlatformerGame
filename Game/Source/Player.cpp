@@ -69,28 +69,6 @@ bool Player::Update(float dt)
 				//collider->SetPos(position.x, position.y);
 
 		}
-		else {
-			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-			{
-
-					position.y += speed;
-
-				
-		
-			}
-
-			else {
-				if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-				{
-					
-						position.y -= speed;
-
-
-				}
-			}
-
-		}
-
 
 	}
 	//currentAnimation->Update();
