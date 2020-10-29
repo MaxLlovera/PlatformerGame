@@ -45,14 +45,14 @@ bool Player::Start()
 bool Player::Update(float dt)
 {
 	currentAnimation = &upAnim;
-	
+
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-			position.x -= speed;
-			
-			
-			//collidatoL = false;
-			//collider->SetPos(position.x, position.y);
+		position.x -= speed;
+
+
+		//collidatoL = false;
+		//collider->SetPos(position.x, position.y);
 
 
 	}
@@ -60,13 +60,13 @@ bool Player::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			
-				position.x += speed;
+
+			position.x += speed;
 
 
-				//collidatoR = false;
+			//collidatoR = false;
 
-				//collider->SetPos(position.x, position.y);
+			//collider->SetPos(position.x, position.y);
 
 		}
 

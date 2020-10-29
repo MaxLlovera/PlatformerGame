@@ -40,7 +40,7 @@ enum MapTypes
 	MAPTYPE_STAGGERED
 };
 
-// L06: TODO 5: Create a generic structure to hold properties
+// L06: DONE 5: Create a generic structure to hold properties
 struct Properties
 {
 	struct Property
@@ -141,7 +141,7 @@ private:
 	// L06: TODO 6: Load a group of properties 
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
-	// L06: TODO 3: Pick the right Tileset based on a tile id
+	// L06: DONE 3: Pick the right Tileset based on a tile id
 	TileSet* GetTilesetFromTileId(int id) const;
 
 public:

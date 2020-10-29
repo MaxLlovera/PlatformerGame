@@ -51,7 +51,7 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-    // L02: DONE 1: Create methods to request Load / Save
+	// L02: DONE 1: Create methods to request Load / Save
 	void LoadGameRequest();
 	void SaveGameRequest() const;
 
@@ -100,7 +100,7 @@ private:
 	SString title;
 	SString organization;
 
-	List<Module *> modules;
+	List<Module*> modules;
 
 	// L01: DONE 2: Create new variables from pugui namespace
 	// NOTE: Redesigned LoadConfig() to avoid storing this variables

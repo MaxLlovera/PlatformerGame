@@ -44,6 +44,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(render);
 }
 
+
 // Destructor
 App::~App()
 {
@@ -303,10 +304,10 @@ bool App::LoadGame()
 	pugi::xml_document data;
 	pugi::xml_node root;
 
-	pugi::xml_parse_result result = data.load_file(loadedGame.GetString());
+	pugi::xml_parse_result result = data.load_file(SAVE_STATE_FILENAME);
 
 	if (result != NULL) {
-		LOG("Loading new Game State from %s...", loadedGame.GetString());
+		LOG("Loading new Game State from %s...", SAVE_STATE_FILENAME);
 
 		root = data.child("save_state");
 
@@ -336,7 +337,7 @@ bool App::SaveGame() const
 {
 	bool ret = true;
 
-	LOG("Saving Game State to %s...", savedGame.GetString());
+	LOG("Saving Game State to %s...", SAVE_STATE_FILENAME);
 
 	//xml object were we will store all data
 	pugi::xml_document data;
@@ -350,7 +351,7 @@ bool App::SaveGame() const
 		item = item->next;
 	}
 	if (ret == true) {
-		data.save_file(savedGame.GetString());
+		data.save_file(SAVE_STATE_FILENAME);
 		LOG("... finished saving", );
 	}
 	else LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : 0);

@@ -45,11 +45,9 @@ void Map::Draw()
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
 	ListItem<MapLayer*>* layer = data.layers.start;
 
-	// L06: TODO 4: Make sure we draw all the layers and not just the first one	
+	// L06: DONE 4: Make sure we draw all the layers and not just the first one	
 	while (layer != NULL)
 	{
-
-
 		for (int y = 0; y < data.height; ++y)
 		{
 			for (int x = 0; x < data.width; ++x)
@@ -57,7 +55,7 @@ void Map::Draw()
 				int tileId = layer->data->Get(x,y);
 				if (tileId > 0)
 				{
-					// L04: TODO 9: Complete the draw function DONE?
+					// L04: DONE 9: Complete the draw function
 					SDL_Rect rect = data.tilesets.start->data->GetTileRect(tileId);
 					iPoint coords = MapToWorld(x, y);
 					app->render->DrawTexture(data.tilesets.start->data->texture, coords.x, coords.y, &rect);
@@ -121,7 +119,7 @@ iPoint Map::WorldToMap(int x, int y) const
 	return ret;
 }
 
-// L06: TODO 3: Pick the right Tileset based on a tile id
+// L06: TODO ?? 3: Pick the right Tileset based on a tile id
 TileSet* Map::GetTilesetFromTileId(int id) const
 {
 	ListItem<TileSet*>* item = data.tilesets.start;
@@ -271,18 +269,18 @@ bool Map::LoadMap()
 		data.tileHeight = map.attribute("tileheight").as_int();
 		data.tileWidth = map.attribute("tilewidth").as_int();
 
-		SString tmp("%s", map.attribute("orientation").value());
+		SString orientation("%s", map.attribute("orientation").value());
 
 
-		if (tmp == "orthogonal")
+		if (orientation == "orthogonal")
 		{
 			data.type = MapTypes::MAPTYPE_ORTHOGONAL;
 		}
-		else if (tmp == "isometric")
+		else if (orientation == "isometric")
 		{
 			data.type = MapTypes::MAPTYPE_ISOMETRIC;
 		}
-		else if (tmp == "staggered")
+		else if (orientation == "staggered")
 		{
 			data.type = MapTypes::MAPTYPE_STAGGERED;
 		}
@@ -329,10 +327,13 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 		SString imageSource;
 		imageSource.Create("%s%s", folder.GetString(), tileset_node.child("image").attribute("source").value());
 		set->texture = app->tex->Load(imageSource.GetString());
-		set->texWidth = tileset_node.child("image").attribute("width").as_int();
+
 		set->texHeight = tileset_node.child("image").attribute("height").as_int();
-		set->numTilesWidth = set->texWidth / set->tileWidth;
+		set->texWidth = tileset_node.child("image").attribute("width").as_int();
+
 		set->numTilesHeight = set->texHeight / set->tileHeight;
+		set->numTilesWidth = set->texWidth / set->tileWidth;
+		
 	}
 
 	return ret;
@@ -347,19 +348,16 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->height = node.attribute("height").as_int();
 	layer->width = node.attribute("width").as_int();
 	layer->name = node.attribute("name").value();
+	layer->data = new uint[layer->width * layer->height];
+	memset(layer->data, 0, layer->width * layer->height);
 
-	int newSize = layer->width * layer->height;
+	pugi::xml_node tilesibling = node.child("data").child("tile");
 
-	layer->data = new uint[newSize];
-
-	pugi::xml_node sibling = node.child("data").child("tile");
-
-	for (int i = 0; i < newSize; i++)
+	for (int i = 0; i < (layer->width * layer->height); i++)
 	{
-		layer->data[i] = sibling.attribute("gid").as_int();
-		sibling = sibling.next_sibling("tile");
+		layer->data[i] = tilesibling.attribute("gid").as_uint();
+		tilesibling = tilesibling.next_sibling("tile");
 	}
-
 	return ret;
 }
 
