@@ -13,6 +13,13 @@
 Player::Player() : Module()
 {
 	name.Create("player");
+	position.x = 64;
+	position.y = 896;
+
+	upAnim.PushBack({ 0, 0, 64, 38 });
+	//upAnim.PushBack({ 64, 0, 64, 64 });
+	upAnim.speed = 0.1f;
+
 }
 
 // Destructor
@@ -30,22 +37,70 @@ bool Player::Awake()
 bool Player::Start()
 {
 	texPlayer = app->tex->Load("Assets/textures/player_textures.png");
-	position.x = 0;
-	position.y = 0;
+
 
 	return true;
 }
 
 bool Player::Update(float dt)
 {
+	currentAnimation = &upAnim;
+	
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+			position.x -= speed;
+			
+			
+			//collidatoL = false;
+			//collider->SetPos(position.x, position.y);
 
+
+	}
+	else {
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			
+				position.x += speed;
+
+
+				//collidatoR = false;
+
+				//collider->SetPos(position.x, position.y);
+
+		}
+		else {
+			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			{
+
+					position.y += speed;
+
+				
+		
+			}
+
+			else {
+				if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+				{
+					
+						position.y -= speed;
+
+
+				}
+			}
+
+		}
+
+
+	}
+	//currentAnimation->Update();
 	return true;
 }
 
 bool Player::PostUpdate()
 {
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(texPlayer)
+	app->render->DrawTexture(texPlayer, position.x, position.y, &rect);
 	return true;
 }
 

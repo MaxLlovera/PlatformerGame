@@ -31,8 +31,14 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	Animation* currentAnimation = nullptr;
 	iPoint position;
+	int speed = 1;
+
+
+
+	Animation* currentAnimation = nullptr;
+
+	Animation upAnim;
 private:
 	SDL_Texture* texPlayer;
 };
