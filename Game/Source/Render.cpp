@@ -1,6 +1,8 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
+#include "Player.h"
+#include "Map.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -45,8 +47,8 @@ bool Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = app->win->screenSurface->w;
 		camera.h = app->win->screenSurface->h;
-		camera.x = 0;
-		camera.y = 0;
+		camera.x = app->player->position.x+(camera.w/2);
+		camera.y = app->player->position.y-(camera.h*2);
 	}
 
 	return ret;
