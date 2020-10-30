@@ -64,11 +64,11 @@ bool Scene::Update(float dt)
 
 	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)&&app->player->position.x>350&& app->player->position.x<=2400)
 	{
-		app->render->camera.x += 1.0f;
+		app->render->camera.x += 2.0f;
 	}
 	else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 2400)
 	{
-		app->render->camera.x -= 1.0f;
+		app->render->camera.x -= 2.0f;
 	}
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more

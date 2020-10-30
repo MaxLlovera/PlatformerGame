@@ -33,6 +33,8 @@ public:
 	bool CleanUp();
 
 	bool thereIsGround();
+	bool thereIsLeftWall();
+	bool thereIsRightWall();
 
 	void Jump();
 
@@ -56,11 +58,12 @@ public:
 
 	Animation upAnim;
 private:
-	float speedX = 1.0f;
+	float speedX = 3.0f;
 	float speedY = 0.0f;
-	float gravity = 1.0f;
-
-
+	float gravity = 0.15f;
+	int playerheight = 85;
+	int playerwidth = 64;
+	bool isJumping = false;
 	SDL_Texture* texPlayer;
 };
 

@@ -25,12 +25,12 @@ Player::Player() : Module()
 	//move right
 	rightAnim.PushBack({ 0, 85, 64, 85 });
 	rightAnim.PushBack({ 0, 170, 64, 85 });
-	rightAnim.speed = 1.0f;
+	rightAnim.speed = 0.1f;
 
 	//move left
 	leftAnim.PushBack({ 0, 255, 64, 85 });
 	leftAnim.PushBack({ 0, 340, 64, 85 });
-	leftAnim.speed = 1.0f;
+	leftAnim.speed = 0.1f;
 }
 
 // Destructor
@@ -57,16 +57,14 @@ bool Player::Update(float dt)
 {
 	currentAnimation = &idlAnim;
 
-	if (!thereIsGround()) {
-		gravityPlayer();
-
-	}
-
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= speedX;
-		currentAnimation = &leftAnim;
-
+		
+		if(!thereIsLeftWall())
+		{
+			position.x -= speedX;
+			currentAnimation = &leftAnim;
+		}
 		//collidatoL = false;
 		//collider->SetPos(position.x, position.y);
 
@@ -74,22 +72,28 @@ bool Player::Update(float dt)
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-
+		if (!thereIsRightWall())
+		{
 			position.x += speedX;
 			currentAnimation = &rightAnim;
-
+		}
 			//collidatoR = false;
 
 			//collider->SetPos(position.x, position.y);
 
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && thereIsGround())
 	{
-		Jump();
-		speedY = 2.0f;
+		isJumping = true;
+		speedY = 5.0f;
 		//gravityPlayer();
 	}
-
+	if (isJumping) 
+	{
+		Jump();
+		isJumping = false;
+	}
+	gravityPlayer();
 	currentAnimation->Update();
 	return true;
 }
@@ -102,6 +106,27 @@ bool Player::PostUpdate()
 }
 
 bool Player::thereIsGround()
+{
+	bool valid = false;
+	iPoint tilePosition = app->map->WorldToMap(position.x, position.y + playerheight);
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int groundId;
+	while (layer != NULL) 
+	{
+		if (layer->data->properties.GetProperty("Navigation") == 0) 
+		{
+			groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+			if (groundId == 266) {
+				valid = true;
+			}
+		}
+		layer = layer->next;
+	}
+	return valid;
+
+}
+
+bool Player::thereIsLeftWall()
 {
 	bool valid = false;
 	iPoint tilePosition = app->map->WorldToMap(position.x, position.y);
@@ -122,19 +147,42 @@ bool Player::thereIsGround()
 
 }
 
+bool Player::thereIsRightWall()
+{
+	bool valid = false;
+	iPoint tilePosition = app->map->WorldToMap(position.x + playerwidth, position.y);
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int groundId;
+	while (layer != NULL) 
+	{
+		if (layer->data->properties.GetProperty("Navigation") == 0) 
+		{
+			groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+			if (groundId == 266) {
+				valid = true;
+			}
+		}
+		layer = layer->next;
+	}
+	return valid;
+
+}
+
 void Player::Jump() 
 {
-	speedY = 1.0f;
-	int pos = position.y-100;
-	do {
-		position.y -= speedY;
-	} while (position.y != pos);
+	speedY -= gravity;
+	position.y -= speedY;
+	
 }
 
 void Player::gravityPlayer()
 {
-	speedY = 1.0f;
-	position.y += speedY;
+	if (!thereIsGround())
+	{
+		speedY -= gravity;
+		position.y -= speedY;
+		
+	}
 }
 
 bool Player::CleanUp()
