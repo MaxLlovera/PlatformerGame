@@ -57,6 +57,11 @@ bool Player::Update(float dt)
 {
 	currentAnimation = &idlAnim;
 
+	if (!thereIsGround()) {
+		gravityPlayer();
+
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= speedX;
@@ -82,6 +87,7 @@ bool Player::Update(float dt)
 	{
 		Jump();
 		speedY = 2.0f;
+		//gravityPlayer();
 	}
 
 	currentAnimation->Update();
@@ -118,13 +124,17 @@ bool Player::thereIsGround()
 
 void Player::Jump() 
 {
-	speedY -= gravity;
-	position.y -= speedY;
+	speedY = 1.0f;
+	int pos = position.y-100;
+	do {
+		position.y -= speedY;
+	} while (position.y != pos);
 }
 
 void Player::gravityPlayer()
 {
-	
+	speedY = 1.0f;
+	position.y += speedY;
 }
 
 bool Player::CleanUp()

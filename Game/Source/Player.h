@@ -58,7 +58,7 @@ public:
 private:
 	float speedX = 1.0f;
 	float speedY = 0.0f;
-	float gravity = 0.1f;
+	float gravity = 1.0f;
 
 
 	SDL_Texture* texPlayer;
