@@ -59,7 +59,7 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= speed;
+		position.x -= speedX;
 		currentAnimation = &leftAnim;
 
 		//collidatoL = false;
@@ -67,20 +67,21 @@ bool Player::Update(float dt)
 
 
 	}
-	else {
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
 
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		{
-
-			position.x += speed;
+			position.x += speedX;
 			currentAnimation = &rightAnim;
 
 			//collidatoR = false;
 
 			//collider->SetPos(position.x, position.y);
 
-		}
-
+	}
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		Jump();
+		speedY = 2.0f;
 	}
 
 	currentAnimation->Update();
@@ -94,7 +95,7 @@ bool Player::PostUpdate()
 	return true;
 }
 
-bool Player::isWalkable(int x, int y)
+bool Player::thereIsGround()
 {
 	bool valid = false;
 	iPoint tilePosition = app->map->WorldToMap(position.x, position.y);
@@ -113,6 +114,17 @@ bool Player::isWalkable(int x, int y)
 	}
 	return valid;
 
+}
+
+void Player::Jump() 
+{
+	speedY -= gravity;
+	position.y -= speedY;
+}
+
+void Player::gravityPlayer()
+{
+	
 }
 
 bool Player::CleanUp()

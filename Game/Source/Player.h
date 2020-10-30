@@ -32,10 +32,14 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool isWalkable(int x, int y);
+	bool thereIsGround();
+
+	void Jump();
+
+	void gravityPlayer();
 
 	iPoint position;
-	
+
 
 
 
@@ -49,10 +53,13 @@ public:
 	Animation leftAnim2;
 
 	char opcio = 'l';
+
+	Animation upAnim;
 private:
-	int speed = 1;
-	int gravity = 1;
-	
+	float speedX = 1.0f;
+	float speedY = 0.0f;
+	float gravity = 0.1f;
+
 
 	SDL_Texture* texPlayer;
 };
