@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -61,11 +62,11 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 		app->SaveGameRequest();
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)&&app->player->position.x>350&& app->player->position.x<=2400)
 	{
 		app->render->camera.x += 1;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 2400)
 	{
 		app->render->camera.x -= 1;
 	}
