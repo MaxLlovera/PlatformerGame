@@ -52,7 +52,6 @@ void Map::Draw()
 
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
 	ListItem<MapLayer*>* layer = data.layers.start;
-
 	// L06: DONE 4: Make sure we draw all the layers and not just the first one	
 	while (layer != NULL)
 	{
@@ -60,16 +59,18 @@ void Map::Draw()
 		{
 			for (int x = 0; x < data.width; ++x)
 			{
-				int tileId = layer->data->Get(x,y);
+				int tileId = layer->data->Get(x, y);
 				if (tileId > 0)
 				{
+	
 					// L04: DONE 9: Complete the draw function
 					SDL_Rect rect = data.tilesets.start->data->GetTileRect(tileId);
-					iPoint coords = MapToWorld(x, y);
-					app->render->DrawTexture(data.tilesets.start->data->texture, coords.x, coords.y, &rect);
+					iPoint pos = MapToWorld(x, y);
+					app->render->DrawTexture(data.tilesets.start->data->texture, pos.x, pos.y, &rect);
 				}
 			}
 		}
+
 		layer = layer->next;
 	}
 }
@@ -225,7 +226,6 @@ bool Map::Load(const char* filename)
 		TileSet* set = new TileSet();
 
 		if (ret == true) ret = LoadTilesetDetails(tileset, set);
-
 		if (ret == true) ret = LoadTilesetImage(tileset, set);
 
 		data.tilesets.add(set);
@@ -240,8 +240,7 @@ bool Map::Load(const char* filename)
 
 		ret = LoadLayer(layer, lay);
 
-		if (ret == true)
-			data.layers.add(lay);
+		if (ret == true) data.layers.add(lay);
 	}
     
     if(ret == true)

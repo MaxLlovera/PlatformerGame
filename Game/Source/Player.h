@@ -32,7 +32,7 @@ public:
 	bool CleanUp();
 
 	iPoint position;
-	int speed = 1;
+	
 
 
 
@@ -40,6 +40,10 @@ public:
 
 	Animation upAnim;
 private:
+	int speed = 1;
+	int gravity = 1;
+	
+
 	SDL_Texture* texPlayer;
 };
 
