@@ -7,6 +7,7 @@
 
 struct SDL_Texture;
 
+
 class Player : public Module
 {
 public:
@@ -30,6 +31,8 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+	bool isWalkable(int x, int y);
 
 	iPoint position;
 	

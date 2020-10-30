@@ -28,9 +28,8 @@ int Properties::GetProperty(const char* value, int defaultValue) const
 		{
 			return property->data->value;
 		}
-		property->next;
+		property = property->next;
 	}
-
 	return defaultValue;
 }
 
@@ -55,24 +54,33 @@ void Map::Draw()
 	// L06: DONE 4: Make sure we draw all the layers and not just the first one	
 	while (layer != NULL)
 	{
-		for (int y = 0; y < data.height; ++y)
+		if (layer->data->properties.GetProperty("NoDrawable") == 0)
 		{
-			for (int x = 0; x < data.width; ++x)
+
+			for (int y = 0; y < data.height; ++y)
 			{
-				int tileId = layer->data->Get(x, y);
-				if (tileId > 0)
+				for (int x = 0; x < data.width; ++x)
 				{
-	
-					// L04: DONE 9: Complete the draw function
-					SDL_Rect rect = data.tilesets.start->data->GetTileRect(tileId);
-					iPoint pos = MapToWorld(x, y);
-					app->render->DrawTexture(data.tilesets.start->data->texture, pos.x, pos.y, &rect);
+					int tileId = layer->data->Get(x, y);
+					if (tileId > 0)
+					{
+
+						// L04: DONE 9: Complete the draw function
+						TileSet* set = GetTilesetFromTileId(tileId);
+						SDL_Rect rect = set->GetTileRect(tileId);
+						iPoint pos = MapToWorld(x, y);
+
+						app->render->DrawTexture(set->texture, pos.x, pos.y, &rect);
+
+					}
 				}
 			}
 		}
-
 		layer = layer->next;
 	}
+
+
+
 }
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
@@ -134,14 +142,17 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 	ListItem<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
-	
-	while (item != NULL) 
+	while (item->next != nullptr)
 	{
-		if (item->data->firstgid == id) 
+		if (id <= (set->numTilesWidth * set->numTilesHeight))
 		{
-			return item->data;
+			break;
 		}
-		item=item->next;
+		else
+		{
+			item = item->next;
+			set = item->data;
+		}
 	}
 
 	return set;
@@ -151,14 +162,12 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	SDL_Rect rect = { 0 };
-
 	// L04: DONE 7: Get relative Tile rectangle
-	int relativeId = id - firstgid;
+	int relativeTileId = id - firstgid;
 	rect.w = tileWidth;
 	rect.h = tileHeight;
-	rect.x = margin + ((rect.w + spacing) * (relativeId % numTilesWidth));
-	rect.y = margin + ((rect.h + spacing) * (relativeId / numTilesWidth));
-	
+	rect.x = margin + ((rect.w + spacing) * (relativeTileId % numTilesWidth));
+	rect.y = margin + ((rect.h + spacing) * (relativeTileId / numTilesWidth));
 	return rect;
 }
 
@@ -378,7 +387,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	{
 		property->name = pnode.attribute("name").as_string();
 		property->value = pnode.attribute("value").as_int();
-		property->condition = pnode.attribute("condition").as_bool();
+		//property->condition = pnode.attribute("condition").as_bool();
 		properties.list.add(property);
 	}
 	return ret;
