@@ -18,10 +18,18 @@ Map::Map() : Module(), mapLoaded(false)
 Map::~Map()
 {}
 
-// L06: TODO 7: Ask for the value of a custom property
+// L06: DONE 7: Ask for the value of a custom property
 int Properties::GetProperty(const char* value, int defaultValue) const
 {
-	//...
+	ListItem<Property*>* property = list.start;
+	while (property != NULL) 
+	{
+		if (strcmp(property->data->name.GetString(), value) == 0)
+		{
+			return property->data->value;
+		}
+		property->next;
+	}
 
 	return defaultValue;
 }
@@ -361,17 +369,18 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
-// L06: TODO 6: Load a group of properties from a node and fill a list with it
+// L06: DONE 6: Load a group of properties from a node and fill a list with it
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
 	bool ret = true;
-
-	//Properties::Property* property = new Properties::Property;
-
-	//for(pugi::xml_node p_node = node.child("properties").first_child())
-
-
-	////properties.list = node.attribute(name)
-
+	Properties::Property* property = new Properties::Property;
+	pugi::xml_node pnode = node;
+	for(pnode = node.child("properties").first_child(); pnode; pnode=pnode.next_sibling("properties"))
+	{
+		property->name = pnode.attribute("name").as_string();
+		property->value = pnode.attribute("value").as_int();
+		property->condition = pnode.attribute("condition").as_bool();
+		properties.list.add(property);
+	}
 	return ret;
 }

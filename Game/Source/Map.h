@@ -56,7 +56,7 @@ struct Properties
 		list.clear();
 	}
 
-	// L06: TODO 7: Method to ask for the value of a custom property
+	// L06: DONE 7: Method to ask for the value of a custom property
 	int GetProperty(const char* name, int default_value = 0) const;
 
 	List<Property*> list;
@@ -138,7 +138,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 
-	// L06: TODO 6: Load a group of properties 
+	// L06: DONE 6: Load a group of properties 
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
 	// L06: DONE 3: Pick the right Tileset based on a tile id
