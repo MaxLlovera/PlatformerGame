@@ -13,13 +13,24 @@
 Player::Player() : Module()
 {
 	name.Create("player");
-	position.x = 64;
+	position.x = 350;
 	position.y = 875;
 
-	upAnim.PushBack({ 0, 0, 64, 85 });
-	//upAnim.PushBack({ 156, 310, 192, 256 });
-	upAnim.speed = 0.1f;
+	//idlanim
+	idlAnim.PushBack({ 0, 0, 64, 85 });
+	//idlAnim.PushBack({ 156, 310, 64, 85 });
+	idlAnim.speed = 0.1f;
 
+
+	//move right
+	rightAnim.PushBack({ 0, 85, 64, 85 });
+	rightAnim.PushBack({ 0, 170, 64, 85 });
+	rightAnim.speed = 1.0f;
+
+	//move left
+	leftAnim.PushBack({ 0, 255, 64, 85 });
+	leftAnim.PushBack({ 0, 340, 64, 85 });
+	leftAnim.speed = 1.0f;
 }
 
 // Destructor
@@ -44,12 +55,12 @@ bool Player::Start()
 
 bool Player::Update(float dt)
 {
-	currentAnimation = &upAnim;
+	currentAnimation = &idlAnim;
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= speed;
-
+		currentAnimation = &leftAnim;
 
 		//collidatoL = false;
 		//collider->SetPos(position.x, position.y);
@@ -62,7 +73,7 @@ bool Player::Update(float dt)
 		{
 
 			position.x += speed;
-
+			currentAnimation = &rightAnim;
 
 			//collidatoR = false;
 
@@ -72,7 +83,7 @@ bool Player::Update(float dt)
 
 	}
 
-	//currentAnimation->Update();
+	currentAnimation->Update();
 	return true;
 }
 

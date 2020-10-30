@@ -41,7 +41,14 @@ public:
 
 	Animation* currentAnimation = nullptr;
 
-	Animation upAnim;
+	Animation idlAnim;
+	Animation rightAnim;
+	Animation leftAnim;
+
+	Animation rightAnim2;
+	Animation leftAnim2;
+
+	char opcio = 'l';
 private:
 	int speed = 1;
 	int gravity = 1;
