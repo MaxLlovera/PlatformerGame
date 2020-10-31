@@ -59,7 +59,6 @@ bool Player::Start()
 {
 	texPlayer = app->tex->Load("Assets/textures/player_textures.png");
 
-
 	return true;
 }
 
@@ -75,10 +74,6 @@ bool Player::Update(float dt)
 			position.x -= speedX;
 			currentAnimation = &leftAnim;
 		}
-		//collidatoL = false;
-		//collider->SetPos(position.x, position.y);
-
-
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
@@ -87,10 +82,6 @@ bool Player::Update(float dt)
 			position.x += speedX;
 			currentAnimation = &rightAnim;
 		}
-			//collidatoR = false;
-
-			//collider->SetPos(position.x, position.y);
-
 	}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && thereIsGround())
 	{
@@ -126,9 +117,7 @@ bool Player::thereIsGround()
 		if (layer->data->properties.GetProperty("Navigation") == 0) 
 		{
 			groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-			if (groundId == 266) {
-				valid = true;
-			}
+			if (groundId == 266) valid = true;
 		}
 		layer = layer->next;
 	}
@@ -147,9 +136,7 @@ bool Player::thereIsLeftWall()
 		if (layer->data->properties.GetProperty("Navigation") == 0) 
 		{
 			groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-			if (groundId == 266) {
-				valid = true;
-			}
+			if (groundId == 266) valid = true;
 		}
 		layer = layer->next;
 	}
@@ -168,9 +155,7 @@ bool Player::thereIsRightWall()
 		if (layer->data->properties.GetProperty("Navigation") == 0) 
 		{
 			groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-			if (groundId == 266) {
-				valid = true;
-			}
+			if (groundId == 266) valid = true;
 		}
 		layer = layer->next;
 	}
