@@ -6,8 +6,10 @@
 	<audio />
 	<scene />
 	<map />
-	<player />
+	<player>
+		<positionPlayer x="863" y="876" />
+	</player>
 	<renderer>
-		<camera x="-1061" y="-555" />
+		<camera x="-342" y="-555" />
 	</renderer>
 </save_state>

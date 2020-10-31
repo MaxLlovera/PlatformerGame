@@ -191,3 +191,20 @@ bool Player::CleanUp()
 
 	return true;
 }
+
+
+bool Player::LoadState(pugi::xml_node& node)
+{
+	bool ret = true;
+	position.x = node.child("positionPlayer").attribute("x").as_int();
+	position.y = node.child("positionPlayer").attribute("y").as_int();
+	return ret;
+}
+bool Player::SaveState(pugi::xml_node& node) const
+{
+	bool ret = true;
+	pugi::xml_node pnode = node.append_child("positionPlayer");
+	pnode.append_attribute("x") = position.x;
+	pnode.append_attribute("y") = position.y;
+	return ret;
+}

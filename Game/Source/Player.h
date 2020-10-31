@@ -35,7 +35,8 @@ public:
 	bool thereIsGround();
 	bool thereIsLeftWall();
 	bool thereIsRightWall();
-
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
 	void Jump();
 
 	void gravityPlayer();
