@@ -74,6 +74,7 @@ bool Player::Update(float dt)
 
 	if (thereAreSpikes()) 
 	{
+		dead = true;
 		isDead();
 	}
 
@@ -198,9 +199,9 @@ bool Player::thereAreSpikes()
 		{
 			for (int i = 0; i < 3; ++i)
 			{
-				tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + playerheight);
+				tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y+21);
 				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-				if (groundId == 265) valid = true;
+				if (groundId == 268) valid = true;
 			}
 		}
 		layer = layer->next;
@@ -227,10 +228,16 @@ void Player::gravityPlayer()
 
 bool Player ::isDead()
 {
+	bool ret = false;
+	if(dead)
+	{
+		dead = false;
+		currentAnimation = &deathAnim;
+		ret = true;
+	}
+	
 
-	currentAnimation = &deathAnim;
-
-	return true;
+	return ret;
 }
 
 bool Player::CleanUp()

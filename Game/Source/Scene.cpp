@@ -78,14 +78,19 @@ bool Scene::Update(float dt)
 
 
 	//camera x
-	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)&&app->player->position.x>350&& app->player->position.x<=2400)
+	if (!app->player->isDead())
 	{
-		app->render->camera.x += 3.0f;
+		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->player->position.x > 350 && app->player->position.x <= 2400)
+		{
+			app->render->camera.x += 3.0f;
+		}
+		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 2400)
+		{
+			app->render->camera.x -= 3.0f;
+		}
+
 	}
-	else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 2400)
-	{
-		app->render->camera.x -= 3.0f;
-	}
+	
 	
 	
 

@@ -63,7 +63,7 @@ public:
 	Animation leftAnim2;
 
 	char opcio = 'l';
-
+	bool dead = false;
 	Animation upAnim;
 private:
 	float speedX = 3.0f;
@@ -73,6 +73,7 @@ private:
 	int playerwidth = 64;
 	bool isJumping = false;
 	SDL_Texture* texPlayer;
+	
 };
 
 #endif // __PLAYER_H__
