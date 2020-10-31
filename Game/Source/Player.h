@@ -63,10 +63,13 @@ public:
 
 	Animation rightAnim2;
 	Animation leftAnim2;
+	Animation upAnim;
 
 	char opcio = 'l';
 	bool dead = false;
-	Animation upAnim;
+	bool godModeEnabled = false;
+	
+
 private:
 	float speedX = 3.0f;
 	float speedY = 0.0f;

@@ -54,7 +54,7 @@ void Map::Draw()
 	// L06: DONE 4: Make sure we draw all the layers and not just the first one	
 	while (layer != NULL)
 	{
-		if (layer->data->properties.GetProperty("NoDrawable") == 0)
+		if (layer->data->properties.GetProperty("NoDrawable") == 0 || colliders)
 		{
 
 			for (int y = 0; y < data.height; ++y)

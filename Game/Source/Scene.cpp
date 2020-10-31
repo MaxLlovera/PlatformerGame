@@ -68,11 +68,17 @@ bool Scene::Update(float dt)
 	{
 		app->render->RestartValues();
 	}
+	//view colliders
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{
+		app->map->colliders = !app->map->colliders;
+	}
 
-
-
-
-
+	//god mode
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KeyState::KEY_DOWN)
+	{
+		app->player->godModeEnabled = !app->player->godModeEnabled;
+	}
 
 	//camera x
 	if (app->render->counter==0)
@@ -80,9 +86,6 @@ bool Scene::Update(float dt)
 		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->player->position.x > 350 && app->player->position.x <= 2400) app->render->camera.x += 3.0f;	
 		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 2400) app->render->camera.x -= 3.0f;
 	}
-	
-	
-	
 
 	//camera y
 	if (app->player->position.y < 550&&!cameraUP)
@@ -107,9 +110,7 @@ bool Scene::Update(float dt)
 	}
 
 
-	// Draw map
-	app->render->DrawTexture(background, 0, 0);
-	app->map->Draw();
+	
 	
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -129,6 +130,10 @@ bool Scene::PostUpdate()
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	// Draw map
+	app->render->DrawTexture(background, 0, 0);
+	app->map->Draw();
 
 	return ret;
 }
