@@ -51,6 +51,8 @@ public:
 	Animation idlAnim;
 	Animation rightAnim;
 	Animation leftAnim;
+	Animation jumpAnimRight;
+	Animation jumpAnimLeft;
 
 	Animation rightAnim2;
 	Animation leftAnim2;

@@ -31,6 +31,16 @@ Player::Player() : Module()
 	leftAnim.PushBack({ 0, 255, 64, 85 });
 	leftAnim.PushBack({ 0, 340, 64, 85 });
 	leftAnim.speed = 0.1f;
+
+	//jumpAnimRight
+	jumpAnimRight.PushBack({ 0, 425, 64, 85 });
+	//leftAnim.PushBack({ 0, 340, 64, 85 });
+	jumpAnimRight.speed = 0.1f;
+	
+	//jumpAnimRight
+	jumpAnimLeft.PushBack({ 0, 510, 64, 85 });
+	//leftAnim.PushBack({ 0, 340, 64, 85 });
+	jumpAnimLeft.speed = 0.1f;
 }
 
 // Destructor
@@ -85,7 +95,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && thereIsGround())
 	{
 		isJumping = true;
-		speedY = 10.0f;
+		speedY = 5.0f;
 		//gravityPlayer();
 	}
 	if (isJumping) 
@@ -172,7 +182,7 @@ void Player::Jump()
 {
 	speedY -= gravity;
 	position.y -= speedY;
-	
+
 }
 
 void Player::gravityPlayer()
@@ -181,7 +191,8 @@ void Player::gravityPlayer()
 	{
 		speedY -= gravity;
 		position.y -= speedY;
-		
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnimation = &jumpAnimLeft;
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) currentAnimation = &jumpAnimRight;
 	}
 }
 
