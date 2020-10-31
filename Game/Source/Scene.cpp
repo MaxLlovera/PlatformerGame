@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
+#include "FadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -17,8 +18,7 @@ Scene::Scene() : Module()
 }
 
 // Destructor
-Scene::~Scene()
-{}
+Scene::~Scene(){}
 
 // Called before render is available
 bool Scene::Awake()
@@ -74,6 +74,11 @@ bool Scene::Update(float dt)
 	//god mode
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KeyState::KEY_DOWN) app->player->godModeEnabled = !app->player->godModeEnabled;
 	
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KeyState::KEY_DOWN)
+	{
+		app->fadetoblack->Fadetoblack((Module*)app->render, (Module*)app->render, 10);
+	}
+
 
 	//camera x
 	if (app->render->counter==0||app->player->godModeEnabled)
@@ -91,8 +96,7 @@ bool Scene::Update(float dt)
 			app->render->camera.y += 0.0f;
 			cameraUP = true;
 		}
-	}
-	
+	}	
 	if (app->player->position.y > 700 && cameraUP)
 	{
 		app->render->camera.y -= 6.0f;
@@ -101,11 +105,7 @@ bool Scene::Update(float dt)
 			cameraUP = false;
 
 		}
-		
 	}
-
-
-	
 	
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
