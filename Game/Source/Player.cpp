@@ -144,15 +144,19 @@ bool Player::thereIsGround()
 bool Player::thereIsLeftWall()
 {
 	bool valid = false;
-	iPoint tilePosition = app->map->WorldToMap(position.x, position.y+21);
+	iPoint tilePosition;
 	ListItem<MapLayer*>* layer = app->map->data.layers.start;
 	int groundId;
 	while (layer != NULL) 
 	{
 		if (layer->data->properties.GetProperty("Navigation") == 0) 
 		{
-			groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-			if (groundId == 266) valid = true;
+			for (int i = 0; i < 4; ++i)
+			{
+				tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
+				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (groundId == 266) valid = true;
+			}
 		}
 		layer = layer->next;
 	}
@@ -163,15 +167,19 @@ bool Player::thereIsLeftWall()
 bool Player::thereIsRightWall()
 {
 	bool valid = false;
-	iPoint tilePosition = app->map->WorldToMap(position.x + playerwidth, position.y+21);
+	iPoint tilePosition;
 	ListItem<MapLayer*>* layer = app->map->data.layers.start;
 	int groundId;
 	while (layer != NULL) 
 	{
 		if (layer->data->properties.GetProperty("Navigation") == 0) 
 		{
-			groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-			if (groundId == 266) valid = true;
+			for (int i = 0; i < 4; ++i)
+			{
+				tilePosition = app->map->WorldToMap(position.x + playerwidth, position.y + 21 + i * 16);
+				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (groundId == 266) valid = true;
+			}
 		}
 		layer = layer->next;
 	}
@@ -181,15 +189,19 @@ bool Player::thereIsRightWall()
 bool Player::thereAreSpikes()
 {
 	bool valid = false;
-	iPoint tilePosition = app->map->WorldToMap(position.x, position.y);
+	iPoint tilePosition;
 	ListItem<MapLayer*>* layer = app->map->data.layers.start;
 	int groundId;
 	while (layer != NULL)
 	{
 		if (layer->data->properties.GetProperty("Navigation") == 0)
 		{
-			groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-			if (groundId == 265) valid = true;
+			for (int i = 0; i < 3; ++i)
+			{
+				tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + playerheight);
+				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (groundId == 265) valid = true;
+			}
 		}
 		layer = layer->next;
 	}
