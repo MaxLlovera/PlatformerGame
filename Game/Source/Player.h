@@ -35,11 +35,15 @@ public:
 	bool thereIsGround();
 	bool thereIsLeftWall();
 	bool thereIsRightWall();
+	bool thereAreSpikes();
+
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 	void Jump();
 
 	void gravityPlayer();
+
+	bool isDead();
 
 	iPoint position;
 
@@ -53,6 +57,7 @@ public:
 	Animation leftAnim;
 	Animation jumpAnimRight;
 	Animation jumpAnimLeft;
+	Animation deathAnim;
 
 	Animation rightAnim2;
 	Animation leftAnim2;

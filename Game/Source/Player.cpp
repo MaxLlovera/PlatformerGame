@@ -41,6 +41,11 @@ Player::Player() : Module()
 	jumpAnimLeft.PushBack({ 0, 510, 64, 85 });
 	//leftAnim.PushBack({ 0, 340, 64, 85 });
 	jumpAnimLeft.speed = 0.1f;
+
+	//deathAnim
+	deathAnim.PushBack({ 0, 595, 64, 85 });
+	//leftAnim.PushBack({ 0, 340, 64, 85 });
+	deathAnim.speed = 0.1f;
 }
 
 // Destructor
@@ -64,9 +69,15 @@ bool Player::Start()
 
 bool Player::Update(float dt)
 {
+
 	currentAnimation = &idlAnim;
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (thereAreSpikes()) 
+	{
+		isDead();
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !thereAreSpikes())
 	{
 		
 		if(!thereIsLeftWall())
@@ -75,7 +86,7 @@ bool Player::Update(float dt)
 			currentAnimation = &leftAnim;
 		}
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !thereAreSpikes())
 	{
 		if (!thereIsRightWall())
 		{
@@ -160,14 +171,30 @@ bool Player::thereIsRightWall()
 		layer = layer->next;
 	}
 	return valid;
+}
 
+bool Player::thereAreSpikes()
+{
+	bool valid = false;
+	iPoint tilePosition = app->map->WorldToMap(position.x, position.y+ playerheight);
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int groundId;
+	while (layer != NULL)
+	{
+		if (layer->data->properties.GetProperty("Navigation") == 0)
+		{
+			groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+			if (groundId == 265) valid = true;
+		}
+		layer = layer->next;
+	}
+	return valid;
 }
 
 void Player::Jump() 
 {
 	speedY -= gravity;
 	position.y -= speedY;
-
 }
 
 void Player::gravityPlayer()
@@ -179,6 +206,14 @@ void Player::gravityPlayer()
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnimation = &jumpAnimLeft;
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) currentAnimation = &jumpAnimRight;
 	}
+}
+
+bool Player ::isDead()
+{
+
+	currentAnimation = &deathAnim;
+
+	return true;
 }
 
 bool Player::CleanUp()
@@ -196,6 +231,7 @@ bool Player::LoadState(pugi::xml_node& node)
 	position.y = node.child("positionPlayer").attribute("y").as_int();
 	return ret;
 }
+
 bool Player::SaveState(pugi::xml_node& node) const
 {
 	bool ret = true;

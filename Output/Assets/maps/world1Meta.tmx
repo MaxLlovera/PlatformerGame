@@ -989,8 +989,8 @@
    <tile gid="23"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile/>
-   <tile/>
+   <tile gid="212"/>
+   <tile gid="212"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -2317,8 +2317,8 @@
    <tile/>
    <tile/>
    <tile gid="266"/>
-   <tile/>
-   <tile/>
+   <tile gid="265"/>
+   <tile gid="265"/>
    <tile gid="266"/>
    <tile/>
    <tile/>
