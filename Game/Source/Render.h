@@ -46,6 +46,12 @@ public:
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 
+	//restart values
+	void RestartValues();
+	void DeadRestart();
+
+	int counter = 0;
+
 public:
 
 	SDL_Renderer* renderer;

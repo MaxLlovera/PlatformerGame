@@ -72,6 +72,12 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+
+	if (app->player->dead) {
+		DeadRestart();
+
+	}
+
 	return true;
 }
 
@@ -89,6 +95,37 @@ bool Render::CleanUp()
 	SDL_DestroyRenderer(renderer);
 	return true;
 }
+
+
+//restart values
+void Render::RestartValues()
+{
+	app->player->position.x = 350;
+	app->player->position.y = 875;
+	app->render->camera.x = app->player->position.x - app->player->position.x;
+	app->render->camera.y = app->player->position.y - (app->render->camera.h * 2) + 10;
+	counter = 0;
+}
+
+
+void Render::DeadRestart()
+{
+	if (app->player->currentAnimation == &app->player->deathAnim)
+	{
+		//SDL_Delay(1000);
+		if (counter > 100)
+		{
+			RestartValues();
+			app->player->dead = false;
+		}
+		else
+		{
+			counter++;
+		}
+		
+	}
+}
+
 
 // L02: DONE 6: Implement a method to load the state, for now load camera's x and y
 // Load Game State

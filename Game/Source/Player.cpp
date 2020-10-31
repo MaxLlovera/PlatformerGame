@@ -74,9 +74,9 @@ bool Player::Update(float dt)
 
 	if (thereAreSpikes()) 
 	{
-		dead = true;
 		isDead();
 	}
+
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !thereAreSpikes())
 	{
@@ -107,6 +107,7 @@ bool Player::Update(float dt)
 		isJumping = false;
 	}
 	gravityPlayer();
+	
 	currentAnimation->Update();
 	return true;
 }
@@ -226,19 +227,20 @@ void Player::gravityPlayer()
 	}
 }
 
-bool Player ::isDead()
+bool Player::isDead()
 {
 	bool ret = false;
-	if(dead)
-	{
-		dead = false;
-		currentAnimation = &deathAnim;
-		ret = true;
-	}
-	
+
+	dead = true;
+	currentAnimation = &deathAnim;
+	ret = true;
+
 
 	return ret;
 }
+
+
+
 
 bool Player::CleanUp()
 {

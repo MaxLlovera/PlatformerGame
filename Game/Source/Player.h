@@ -45,6 +45,8 @@ public:
 
 	bool isDead();
 
+	
+
 	iPoint position;
 
 

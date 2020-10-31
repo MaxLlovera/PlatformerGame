@@ -34,6 +34,7 @@ public:
 
 	bool cameraUP = false;
 
+
 private:
 	SDL_Texture* img;
 	SDL_Texture* background;

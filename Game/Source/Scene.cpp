@@ -64,12 +64,9 @@ bool Scene::Update(float dt)
 
 
 	//restart
-	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		app->player->position.x = 350;
-		app->player->position.y = 875;
-		app->render->camera.x = app->player->position.x- app->player->position.x;
-		app->render->camera.y = app->player->position.y - (app->render->camera.h * 2) + 10;
+		app->render->RestartValues();
 	}
 
 
@@ -78,17 +75,10 @@ bool Scene::Update(float dt)
 
 
 	//camera x
-	if (!app->player->isDead())
+	if (app->render->counter==0)
 	{
-		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->player->position.x > 350 && app->player->position.x <= 2400)
-		{
-			app->render->camera.x += 3.0f;
-		}
-		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 2400)
-		{
-			app->render->camera.x -= 3.0f;
-		}
-
+		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->player->position.x > 350 && app->player->position.x <= 2400) app->render->camera.x += 3.0f;	
+		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 2400) app->render->camera.x -= 3.0f;
 	}
 	
 	
