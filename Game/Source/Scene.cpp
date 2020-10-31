@@ -75,10 +75,10 @@ bool Scene::Update(float dt)
 	
 
 	//camera y
-	if (app->player->position.y < 500&&!cameraUP)
+	if (app->player->position.y < 550&&!cameraUP)
 	{
-		app->render->camera.y += 3.0f;
-		if (app->player->position.y < 300) 
+		app->render->camera.y += 6.0f;
+		if (app->render->camera.y >= -100) 
 		{
 			app->render->camera.y += 0.0f;
 			cameraUP = true;
@@ -87,13 +87,15 @@ bool Scene::Update(float dt)
 	
 	if (app->player->position.y > 700 && cameraUP)
 	{
-		if (app->render->camera.y != app->player->position.y - (app->render->camera.h * 2) + 10)
+		app->render->camera.y -= 6.0f;
+		if (app->render->camera.y < -550)
 		{
-			app->render->camera.y -= 3.0f;
-			if (app->render->camera.y == app->player->position.y - (app->render->camera.h * 2) + 10)
+			cameraUP = false;
+
+			/*if (app->render->camera.y == app->player->position.y - (app->render->camera.h * 2) + 10)
 			{
 				cameraUP = false;
-			}
+			}*/
 		}
 		
 		/*if(app->player->position.y >= 875)
