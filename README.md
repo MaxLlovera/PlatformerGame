@@ -8,6 +8,9 @@ This is a platformer game by Fake Xeics.
 
 ## Key Features
 
+F5 -> Save
+F6 -> Load
+
  - {Feature01}
  - {Feature02}
  - {Feature03}
