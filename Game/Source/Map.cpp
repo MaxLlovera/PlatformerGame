@@ -69,7 +69,6 @@ void Map::Draw()
 						TileSet* set = GetTilesetFromTileId(tileId);
 						SDL_Rect rect = set->GetTileRect(tileId);
 						iPoint pos = MapToWorld(x, y);
-
 						app->render->DrawTexture(set->texture, pos.x, pos.y, &rect);
 
 					}
@@ -142,19 +141,15 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 	ListItem<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
-	while (item->next != nullptr)
+	while (item->next != NULL)
 	{
-		if (id <= (set->numTilesWidth * set->numTilesHeight))
-		{
-			break;
-		}
-		else
+		if (id > (set->numTilesWidth * set->numTilesHeight))
 		{
 			item = item->next;
 			set = item->data;
 		}
+		else return set;
 	}
-
 	return set;
 }
 
@@ -366,7 +361,6 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name = node.attribute("name").value();
 	layer->data = new uint[layer->width * layer->height];
 	memset(layer->data, 0, layer->width * layer->height);
-
 	pugi::xml_node tilesibling = node.child("data").child("tile");
 
 	for (int i = 0; i < (layer->width * layer->height); i++)
@@ -374,6 +368,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		layer->data[i] = tilesibling.attribute("gid").as_uint();
 		tilesibling = tilesibling.next_sibling("tile");
 	}
+	LoadProperties(node, layer->properties);
 	return ret;
 }
 
@@ -383,11 +378,10 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	bool ret = true;
 	Properties::Property* property = new Properties::Property;
 	pugi::xml_node pnode = node;
-	for(pnode = node.child("properties").first_child(); pnode; pnode=pnode.next_sibling("properties"))
+	for(pnode = node.child("properties").child("property"); pnode; pnode=pnode.next_sibling("property"))
 	{
 		property->name = pnode.attribute("name").as_string();
 		property->value = pnode.attribute("value").as_int();
-		//property->condition = pnode.attribute("condition").as_bool();
 		properties.list.add(property);
 	}
 	return ret;

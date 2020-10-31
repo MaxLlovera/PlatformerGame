@@ -176,7 +176,7 @@ bool Player::thereIsRightWall()
 bool Player::thereAreSpikes()
 {
 	bool valid = false;
-	iPoint tilePosition = app->map->WorldToMap(position.x, position.y+ playerheight);
+	iPoint tilePosition = app->map->WorldToMap(position.x, position.y);
 	ListItem<MapLayer*>* layer = app->map->data.layers.start;
 	int groundId;
 	while (layer != NULL)
@@ -204,7 +204,7 @@ void Player::gravityPlayer()
 		speedY -= gravity;
 		position.y -= speedY;
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnimation = &jumpAnimLeft;
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) currentAnimation = &jumpAnimRight;
+		else currentAnimation = &jumpAnimRight;
 	}
 }
 

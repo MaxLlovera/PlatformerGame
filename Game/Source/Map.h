@@ -47,7 +47,6 @@ struct Properties
 	{
 		SString name;
 		int value;
-		//bool condition;
 
 	};
 
