@@ -85,7 +85,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && thereIsGround())
 	{
 		isJumping = true;
-		speedY = 5.0f;
+		speedY = 10.0f;
 		//gravityPlayer();
 	}
 	if (isJumping) 

@@ -32,6 +32,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool cameraUP = false;
+	bool cameraDOWN = false;
+
 private:
 	SDL_Texture* img;
 	SDL_Texture* background;

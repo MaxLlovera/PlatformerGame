@@ -62,6 +62,7 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
 
+	//camera x
 	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)&&app->player->position.x>350&& app->player->position.x<=2400)
 	{
 		app->render->camera.x += 3.0f;
@@ -70,6 +71,41 @@ bool Scene::Update(float dt)
 	{
 		app->render->camera.x -= 3.0f;
 	}
+	
+	
+
+	//camera y
+	if (app->player->position.y < 500&&!cameraUP)
+	{
+		app->render->camera.y += 3.0f;
+		if (app->player->position.y < 300) 
+		{
+			app->render->camera.y += 0.0f;
+			cameraUP = true;
+		}
+	}
+	
+	if (app->player->position.y > 700 && cameraUP)
+	{
+		if (app->render->camera.y != app->player->position.y - (app->render->camera.h * 2) + 10)
+		{
+			app->render->camera.y -= 3.0f;
+			if (app->render->camera.y == app->player->position.y - (app->render->camera.h * 2) + 10)
+			{
+				cameraUP = false;
+			}
+		}
+		
+		/*if(app->player->position.y >= 875)
+			cameraUP = false;*/
+		
+	}
+	//else if (app->player->position.y > 850 && cameraDOWN)
+	//{
+	//	app->render->camera.y -= 0.0f;
+	//	//cameraUP = false;	
+	//	cameraDOWN = false;
+	//}
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
