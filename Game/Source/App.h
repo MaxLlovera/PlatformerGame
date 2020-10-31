@@ -55,6 +55,8 @@ public:
 	void LoadGameRequest();
 	void SaveGameRequest() const;
 
+
+
 private:
 
 	// Load config file
