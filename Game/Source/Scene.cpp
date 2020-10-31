@@ -56,32 +56,27 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
     // L02: DONE 3: Request Load / Save when pressing L/S
-	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		app->LoadGameRequest();
+	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadGameRequest();
 
-	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		app->SaveGameRequest();
+	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveGameRequest();
 
 
-	//restart
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		app->render->RestartValues();
-	}
+	//restart from first level
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) app->render->RestartValues();
+	
+	//restart the current level
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) app->render->RestartValues();
+
 	//view colliders
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-	{
-		app->map->colliders = !app->map->colliders;
-	}
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) app->map->colliders = !app->map->colliders;
+
 
 	//god mode
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KeyState::KEY_DOWN)
-	{
-		app->player->godModeEnabled = !app->player->godModeEnabled;
-	}
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KeyState::KEY_DOWN) app->player->godModeEnabled = !app->player->godModeEnabled;
+	
 
 	//camera x
-	if (app->render->counter==0)
+	if (app->render->counter==0||app->player->godModeEnabled)
 	{
 		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->player->position.x > 350 && app->player->position.x <= 2400) app->render->camera.x += 3.0f;	
 		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 2400) app->render->camera.x -= 3.0f;

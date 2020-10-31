@@ -104,7 +104,7 @@ bool Player::Update(float dt)
 			currentAnimation = &rightAnim;
 		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && thereIsGround())
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && thereIsGround() && !thereAreSpikes())
 	{
 		isJumping = true;
 		speedY = 5.0f;
