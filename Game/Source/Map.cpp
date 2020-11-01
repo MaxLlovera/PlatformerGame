@@ -72,7 +72,19 @@ void Map::Draw()
 				}
 			}
 		}
-		if (layer->data->properties.GetProperty("Key") == 1 && keyTaken)
+		layer = layer->next;
+	}
+}
+
+void Map::DrawKey()
+{
+	if (mapLoaded == false) return;
+
+	ListItem<MapLayer*>* layer = data.layers.start;
+	while (layer != NULL)
+	{
+
+		if (layer->data->name == "Key")
 		{
 			for (int y = 0; y < data.height; ++y)
 			{
@@ -90,12 +102,39 @@ void Map::Draw()
 				}
 			}
 		}
-
 		layer = layer->next;
 	}
 }
 
+void Map::DrawKeyTaken()
+{
+	if (mapLoaded == false) return;
+	ListItem<MapLayer*>* layer = data.layers.start;
+	while (layer != NULL)
+	{
+		if (layer->data->name == "keytaken")
+		{
+			for (int y = 0; y < data.height; ++y)
+			{
+				for (int x = 0; x < data.width; ++x)
+				{
+					int tileId = layer->data->Get(x, y);
+					if (tileId > 0)
+					{
+						// L04: DONE 9: Complete the draw function
+						TileSet* set = GetTilesetFromTileId(tileId);
+						SDL_Rect rect = set->GetTileRect(tileId);
+						iPoint pos = MapToWorld(x, y);
+						app->render->DrawTexture(set->texture, pos.x, pos.y, &rect);
+					}
+				}
+			}
+		}
+		layer = layer->next;
+	}
+}
 
+	
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 iPoint Map::MapToWorld(int x, int y) const

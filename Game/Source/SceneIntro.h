@@ -30,22 +30,10 @@ public:
 
 private:
 
-	SDL_Texture* logo = nullptr;
+	SDL_Texture* introText = nullptr;
 
 
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-#endif
+#endif //__SCENE_INTRO_H__

@@ -30,22 +30,11 @@ public:
 
 private:
 
-	SDL_Texture* logo = nullptr;
+	SDL_Texture* loseText = nullptr;
 
 
 };
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-#endif
+#endif //__SCENE_LOSE_H__

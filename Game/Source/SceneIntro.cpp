@@ -6,6 +6,8 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "SceneWin.h"
+#include "SceneLose.h"
 #include "FadeToBlack.h"
 
 #include "Defs.h"
@@ -29,9 +31,11 @@ bool SceneIntro::Awake(pugi::xml_node& node)
 bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
-	logo = app->tex->Load("Assets/textures/sceneIntro.png");
+	introText = app->tex->Load("Assets/textures/sceneIntro.png");
 	bool ret = true;
-
+	app->sceneLose->Disable();
+	app->sceneWin->Disable();
+	app->audio->PlayMusic("no.ogg");
 	return ret;
 }
 
@@ -46,7 +50,7 @@ bool SceneIntro::PostUpdate()
 {
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
-	app->render->DrawTexture(logo, 0, 555, NULL);
+	app->render->DrawTexture(introText, 0, 555, NULL);
 	return ret;
 }
 

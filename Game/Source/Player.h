@@ -66,6 +66,7 @@ public:
 	Animation upAnim;
 
 	bool dead = false;
+	bool win = false;
 	bool godModeEnabled = false;
 	
 
@@ -78,7 +79,6 @@ private:
 	bool isJumping = false;
 	SDL_Texture* texPlayer;
 	uint playerDeathFx = 0;
-	uint actClear = 0;
 	
 };
 

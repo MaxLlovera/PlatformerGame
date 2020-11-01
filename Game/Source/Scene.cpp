@@ -85,11 +85,19 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KeyState::KEY_DOWN) app->player->godModeEnabled = !app->player->godModeEnabled;
 	
 	//SceneWin
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KeyState::KEY_DOWN) app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 60);
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KeyState::KEY_DOWN || app->player->win)
+	{
+		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 60);
+		app->render->RestartValues();
+	}
 
 	
 	//SceneLose
-	if (app->input->GetKey(SDL_SCANCODE_F8) == KeyState::KEY_DOWN) app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 60);
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KeyState::KEY_DOWN || app->player->dead)
+	{
+		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 60);
+		app->render->RestartValues();
+	}
 
 
 	//camera x
@@ -138,6 +146,8 @@ bool Scene::PostUpdate()
 	app->render->DrawTexture(background, 0, 0);
 	app->map->Draw();
 
+	if (!app->map->keyTaken) app->map->DrawKey();
+	else if (app->map->keyTaken) app->map->DrawKeyTaken();
 	return ret;
 }
 

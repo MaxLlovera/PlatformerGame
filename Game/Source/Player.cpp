@@ -71,9 +71,11 @@ bool Player::Start()
 {
 	if (this->active == true)
 	{
+		dead = false;
+		win = false;
 		texPlayer = app->tex->Load("Assets/textures/player_textures.png");
 		playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
-		actClear = app->audio->LoadFx("Assets/audio/fx/Victory.wav");
+		
 		currentAnimation = &idlAnim;
 	}
 	return true;
@@ -85,7 +87,8 @@ bool Player::Update(float dt)
 	currentAnimation = &idlAnim;
 
 	if (ThereAreSpikes()) IsDead();
-	if (!ThereIsDoor())
+	if (ThereIsDoor() && app->map->keyTaken) win = true;
+	else
 	{
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godModeEnabled)
 		{
@@ -130,7 +133,7 @@ bool Player::Update(float dt)
 			GravityPlayer();
 		}
 	}
-	else app->audio->PlayFx(actClear, 1);
+	
 
 	if (TakeKey()) {
 		app->map->keyTaken = true;
@@ -353,7 +356,6 @@ bool Player::IsDead()
 	dead = true;
 	currentAnimation = &deathAnim;
 	app->audio->PlayFx(playerDeathFx,0);
-	//app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 60.0f);
 	ret = true;
 	
 

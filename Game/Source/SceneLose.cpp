@@ -4,9 +4,12 @@
 #include "Textures.h"
 #include "Render.h"
 #include "Window.h"
+#include "Map.h"
+#include "Player.h"
 #include "Scene.h"
 #include "FadeToBlack.h"
 #include "SceneLose.h"
+#include "SceneIntro.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -29,7 +32,10 @@ bool SceneLose::Awake(pugi::xml_node& node)
 bool SceneLose::Start()
 {
 	LOG("Loading background assets");
-	logo = app->tex->Load("Assets/textures/sceneLose.png");
+	loseText = app->tex->Load("Assets/textures/sceneLose.png");
+	app->player->Disable();
+	app->map->Disable();
+	app->audio->PlayMusic("no.ogg");
 	bool ret = true;
 
 	return ret;
@@ -37,7 +43,7 @@ bool SceneLose::Start()
 
 bool SceneLose::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->scene, 60);
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->sceneIntro, 60);
 	return true;
 }
 
@@ -46,7 +52,7 @@ bool SceneLose::PostUpdate()
 {
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
-	app->render->DrawTexture(logo, 0, 555, NULL);
+	app->render->DrawTexture(loseText, 0, 555, NULL);
 	return ret;
 }
 

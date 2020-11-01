@@ -116,6 +116,8 @@ public:
 
     // Called each loop iteration
     void Draw();
+    void DrawKey();
+    void DrawKeyTaken();
 
     // Called before quitting
     bool CleanUp();

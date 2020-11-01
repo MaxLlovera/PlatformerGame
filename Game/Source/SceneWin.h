@@ -30,22 +30,11 @@ public:
 
 private:
 
-	SDL_Texture* logo = nullptr;
-
+	SDL_Texture* winText = nullptr;
 
 };
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-#endif
+#endif //__SCENE_WIN_H__
