@@ -10,6 +10,13 @@
 #include "Defs.h"
 #include "Log.h"
 
+
+#define COLLIDER_GREEN 265
+#define COLLIDER_RED 266
+#define COLLIDER_BLUE 267
+#define COLLIDER_YELLOW 268
+
+
 Player::Player() : Module()
 {
 	name.Create("player");
@@ -117,6 +124,10 @@ bool Player::Update(float dt)
 	{
 		GravityPlayer();
 	}
+	
+	if (TakeKey()) {
+		app->map->DeleteCollider();
+	}
 
 	currentAnimation->Update();
 	return true;
@@ -145,7 +156,7 @@ bool Player::ThereIsGround()
 				{
 					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + playerHeight);
 					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (groundId == 266) valid = true;
+					if (groundId == COLLIDER_RED) valid = true;
 				}
 
 			}
@@ -172,7 +183,7 @@ bool Player::ThereIsLeftWall()
 				{
 					tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
 					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (groundId == 266) valid = true;
+					if (groundId == COLLIDER_RED) valid = true;
 				}
 			}
 			layer = layer->next;
@@ -198,7 +209,7 @@ bool Player::ThereIsRightWall()
 				{
 					tilePosition = app->map->WorldToMap(position.x + playerWidth, position.y + 21 + i * 16);
 					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (groundId == 266) valid = true;
+					if (groundId == COLLIDER_RED) valid = true;
 				}
 			}
 			layer = layer->next;
@@ -248,7 +259,7 @@ bool Player::ThereAreSpikes()
 				{
 					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
 					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (groundId == 268) valid = true;
+					if (groundId == COLLIDER_YELLOW) valid = true;
 				}
 			}
 			layer = layer->next;
@@ -256,6 +267,34 @@ bool Player::ThereAreSpikes()
 	}
 	return valid;
 }
+
+bool Player::TakeKey()
+{
+	bool valid = false;
+	if (!godModeEnabled)
+	{
+		iPoint tilePosition;
+		ListItem<MapLayer*>* layer = app->map->data.layers.start;
+		int key;
+		while (layer != NULL)
+		{
+			if (layer->data->properties.GetProperty("Navigation") == 0)
+			{
+				for (int i = 0; i < 3; ++i)
+				{
+					tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
+					key = layer->data->Get(tilePosition.x, tilePosition.y);
+					if (key == COLLIDER_BLUE) valid = true;
+				}
+
+			}
+			layer = layer->next;
+		}
+	}
+	return valid;
+
+}
+
 
 void Player::Jump() 
 {

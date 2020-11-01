@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -75,6 +76,38 @@ void Map::Draw()
 		layer = layer->next;
 	}
 }
+
+void Map::DeleteCollider()
+{
+	ListItem<MapLayer*>* layer = data.layers.start;
+
+	while (layer != NULL)
+	{
+		if (layer->data->properties.GetProperty("NoDrawable") == 0 || colliders)
+		{
+
+			for (int y = 0; y < data.height; ++y)
+			{
+				for (int x = 0; x < data.width; ++x)
+				{
+					int tileId = layer->data->Get(x, y);
+					if (tileId > 0)
+					{
+						// L04: DONE 9: Complete the draw function
+						TileSet* set = GetTilesetFromTileId(tileId);
+						SDL_Rect rect = set->GetTileRect(tileId);
+						iPoint pos = MapToWorld(x, y);
+						app->render->DrawTexture(set->texture, pos.x, pos.y, &rect);
+					}
+				}
+			}
+		}
+		layer = layer->next;
+	}
+
+
+}
+
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 iPoint Map::MapToWorld(int x, int y) const
