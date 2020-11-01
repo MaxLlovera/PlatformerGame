@@ -84,6 +84,12 @@ bool Scene::Update(float dt)
 	//god mode
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KeyState::KEY_DOWN) app->player->godModeEnabled = !app->player->godModeEnabled;
 	
+	//SceneWin
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KeyState::KEY_DOWN) app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 60);
+
+	
+	//SceneLose
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KeyState::KEY_DOWN) app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 60);
 
 
 	//camera x

@@ -20,6 +20,8 @@ class Map;
 class Player;
 class FadeToBlack;
 class SceneIntro;
+class SceneWin;
+class SceneLose;
 
 class App
 {
@@ -96,6 +98,8 @@ public:
 	Player* player;
 	FadeToBlack* fadetoblack;
 	SceneIntro* sceneIntro;
+	SceneWin* sceneWin;
+	SceneLose* sceneLose;
 
 private:
 

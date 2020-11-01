@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "FadeToBlack.h"
 #include "SceneIntro.h"
+#include "SceneWin.h"
+#include "SceneLose.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -31,6 +33,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	player = new Player();
 	fadetoblack = new FadeToBlack();
 	sceneIntro = new SceneIntro();
+	sceneWin = new SceneWin();
+	sceneLose = new SceneLose();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -39,6 +43,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex, true);
 	AddModule(audio, true);
 	AddModule(sceneIntro, true);
+	AddModule(sceneWin, false);
+	AddModule(sceneLose, false);
 	AddModule(scene, false);
 	AddModule(map, false);
 	AddModule(player, false);
