@@ -29,7 +29,7 @@ bool SceneIntro::Awake(pugi::xml_node& node)
 bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
-	logo = app->tex->Load("Assets/textures/SceneIntro.png");
+	logo = app->tex->Load("Assets/textures/sceneIntro.png");
 	bool ret = true;
 
 	return ret;
@@ -46,7 +46,7 @@ bool SceneIntro::PostUpdate()
 {
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
-	app->render->DrawTexture(logo, 0, 0, NULL);
+	app->render->DrawTexture(logo, 0, 555, NULL);
 	return ret;
 }
 
