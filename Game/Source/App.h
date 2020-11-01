@@ -18,7 +18,6 @@ class Audio;
 class Scene;
 class Map;
 class Player;
-class Colliders;
 class FadeToBlack;
 class SceneIntro;
 
@@ -95,7 +94,6 @@ public:
 	Scene* scene;
 	Map* map;
 	Player* player;
-	Colliders* collider;
 	FadeToBlack* fadetoblack;
 	SceneIntro* sceneIntro;
 

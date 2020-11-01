@@ -3,7 +3,7 @@
 
 #include "Log.h"
 
-SceneIntro::SceneIntro()
+SceneIntro::SceneIntro() : Module()
 {
 	name.Create("sceneIntro");
 }

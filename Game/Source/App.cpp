@@ -7,7 +7,6 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
-#include "Colliders.h"
 #include "FadeToBlack.h"
 #include "SceneIntro.h"
 
@@ -30,7 +29,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	map = new Map();
 	player = new Player();
-	collider = new Colliders();
 	fadetoblack = new FadeToBlack();
 	sceneIntro = new SceneIntro();
 

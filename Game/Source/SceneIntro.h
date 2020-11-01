@@ -2,7 +2,6 @@
 #define __SCENE_INTRO_H__
 
 #include "Module.h"
-#include "Module.h"
 #include "Animation.h"
 
 struct SDL_Texture;
