@@ -15,7 +15,7 @@ public:
 	virtual ~Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start();
@@ -33,11 +33,11 @@ public:
 	bool CleanUp();
 
 	bool cameraUP = false;
-
+	
 
 private:
-	SDL_Texture* img;
 	SDL_Texture* background;
+	int volume;
 };
 
 #endif // __SCENE_H__

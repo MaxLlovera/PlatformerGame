@@ -21,11 +21,10 @@ Scene::Scene() : Module()
 Scene::~Scene(){}
 
 // Called before render is available
-bool Scene::Awake()
+bool Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
-
 	return ret;
 }
 
@@ -99,9 +98,9 @@ bool Scene::Update(float dt)
 	}
 
 	//volume changes
-	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(2);
+	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
 
-	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-2);
+	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
 
 	//camera x
 	if (app->render->counter==0||app->player->godModeEnabled)
@@ -158,6 +157,6 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
+	app->tex->UnLoad(background);
 	return true;
 }

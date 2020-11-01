@@ -49,8 +49,8 @@ bool SceneLose::Update(float dt)
 {
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->sceneIntro, 60);
 	//volume changes
-	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(2);
-	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-2);
+	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
+	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
 	return true;
 }
 
@@ -65,5 +65,6 @@ bool SceneLose::PostUpdate()
 
 bool SceneLose::CleanUp()
 {
+	app->tex->UnLoad(loseText);
 	return true;
 }

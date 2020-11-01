@@ -184,7 +184,7 @@ void Audio::ChangeVolume(int index)
 		if (volume <= 0) volume = 0;
 		else
 		{
-			volume -= index;
+			volume += index;
 			Mix_VolumeMusic(volume);
 		}
 

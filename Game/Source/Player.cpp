@@ -366,7 +366,6 @@ bool Player::CleanUp()
 {
 	LOG("Freeing scene");
 	app->tex->UnLoad(texPlayer);
-
 	return true;
 }
 
