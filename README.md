@@ -15,6 +15,9 @@ He needs to find the keys to open de exit doors.
 - Map navigation: player movement and jumping
 - Player walk/jump/die animations
 - DEBUG keys
+- Logo screen with fade-in fade-out
+- Title screen (press ENTER to start)
+- Ending screen (on dying)
 
 
 
@@ -37,7 +40,9 @@ He needs to find the keys to open de exit doors.
 - F2  -> Restart level
 - F5  -> Save
 - F6  -> Load
-- F9  -> Colliders
+- F7  -> Instant Win
+- F8  -> Instant Lose
+- F9  -> Show Colliders
 - F10 -> God Mode
 
 

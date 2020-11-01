@@ -58,5 +58,7 @@ bool SceneLose::PostUpdate()
 
 bool SceneLose::CleanUp()
 {
+	app->tex->UnLoad(loseText);
+
 	return true;
 }

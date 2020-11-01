@@ -62,5 +62,7 @@ bool SceneWin::PostUpdate()
 
 bool SceneWin::CleanUp()
 {
+	app->tex->UnLoad(winText);
+
 	return true;
 }

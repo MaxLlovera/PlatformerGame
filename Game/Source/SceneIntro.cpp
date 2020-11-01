@@ -56,5 +56,6 @@ bool SceneIntro::PostUpdate()
 
 bool SceneIntro::CleanUp()
 {
+	app->tex->UnLoad(introText);
 	return true;
 }
