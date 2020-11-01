@@ -38,6 +38,7 @@ public:
 	//bool ThereIsTopWall();
 	bool ThereAreSpikes();
 	bool TakeKey();
+	bool ThereIsDoor();
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
@@ -78,7 +79,7 @@ private:
 	bool isJumping = false;
 	SDL_Texture* texPlayer;
 	uint playerDeathFx = 0;
-
+	uint actClear = 0;
 	
 };
 

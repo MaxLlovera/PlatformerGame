@@ -101,6 +101,7 @@ bool Scene::Update(float dt)
 		app->render->camera.y -= 6.0f;
 		if (app->render->camera.y < -550) cameraUP = false;
 	}
+
 	
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",

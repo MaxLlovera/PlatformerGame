@@ -71,7 +71,7 @@ bool Player::Start()
 {
 	texPlayer = app->tex->Load("Assets/textures/player_textures.png");
 	playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
-
+	actClear = app->audio->LoadFx("Assets/audio/fx/Victory.wav");
 	return true;
 }
 
@@ -81,52 +81,53 @@ bool Player::Update(float dt)
 	currentAnimation = &idlAnim;
 
 	if (ThereAreSpikes()) IsDead();
-
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godModeEnabled)
+	if (!ThereIsDoor())
 	{
-		position.y -= speedX;
-		currentAnimation = &leftAnim;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godModeEnabled)
-	{
-		position.y += speedX;
-		currentAnimation = &leftAnim;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !ThereAreSpikes())
-	{	
-		if(!ThereIsLeftWall())
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godModeEnabled)
 		{
-			position.x -= speedX;
+			position.y -= speedX;
 			currentAnimation = &leftAnim;
 		}
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !ThereAreSpikes())
-	{
-		if (!ThereIsRightWall())
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godModeEnabled)
 		{
-			position.x += speedX;
-			currentAnimation = &rightAnim;
+			position.y += speedX;
+			currentAnimation = &leftAnim;
 		}
-	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ThereIsGround() && !ThereAreSpikes())
-	{
-		isJumping = true;
-		speedY = 5.0f;
-		//GravityPlayer();
-	}
-	if (isJumping) 
-	{
-		Jump();
-		isJumping = false;
-	}
-	if (!godModeEnabled)
-	{
-		GravityPlayer();
-	}
-	
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !ThereAreSpikes())
+		{
+			if (!ThereIsLeftWall())
+			{
+				position.x -= speedX;
+				currentAnimation = &leftAnim;
+			}
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !ThereAreSpikes())
+		{
+			if (!ThereIsRightWall())
+			{
+				position.x += speedX;
+				currentAnimation = &rightAnim;
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ThereIsGround() && !ThereAreSpikes())
+		{
+			isJumping = true;
+			speedY = 5.0f;
+			//GravityPlayer();
+		}
+		if (isJumping)
+		{
+			Jump();
+			isJumping = false;
+		}
+		if (!godModeEnabled)
+		{
+			GravityPlayer();
+		}
+	}else app->audio->PlayFx(actClear, 1);
 	if (TakeKey()) {
-		app->map->DeleteCollider();
+		//app->map->DeleteCollider();
 	}
 
 	currentAnimation->Update();
@@ -287,6 +288,32 @@ bool Player::TakeKey()
 					if (key == COLLIDER_BLUE) valid = true;
 				}
 
+			}
+			layer = layer->next;
+		}
+	}
+	return valid;
+
+}
+
+bool Player::ThereIsDoor()
+{
+	bool valid = false;
+	if (!godModeEnabled)
+	{
+		iPoint tilePosition;
+		ListItem<MapLayer*>* layer = app->map->data.layers.start;
+		int groundId;
+		while (layer != NULL)
+		{
+			if (layer->data->properties.GetProperty("Navigation") == 0)
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
+					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+					if (groundId == COLLIDER_GREEN) valid = true;
+				}
 			}
 			layer = layer->next;
 		}
