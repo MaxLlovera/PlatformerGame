@@ -3372,6 +3372,39 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="265"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -3385,39 +3418,6 @@
    <tile/>
    <tile/>
    <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
    <tile gid="266"/>
    <tile gid="266"/>
    <tile gid="266"/>
@@ -3432,7 +3432,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="265"/>
    <tile/>
    <tile/>
    <tile/>
@@ -3986,7 +3986,7 @@
    <tile gid="266"/>
   </data>
  </layer>
- <layer id="8" name="Collisions key and door" width="60" height="22" visible="0">
+ <layer id="8" name="Collisions key and door" width="60" height="22">
   <data>
    <tile/>
    <tile/>
@@ -4696,7 +4696,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="265"/>
    <tile/>
    <tile/>
    <tile/>
@@ -4756,7 +4755,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="265"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
