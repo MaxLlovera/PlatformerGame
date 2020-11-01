@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Player.h"
 #include "Map.h"
+#include "FadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -96,11 +97,13 @@ bool Render::CleanUp()
 //restart values
 void Render::RestartValues()
 {
+	
 	app->player->position.x = 350;
 	app->player->position.y = 875;
 	app->render->camera.x = app->player->position.x - app->player->position.x;
 	app->render->camera.y = app->player->position.y - (app->render->camera.h * 2) + 10;
 	counter = 0;
+	
 }
 
 void Render::DeadRestart()

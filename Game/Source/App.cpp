@@ -34,18 +34,19 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
-	AddModule(win);
-	AddModule(input);
-	AddModule(tex);
-	AddModule(audio);
-	AddModule(scene);
-	AddModule(map);
-	AddModule(player);
-	AddModule(fadetoblack);
-	AddModule(sceneIntro);
+	AddModule(win, true);
+	AddModule(input, true);
+	AddModule(tex, true);
+	AddModule(audio, true);
+	AddModule(sceneIntro, true);
+	AddModule(scene, false);
+	AddModule(map, false);
+	AddModule(player, false);
+	AddModule(fadetoblack, true);
+	
 
 	// Render last to swap buffer
-	AddModule(render);
+	AddModule(render, true);
 }
 
 
@@ -64,9 +65,9 @@ App::~App()
 	modules.clear();
 }
 
-void App::AddModule(Module* module)
+void App::AddModule(Module* module, bool active)
 {
-	module->Init();
+	module->Init(active);
 	modules.add(module);
 }
 

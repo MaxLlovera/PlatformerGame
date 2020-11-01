@@ -32,15 +32,18 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
+	if (this->active == true)
+	{
+		app->player->Enable();
+		app->map->Enable();
+		background = app->tex->Load("Assets/textures/background.png");
 
-	background = app->tex->Load("Assets/textures/background.png");
+		// L03: DONE: Load map
+		app->map->Load("world1Meta.tmx");
 
-	// L03: DONE: Load map
-	app->map->Load("world1Meta.tmx");
-	//app->map->Load("iso.tmx");
-
-	// Load music
-	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+		// Load music
+		app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	}
 
 	return true;
 }
@@ -63,12 +66,16 @@ bool Scene::Update(float dt)
 	//restart from first level
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		app->fadetoblack->FadeToBlk((Module*)app->scene, (Module*)app->scene, 60.0f);
+		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 60);
 		app->render->RestartValues();
 	}
 	
 	//restart the current level
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) app->render->RestartValues();
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{
+		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 60);
+		app->render->RestartValues();
+	}
 
 	//view colliders
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) app->map->colliders = !app->map->colliders;
@@ -77,7 +84,7 @@ bool Scene::Update(float dt)
 	//god mode
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KeyState::KEY_DOWN) app->player->godModeEnabled = !app->player->godModeEnabled;
 	
-	if (app->input->GetKey(SDL_SCANCODE_F11) == KeyState::KEY_DOWN) app->fadetoblack->FadeToBlk((Module*)app->scene, (Module*)app->scene, 60);
+
 
 	//camera x
 	if (app->render->counter==0||app->player->godModeEnabled)

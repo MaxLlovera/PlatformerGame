@@ -16,11 +16,11 @@ public:
 	bool Start() override;
 
 
-	bool Update();
-	bool PostUpdate();
+	bool Update(float dt) override;
+	bool PostUpdate() override;
 
 	bool FadeToBlk(Module* toDisable, Module* toEnable, float frames = 60);
-	bool CleanUp();
+	bool CleanUp() override;
 private:
 
 	enum Fade_Step
@@ -43,21 +43,4 @@ private:
 
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#endif //__MODULEFADETOBLACK_H__
+#endif // __FADETOBLACK_H__

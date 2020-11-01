@@ -130,8 +130,6 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 
 
-	void DeleteCollider();
-
 private:
 
 	// L03: Methods to load all required map data
@@ -151,7 +149,7 @@ public:
     // L03: DONE 1: Add your struct for map info
 	MapData data;
 	bool colliders = false;
-
+	bool keyTaken = false;
 private:
 
     pugi::xml_document mapFile;

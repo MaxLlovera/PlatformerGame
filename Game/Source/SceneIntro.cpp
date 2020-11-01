@@ -1,6 +1,14 @@
 #include "SceneIntro.h"
+#include "App.h"
+#include "Audio.h"
+#include "Input.h"
+#include "Textures.h"
+#include "Render.h"
+#include "Window.h"
+#include "Scene.h"
+#include "FadeToBlack.h"
 
-
+#include "Defs.h"
 #include "Log.h"
 
 SceneIntro::SceneIntro() : Module()
@@ -13,26 +21,33 @@ SceneIntro::~SceneIntro()
 
 }
 
+bool SceneIntro::Awake(pugi::xml_node& node)
+{
+	return true;
+}
 
 bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
-
+	logo = app->tex->Load("Assets/textures/SceneIntro.png");
 	bool ret = true;
 
 	return ret;
 }
 
-bool SceneIntro::Update()
+bool SceneIntro::Update(float dt)
 {
-	//skyAnim.Update();
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->scene, 60);
 	return true;
 }
 
 // Update: draw background
 bool SceneIntro::PostUpdate()
 {
-	return true;
+	bool ret = true;
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
+	app->render->DrawTexture(logo, 0, 0, NULL);
+	return ret;
 }
 
 bool SceneIntro::CleanUp()

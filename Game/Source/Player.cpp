@@ -6,7 +6,7 @@
 #include "Window.h"
 #include "Map.h"
 #include "Player.h"
-
+#include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -69,9 +69,13 @@ bool Player::Awake()
 
 bool Player::Start()
 {
-	texPlayer = app->tex->Load("Assets/textures/player_textures.png");
-	playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
-	actClear = app->audio->LoadFx("Assets/audio/fx/Victory.wav");
+	if (this->active == true)
+	{
+		texPlayer = app->tex->Load("Assets/textures/player_textures.png");
+		playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
+		actClear = app->audio->LoadFx("Assets/audio/fx/Victory.wav");
+		currentAnimation = &idlAnim;
+	}
 	return true;
 }
 
@@ -125,9 +129,11 @@ bool Player::Update(float dt)
 		{
 			GravityPlayer();
 		}
-	}else app->audio->PlayFx(actClear, 1);
+	}
+	else app->audio->PlayFx(actClear, 1);
+
 	if (TakeKey()) {
-		//app->map->DeleteCollider();
+		app->map->keyTaken = true;
 	}
 
 	currentAnimation->Update();
@@ -242,7 +248,7 @@ bool Player::ThereIsRightWall()
 //		}
 //	}
 //	return valid;
-//}
+//}º
 
 bool Player::ThereAreSpikes()
 {
@@ -283,7 +289,7 @@ bool Player::TakeKey()
 			{
 				for (int i = 0; i < 3; ++i)
 				{
-					tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
+					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
 					key = layer->data->Get(tilePosition.x, tilePosition.y);
 					if (key == COLLIDER_BLUE) valid = true;
 				}
@@ -347,6 +353,7 @@ bool Player::IsDead()
 	dead = true;
 	currentAnimation = &deathAnim;
 	app->audio->PlayFx(playerDeathFx,0);
+	//app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 60.0f);
 	ret = true;
 	
 
