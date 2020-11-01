@@ -188,7 +188,7 @@ iPoint Map::WorldToMap(int x, int y) const
 	return ret;
 }
 
-// L06: TODO ?? 3: Pick the right Tileset based on a tile id
+// L06: DONE 3: Pick the right Tileset based on a tile id
 TileSet* Map::GetTilesetFromTileId(int id) const
 {
 	ListItem<TileSet*>* item = data.tilesets.start;
@@ -298,9 +298,8 @@ bool Map::Load(const char* filename)
     
     if(ret == true)
     {
-        // L03: TODO 5: LOG all the data loaded iterate all tilesets and LOG everything
-
-		// L04: TODO 4: LOG the info for each loaded layer
+        // L03: T0D0 5: LOG all the data loaded iterate all tilesets and LOG everything
+		// L04: T0D0 4: LOG the info for each loaded layer
     }
 
     mapLoaded = ret;
