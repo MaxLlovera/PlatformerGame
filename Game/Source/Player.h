@@ -76,6 +76,8 @@ private:
 	int playerWidth = 64;
 	bool isJumping = false;
 	SDL_Texture* texPlayer;
+	uint playerDeathFx = 0;
+
 	
 };
 

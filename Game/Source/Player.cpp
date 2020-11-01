@@ -63,6 +63,7 @@ bool Player::Awake()
 bool Player::Start()
 {
 	texPlayer = app->tex->Load("Assets/textures/player_textures.png");
+	playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
 
 	return true;
 }
@@ -279,8 +280,9 @@ bool Player::IsDead()
 
 	dead = true;
 	currentAnimation = &deathAnim;
+	app->audio->PlayFx(playerDeathFx,0);
 	ret = true;
-
+	
 
 	return ret;
 }
