@@ -177,3 +177,42 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 	return ret;
 }
 
+void Audio::ChangeVolume(int index)
+{
+	if (index < 0)
+	{
+		if (volume <= 0) volume = 0;
+		else
+		{
+			volume -= index;
+			Mix_VolumeMusic(volume);
+		}
+
+	}
+
+	if (index > 0)
+	{
+		if (volume >= 128) volume = 128;
+		else
+		{
+			volume += index;
+			Mix_VolumeMusic(volume);
+		}
+	}
+}
+
+bool Audio::LoadState(pugi::xml_node& audioNode)
+{
+	volume = audioNode.child("volume").attribute("value").as_int();
+	Mix_VolumeMusic(volume);
+
+	return true;
+}
+
+bool Audio::SaveState(pugi::xml_node& audioNode) const
+{
+	pugi::xml_node node = audioNode.append_child("volume");
+	node.append_attribute("value").set_value(volume);
+
+	return true;
+}

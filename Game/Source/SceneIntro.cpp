@@ -35,13 +35,16 @@ bool SceneIntro::Start()
 	bool ret = true;
 	app->sceneLose->Disable();
 	app->sceneWin->Disable();
-	app->audio->PlayMusic("no.ogg");
+	app->audio->PlayMusic("Assets/audio/music/IntroTheme.ogg");
 	return ret;
 }
 
 bool SceneIntro::Update(float dt)
 {
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->scene, 60);
+	//volume changes
+	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(2);
+	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-2);
 	return true;
 }
 
@@ -56,6 +59,5 @@ bool SceneIntro::PostUpdate()
 
 bool SceneIntro::CleanUp()
 {
-	app->tex->UnLoad(introText);
 	return true;
 }

@@ -31,12 +31,16 @@ bool SceneLose::Awake(pugi::xml_node& node)
 
 bool SceneLose::Start()
 {
-	LOG("Loading background assets");
-	loseText = app->tex->Load("Assets/textures/sceneLose.png");
-	app->player->Disable();
-	app->map->Disable();
-	app->audio->PlayMusic("no.ogg");
 	bool ret = true;
+	if (this->active == true)
+	{
+		LOG("Loading background assets");
+		loseText = app->tex->Load("Assets/textures/sceneLose.png");
+		app->player->Disable();
+		app->map->Disable();
+		app->audio->PlayMusic("Assets/audio/music/GameOver.ogg");
+	}
+	
 
 	return ret;
 }
@@ -44,6 +48,9 @@ bool SceneLose::Start()
 bool SceneLose::Update(float dt)
 {
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->sceneIntro, 60);
+	//volume changes
+	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(2);
+	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-2);
 	return true;
 }
 
@@ -58,7 +65,5 @@ bool SceneLose::PostUpdate()
 
 bool SceneLose::CleanUp()
 {
-	app->tex->UnLoad(loseText);
-
 	return true;
 }

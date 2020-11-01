@@ -82,23 +82,26 @@ bool Scene::Update(float dt)
 
 
 	//god mode
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KeyState::KEY_DOWN) app->player->godModeEnabled = !app->player->godModeEnabled;
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) app->player->godModeEnabled = !app->player->godModeEnabled;
 	
 	//SceneWin
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KeyState::KEY_DOWN || app->player->win)
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->player->win)
 	{
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 60);
 		app->render->RestartValues();
 	}
-
 	
 	//SceneLose
-	if (app->input->GetKey(SDL_SCANCODE_F8) == KeyState::KEY_DOWN || app->player->dead)
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN || app->player->dead)
 	{
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 60);
 		app->render->RestartValues();
 	}
 
+	//volume changes
+	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(2);
+
+	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-2);
 
 	//camera x
 	if (app->render->counter==0||app->player->godModeEnabled)
@@ -155,8 +158,6 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
-	app->tex->UnLoad(background);
 
 	return true;
 }
