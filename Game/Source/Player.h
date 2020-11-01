@@ -35,6 +35,7 @@ public:
 	bool thereIsGround();
 	bool thereIsLeftWall();
 	bool thereIsRightWall();
+	//bool thereIsTopWall();
 	bool thereAreSpikes();
 
 	bool LoadState(pugi::xml_node&);

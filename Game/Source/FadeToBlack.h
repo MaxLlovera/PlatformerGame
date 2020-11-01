@@ -20,7 +20,7 @@ public:
 	bool PostUpdate();
 
 	bool Fadetoblack(Module* toDisable, Module* toEnable, float frames = 60);
-
+	bool CleanUp();
 private:
 
 	enum Fade_Step

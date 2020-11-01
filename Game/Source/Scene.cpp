@@ -60,9 +60,13 @@ bool Scene::Update(float dt)
 
 	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveGameRequest();
 
-
+	
 	//restart from first level
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) app->render->RestartValues();
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		app->fadetoblack->Fadetoblack((Module*)app->scene, (Module*)app->scene, 60.0f);
+		app->render->RestartValues();
+	}
 	
 	//restart the current level
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) app->render->RestartValues();
@@ -76,7 +80,7 @@ bool Scene::Update(float dt)
 	
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KeyState::KEY_DOWN)
 	{
-		app->fadetoblack->Fadetoblack((Module*)app->render, (Module*)app->render, 10);
+		app->fadetoblack->Fadetoblack((Module*)app->scene, (Module*)app->scene, 60);
 	}
 
 
