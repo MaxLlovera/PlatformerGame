@@ -3,9 +3,9 @@
 ## Description
 
 Zombie Escape is a platformer game by Fake Xeics for the subject
-of Game Develompment in "Universitat Politècnica de Catalunya"
+of Game Development in "Universitat Politècnica de Catalunya"
 The game is about a Zombie that needs to escape from the enemies. 
-He needs to find the keys to open de exit doors.
+He needs to find the keys to open the exit doors.
 
 ## Key Features
 - XML config file loading
