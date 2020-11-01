@@ -72,10 +72,8 @@ bool Player::Update(float dt)
 
 	currentAnimation = &idlAnim;
 
-	if (thereAreSpikes()) 
-	{
-		isDead();
-	}
+	if (ThereAreSpikes()) IsDead();
+
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godModeEnabled)
 	{
 		position.y -= speedX;
@@ -87,28 +85,27 @@ bool Player::Update(float dt)
 		currentAnimation = &leftAnim;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !thereAreSpikes())
-	{
-		
-		if(!thereIsLeftWall())
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !ThereAreSpikes())
+	{	
+		if(!ThereIsLeftWall())
 		{
 			position.x -= speedX;
 			currentAnimation = &leftAnim;
 		}
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !thereAreSpikes())
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !ThereAreSpikes())
 	{
-		if (!thereIsRightWall())
+		if (!ThereIsRightWall())
 		{
 			position.x += speedX;
 			currentAnimation = &rightAnim;
 		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && thereIsGround() && !thereAreSpikes())
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ThereIsGround() && !ThereAreSpikes())
 	{
 		isJumping = true;
 		speedY = 5.0f;
-		//gravityPlayer();
+		//GravityPlayer();
 	}
 	if (isJumping) 
 	{
@@ -117,7 +114,7 @@ bool Player::Update(float dt)
 	}
 	if (!godModeEnabled)
 	{
-		gravityPlayer();
+		GravityPlayer();
 	}
 
 	currentAnimation->Update();
@@ -131,7 +128,7 @@ bool Player::PostUpdate()
 	return true;
 }
 
-bool Player::thereIsGround()
+bool Player::ThereIsGround()
 {
 	bool valid = false;
 	if (!godModeEnabled)
@@ -145,7 +142,7 @@ bool Player::thereIsGround()
 			{
 				for (int i = 0; i < 3; ++i)
 				{
-					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + playerheight);
+					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + playerHeight);
 					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
 					if (groundId == 266) valid = true;
 				}
@@ -158,7 +155,7 @@ bool Player::thereIsGround()
 
 }
 
-bool Player::thereIsLeftWall()
+bool Player::ThereIsLeftWall()
 {
 	bool valid = false;
 	if (!godModeEnabled)
@@ -184,7 +181,7 @@ bool Player::thereIsLeftWall()
 
 }
 
-bool Player::thereIsRightWall()
+bool Player::ThereIsRightWall()
 {
 	bool valid = false;
 	if (!godModeEnabled)
@@ -198,7 +195,7 @@ bool Player::thereIsRightWall()
 			{
 				for (int i = 0; i < 4; ++i)
 				{
-					tilePosition = app->map->WorldToMap(position.x + playerwidth, position.y + 21 + i * 16);
+					tilePosition = app->map->WorldToMap(position.x + playerWidth, position.y + 21 + i * 16);
 					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
 					if (groundId == 266) valid = true;
 				}
@@ -234,7 +231,7 @@ bool Player::thereIsRightWall()
 //	return valid;
 //}
 
-bool Player::thereAreSpikes()
+bool Player::ThereAreSpikes()
 {
 	bool valid = false;
 	if (!godModeEnabled)
@@ -265,9 +262,9 @@ void Player::Jump()
 	position.y -= speedY;
 }
 
-void Player::gravityPlayer()
+void Player::GravityPlayer()
 {
-	if (!thereIsGround())
+	if (!ThereIsGround())
 	{
 		speedY -= gravity;
 		position.y -= speedY;
@@ -276,7 +273,7 @@ void Player::gravityPlayer()
 	}
 }
 
-bool Player::isDead()
+bool Player::IsDead()
 {
 	bool ret = false;
 
@@ -287,9 +284,6 @@ bool Player::isDead()
 
 	return ret;
 }
-
-
-
 
 bool Player::CleanUp()
 {

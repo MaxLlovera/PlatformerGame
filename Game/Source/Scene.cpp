@@ -39,7 +39,6 @@ bool Scene::Start()
 	app->map->Load("world1Meta.tmx");
 	//app->map->Load("iso.tmx");
 
-
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
@@ -64,7 +63,7 @@ bool Scene::Update(float dt)
 	//restart from first level
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		app->fadetoblack->Fadetoblack((Module*)app->scene, (Module*)app->scene, 60.0f);
+		app->fadetoblack->FadeToBlk((Module*)app->scene, (Module*)app->scene, 60.0f);
 		app->render->RestartValues();
 	}
 	
@@ -78,11 +77,7 @@ bool Scene::Update(float dt)
 	//god mode
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KeyState::KEY_DOWN) app->player->godModeEnabled = !app->player->godModeEnabled;
 	
-	if (app->input->GetKey(SDL_SCANCODE_F11) == KeyState::KEY_DOWN)
-	{
-		app->fadetoblack->Fadetoblack((Module*)app->scene, (Module*)app->scene, 60);
-	}
-
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KeyState::KEY_DOWN) app->fadetoblack->FadeToBlk((Module*)app->scene, (Module*)app->scene, 60);
 
 	//camera x
 	if (app->render->counter==0||app->player->godModeEnabled)
@@ -104,11 +99,7 @@ bool Scene::Update(float dt)
 	if (app->player->position.y > 700 && cameraUP)
 	{
 		app->render->camera.y -= 6.0f;
-		if (app->render->camera.y < -550)
-		{
-			cameraUP = false;
-
-		}
+		if (app->render->camera.y < -550) cameraUP = false;
 	}
 	
 	// L03: DONE 7: Set the window title with map/tileset info
@@ -127,8 +118,7 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
 
 	// Draw map
 	app->render->DrawTexture(background, 0, 0);

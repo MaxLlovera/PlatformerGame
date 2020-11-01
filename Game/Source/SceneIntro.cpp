@@ -6,7 +6,6 @@
 SceneIntro::SceneIntro()
 {
 	name.Create("sceneIntro");
-
 }
 
 SceneIntro::~SceneIntro()
@@ -26,8 +25,6 @@ bool SceneIntro::Start()
 
 bool SceneIntro::Update()
 {
-
-
 	//skyAnim.Update();
 	return true;
 }
@@ -35,16 +32,10 @@ bool SceneIntro::Update()
 // Update: draw background
 bool SceneIntro::PostUpdate()
 {
-	
-
-
 	return true;
 }
 
 bool SceneIntro::CleanUp()
 {
-
-
-
 	return true;
 }

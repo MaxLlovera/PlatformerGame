@@ -16,7 +16,8 @@ Map::Map() : Module(), mapLoaded(false)
 
 // Destructor
 Map::~Map()
-{}
+{
+}
 
 // L06: DONE 7: Ask for the value of a custom property
 int Properties::GetProperty(const char* value, int defaultValue) const
@@ -24,10 +25,8 @@ int Properties::GetProperty(const char* value, int defaultValue) const
 	ListItem<Property*>* property = list.start;
 	while (property != NULL) 
 	{
-		if (strcmp(property->data->name.GetString(), value) == 0)
-		{
-			return property->data->value;
-		}
+		if (strcmp(property->data->name.GetString(), value) == 0) return property->data->value;
+
 		property = property->next;
 	}
 	return defaultValue;
@@ -64,22 +63,17 @@ void Map::Draw()
 					int tileId = layer->data->Get(x, y);
 					if (tileId > 0)
 					{
-
 						// L04: DONE 9: Complete the draw function
 						TileSet* set = GetTilesetFromTileId(tileId);
 						SDL_Rect rect = set->GetTileRect(tileId);
 						iPoint pos = MapToWorld(x, y);
 						app->render->DrawTexture(set->texture, pos.x, pos.y, &rect);
-
 					}
 				}
 			}
 		}
 		layer = layer->next;
 	}
-
-
-
 }
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
@@ -120,7 +114,6 @@ iPoint Map::WorldToMap(int x, int y) const
 	}
 	else if (data.type == MAPTYPE_ISOMETRIC)
 	{
-
 		float half_width = data.tileWidth * 0.5f;
 		float half_height = data.tileHeight * 0.5f;
 		ret.x = int((x / half_width + y / half_height) / 2);
@@ -216,11 +209,7 @@ bool Map::Load(const char* filename)
     }
 
 	// Load general info
-    if(ret == true)
-    {
-        // L03: DONE 3: Create and call a private function to load and fill all your map data
-		ret = LoadMap();
-	}
+    if(ret == true) ret = LoadMap();
 
     // L03: DONE 4: Create and call a private function to load a tileset
     // remember to support more any number of tilesets!
@@ -250,8 +239,6 @@ bool Map::Load(const char* filename)
     if(ret == true)
     {
         // L03: TODO 5: LOG all the data loaded iterate all tilesets and LOG everything
-
-
 
 		// L04: TODO 4: LOG the info for each loaded layer
     }
@@ -283,22 +270,14 @@ bool Map::LoadMap()
 		SString orientation("%s", map.attribute("orientation").value());
 
 
-		if (orientation == "orthogonal")
-		{
-			data.type = MapTypes::MAPTYPE_ORTHOGONAL;
-		}
-		else if (orientation == "isometric")
-		{
-			data.type = MapTypes::MAPTYPE_ISOMETRIC;
-		}
-		else if (orientation == "staggered")
-		{
-			data.type = MapTypes::MAPTYPE_STAGGERED;
-		}
-		else
-		{
-			data.type = MapTypes::MAPTYPE_UNKNOWN;
-		}
+		if (orientation == "orthogonal") data.type = MapTypes::MAPTYPE_ORTHOGONAL;
+
+		else if (orientation == "isometric") data.type = MapTypes::MAPTYPE_ISOMETRIC;
+
+		else if (orientation == "staggered") data.type = MapTypes::MAPTYPE_STAGGERED;
+
+		else data.type = MapTypes::MAPTYPE_UNKNOWN;
+
 	}
 
 	return ret;
@@ -310,7 +289,6 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	bool ret = true;
 
 	// L03: DONE: Load Tileset attributes
-
 	set->name = tileset_node.attribute("name").value();
 	set->firstgid = tileset_node.attribute("firstgid").as_int();
 	set->margin = tileset_node.attribute("margin").as_int();
@@ -343,8 +321,7 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 		set->texWidth = tileset_node.child("image").attribute("width").as_int();
 
 		set->numTilesHeight = set->texHeight / set->tileHeight;
-		set->numTilesWidth = set->texWidth / set->tileWidth;
-		
+		set->numTilesWidth = set->texWidth / set->tileWidth;		
 	}
 
 	return ret;

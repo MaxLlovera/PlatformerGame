@@ -135,19 +135,16 @@ bool App::Update()
 	bool ret = true;
 	PrepareUpdate();
 
-	if(input->GetWindowEvent(WE_QUIT) == true)
-		ret = false;
+	if(input->GetWindowEvent(WE_QUIT) == true) ret = false;
 
-	if(ret == true)
-		ret = PreUpdate();
+	if(ret == true) ret = PreUpdate();
 
-	if(ret == true)
-		ret = DoUpdate();
+	if(ret == true) ret = DoUpdate();
 
-	if(ret == true)
-		ret = PostUpdate();
+	if(ret == true) ret = PostUpdate();
 
 	FinishUpdate();
+
 	return ret;
 }
 
@@ -190,10 +187,8 @@ bool App::PreUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
-			continue;
-		}
-
+		if(pModule->active == false) continue;
+		
 		ret = item->data->PreUpdate();
 	}
 
@@ -212,10 +207,8 @@ bool App::DoUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
-			continue;
-		}
-
+		if(pModule->active == false) continue;
+	
 		ret = item->data->Update(dt);
 	}
 
@@ -233,9 +226,7 @@ bool App::PostUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
-			continue;
-		}
+		if(pModule->active == false) continue;
 
 		ret = item->data->PostUpdate();
 	}
@@ -268,10 +259,8 @@ int App::GetArgc() const
 // ---------------------------------------
 const char* App::GetArgv(int index) const
 {
-	if(index < argc)
-		return args[index];
-	else
-		return NULL;
+	if(index < argc) return args[index];
+	else return NULL;
 }
 
 // ---------------------------------------
@@ -314,7 +303,8 @@ bool App::LoadGame()
 
 	pugi::xml_parse_result result = data.load_file(SAVE_STATE_FILENAME);
 
-	if (result != NULL) {
+	if (result != NULL) 
+	{
 		LOG("Loading new Game State from %s...", SAVE_STATE_FILENAME);
 
 		root = data.child("save_state");
@@ -322,7 +312,8 @@ bool App::LoadGame()
 		ListItem<Module*>* item = modules.start;
 		ret = true;
 
-		while (item != NULL && ret == true) {
+		while (item != NULL && ret == true) 
+		{
 			ret = item->data->LoadState(root.child(item->data->name.GetString()));
 			item = item->next;
 		}
@@ -358,7 +349,8 @@ bool App::SaveGame() const
 		ret = item->data->SaveState(root.append_child(item->data->name.GetString()));
 		item = item->next;
 	}
-	if (ret == true) {
+	if (ret == true) 
+	{
 		data.save_file(SAVE_STATE_FILENAME);
 		LOG("... finished saving", );
 	}

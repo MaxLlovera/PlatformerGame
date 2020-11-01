@@ -66,10 +66,8 @@ bool FadeToBlack::Update()
 	else
 	{
 		--frameCount;
-		if (frameCount <= 0)
-		{
-			currentStep = Fade_Step::NONE;
-		}
+
+		if (frameCount <= 0) currentStep = Fade_Step::NONE;
 	}
 
 	return true;
@@ -89,7 +87,7 @@ bool FadeToBlack::PostUpdate()
 }
 
 
-bool FadeToBlack::Fadetoblack(Module* moduleToDisable, Module* moduleToEnable, float frames)
+bool FadeToBlack::FadeToBlk(Module* moduleToDisable, Module* moduleToEnable, float frames)
 {
 	bool ret = false;
 

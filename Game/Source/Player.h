@@ -32,19 +32,19 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool thereIsGround();
-	bool thereIsLeftWall();
-	bool thereIsRightWall();
-	//bool thereIsTopWall();
-	bool thereAreSpikes();
+	bool ThereIsGround();
+	bool ThereIsLeftWall();
+	bool ThereIsRightWall();
+	//bool ThereIsTopWall();
+	bool ThereAreSpikes();
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 	void Jump();
 
-	void gravityPlayer();
+	void GravityPlayer();
 
-	bool isDead();
+	bool IsDead();
 
 	
 
@@ -62,11 +62,8 @@ public:
 	Animation jumpAnimLeft;
 	Animation deathAnim;
 
-	Animation rightAnim2;
-	Animation leftAnim2;
 	Animation upAnim;
 
-	char opcio = 'l';
 	bool dead = false;
 	bool godModeEnabled = false;
 	
@@ -75,8 +72,8 @@ private:
 	float speedX = 3.0f;
 	float speedY = 0.0f;
 	float gravity = 0.15f;
-	int playerheight = 85;
-	int playerwidth = 64;
+	int playerHeight = 85;
+	int playerWidth = 64;
 	bool isJumping = false;
 	SDL_Texture* texPlayer;
 	

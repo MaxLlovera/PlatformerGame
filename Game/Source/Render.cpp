@@ -73,10 +73,7 @@ bool Render::PreUpdate()
 bool Render::Update(float dt)
 {
 
-	if (app->player->dead) {
-		DeadRestart();
-
-	}
+	if (app->player->dead) DeadRestart();
 
 	return true;
 }
@@ -96,7 +93,6 @@ bool Render::CleanUp()
 	return true;
 }
 
-
 //restart values
 void Render::RestartValues()
 {
@@ -106,7 +102,6 @@ void Render::RestartValues()
 	app->render->camera.y = app->player->position.y - (app->render->camera.h * 2) + 10;
 	counter = 0;
 }
-
 
 void Render::DeadRestart()
 {
@@ -118,11 +113,7 @@ void Render::DeadRestart()
 			RestartValues();
 			app->player->dead = false;
 		}
-		else
-		{
-			counter++;
-		}
-		
+		else counter++;
 	}
 }
 
@@ -176,10 +167,7 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 		rect.w = section->w;
 		rect.h = section->h;
 	}
-	else
-	{
-		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
-	}
+	else SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 
 	rect.w *= scale;
 	rect.h *= scale;
@@ -241,10 +229,8 @@ bool Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b,
 
 	int result = -1;
 
-	if(use_camera)
-		result = SDL_RenderDrawLine(renderer, camera.x + x1 * scale, camera.y + y1 * scale, camera.x + x2 * scale, camera.y + y2 * scale);
-	else
-		result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
+	if(use_camera) result = SDL_RenderDrawLine(renderer, camera.x + x1 * scale, camera.y + y1 * scale, camera.x + x2 * scale, camera.y + y2 * scale);
+	else result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
 
 	if(result != 0)
 	{
