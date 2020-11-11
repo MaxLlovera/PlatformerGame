@@ -106,24 +106,24 @@ class Map : public Module
 {
 public:
 
-    Map();
+	Map();
 
-    // Destructor
-    virtual ~Map();
+	// Destructor
+	virtual ~Map();
 
-    // Called before render is available
-    bool Awake(pugi::xml_node& conf);
+	// Called before render is available
+	bool Awake(pugi::xml_node& conf);
 
-    // Called each loop iteration
-    void Draw();
-    void DrawKey();
-    void DrawKeyTaken();
+	// Called each loop iteration
+	void Draw();
+	void DrawKey();
+	void DrawKeyTaken();
 
-    // Called before quitting
-    bool CleanUp();
+	// Called before quitting
+	bool CleanUp();
 
-    // Load new map
-    bool Load(const char* path);
+	// Load new map
+	bool Load(const char* path);
 
 	// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
@@ -148,15 +148,15 @@ private:
 
 public:
 
-    // L03: DONE 1: Add your struct for map info
+	// L03: DONE 1: Add your struct for map info
 	MapData data;
 	bool colliders = false;
 	bool keyTaken = false;
 private:
 
-    pugi::xml_document mapFile;
-    SString folder;
-    bool mapLoaded;
+	pugi::xml_document mapFile;
+	SString folder;
+	bool mapLoaded;
 };
 
 #endif // __MAP_H__

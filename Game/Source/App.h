@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include "List.h"
+#include "PerfTimer.h"
+#include "Timer.h"
 
 #include "PugiXml/src/pugixml.hpp"
 
@@ -116,13 +118,24 @@ private:
 	//pugi::xml_node config;
 	//pugi::xml_node configApp;
 
-	uint frames;
-	float dt;
-
 	mutable bool saveGameRequested;
 	bool loadGameRequested;
 	SString loadedGame;
 	mutable SString savedGame;
+
+	// L07: TODO 4: Calculate some timing measures
+	// required variables are provided:
+	PerfTimer ptimer;
+	uint64 frameCount = 0;
+
+	Timer startupTime;
+	Timer frameTime;
+	Timer lastSecFrameTime;
+	uint32 lastSecFrameCount = 0;
+	uint32 prevLastSecFrameCount = 0;
+	float dt = 0.0f;
+
+	float cappedMs = -1;
 };
 
 extern App* app;

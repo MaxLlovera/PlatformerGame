@@ -10,6 +10,10 @@
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2.lib")
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2main.lib")
 
+
+// L09: TODO 1: Include the Optick library header and add the library to the linker
+// Make sure to link the proper library depending on DEBUG/RELEASE project configuration
+
 #include <stdlib.h>
 #pragma comment(linker, "/subsystem:windows")
 
@@ -77,6 +81,7 @@ int main(int argc, char* args[])
 
 			// Loop all modules until we are asked to leave ---------------------
 			case LOOP:
+			// L09: TODO 2: Add the Optick macro to trigger a frame
 			if(app->Update() == false) state = CLEAN;
 			break;
 

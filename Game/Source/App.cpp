@@ -18,10 +18,17 @@
 #include <iostream>
 #include <sstream>
 
+// L07: DONE 3: Measure the amount of ms that takes to execute:
+// App constructor, Awake, Start and CleanUp
+// LOG the result
+
+// L09: TODO 3: Add OPTICK_EVENT() calls to all Update methods
+// Alternatively you can use OPTICK_CATEGORY()
+
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
-	frames = 0;
+	PERF_START(ptimer);
 
 	win = new Window();
 	input = new Input();
@@ -53,6 +60,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	// Render last to swap buffer
 	AddModule(render, true);
+
+	PERF_PEEK(ptimer);
 }
 
 
@@ -80,6 +89,8 @@ void App::AddModule(Module* module, bool active)
 // Called before render is available
 bool App::Awake()
 {
+	PERF_START(ptimer);
+
 	pugi::xml_document configFile;
 	pugi::xml_node config;
 	pugi::xml_node configApp;
@@ -97,6 +108,11 @@ bool App::Awake()
 		// L01: DONE 4: Read the title from the config file
 		title.Create(configApp.child("title").child_value());
 		organization.Create(configApp.child("organization").child_value());
+
+		// L08: DONE 1: Read from config file your framerate cap
+		int cap = configApp.attribute("framerate_cap").as_int(-1);
+
+		if (cap > 0) cappedMs = 1000 / cap;
 	}
 
 	if (ret == true)
@@ -114,6 +130,7 @@ bool App::Awake()
 			item = item->next;
 		}
 	}
+	PERF_PEEK(ptimer);
 
 	return ret;
 }
@@ -121,6 +138,8 @@ bool App::Awake()
 // Called before the first frame
 bool App::Start()
 {
+	PERF_START(ptimer);
+
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -130,6 +149,8 @@ bool App::Start()
 		ret = item->data->Start();
 		item = item->next;
 	}
+
+	PERF_PEEK(ptimer);
 
 	return ret;
 }
@@ -170,6 +191,12 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	frameCount++;
+	lastSecFrameCount++;
+
+	// L08: DONE 4: Calculate the dt: differential time since last frame
+	dt = frameTime.ReadSec();
+	frameTime.Start();
 }
 
 // ---------------------------------------------
@@ -178,6 +205,30 @@ void App::FinishUpdate()
 	// L02: DONE 1: This is a good place to call Load / Save methods
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
+
+	// L07: TODO 4: Framerate calculations
+   // Amount of frames since startup
+   // Amount of time since game start (use a low resolution timer)
+   // Average FPS for the whole game life
+   // Amount of ms took the last update
+   // Amount of frames during the last second
+
+	float averageFps = 0.0f;
+	float secondsSinceStartup = 0.0f;
+	uint32 lastFrameMs = 0;
+	uint32 framesOnLastSec = 0;
+
+	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
+		averageFps, lastFrameMs, framesOnLastSec, dt, secondsSinceStartup, frameCount);
+
+	app->win->SetTitle(title);
+
+	// L08: TODO 2: Use SDL_Delay to make sure you get your capped framerate
+	if ((cappedMs > 0) && (lastFrameMs < cappedMs))
+	{
+		// L08: TODO 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
+	}
 }
 
 // Call modules before each loop iteration
@@ -214,6 +265,8 @@ bool App::DoUpdate()
 
 		if(pModule->active == false) continue;
 	
+		// L08: DONE 5: Send dt as an argument to all updates, you need
+		// to update module parent class and all modules that use update
 		ret = item->data->Update(dt);
 	}
 
