@@ -3,9 +3,13 @@
 
 #include "Module.h"
 #include "List.h"
+#include "PQueue.h"
 #include "Point.h"
+#include "DynArray.h"
 
 #include "PugiXml\src\pugixml.hpp"
+
+#define COST_MAP_SIZE	100
 
 // L03: DONE 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
@@ -52,7 +56,16 @@ struct Properties
 
 	~Properties()
 	{
-		list.clear();
+		ListItem<Property*>* item;
+		item = list.start;
+
+		while (item != NULL)
+		{
+			RELEASE(item->data);
+			item = item->next;
+		}
+
+		list.Clear();
 	}
 
 	// L06: DONE 7: Method to ask for the value of a custom property
@@ -113,6 +126,8 @@ public:
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
+	
+	bool Start();
 
 	// Called each loop iteration
 	void Draw();
@@ -131,6 +146,18 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
+	// L10: BFS Pathfinding methods
+	void ResetPath(iPoint start);
+	void DrawPath();
+	bool IsWalkable(int x, int y) const;
+
+	// L11: More pathfinding methods
+	int MovementCost(int x, int y) const;
+	void ComputePath(int x, int y);
+
+	// Propagation methods
+	void PropagateBFS();
+	void PropagateDijkstra();
 
 private:
 
@@ -157,6 +184,17 @@ private:
 	pugi::xml_document mapFile;
 	SString folder;
 	bool mapLoaded;
+
+	// L10: BFS Pathfinding variables
+	PQueue<iPoint> frontier;
+	List<iPoint> visited;
+
+	// L11: Additional variables
+	List<iPoint> breadcrumbs;
+	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
+	DynArray<iPoint> path;
+
+	SDL_Texture* tileX = nullptr;
 };
 
 #endif // __MAP_H__

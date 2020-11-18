@@ -52,7 +52,7 @@ bool Textures::CleanUp()
 
 	for(item = textures.start; item != NULL; item = item->next) SDL_DestroyTexture(item->data);
 
-	textures.clear();
+	textures.Clear();
 	IMG_Quit();
 	return true;
 }
@@ -83,7 +83,7 @@ bool Textures::UnLoad(SDL_Texture* texture)
 		if(texture == item->data)
 		{
 			SDL_DestroyTexture(item->data);
-			textures.del(item);
+			textures.Del(item);
 			return true;
 		}
 	}
@@ -98,7 +98,7 @@ SDL_Texture* const Textures::LoadSurface(SDL_Surface* surface)
 
 	if(texture == NULL) LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
 
-	else textures.add(texture);
+	else textures.Add(texture);
 
 	return texture;
 }
