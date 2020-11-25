@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "FadeToBlack.h"
+#include "PathFinding.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -31,6 +32,7 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
+	// L12b: Create walkability map on map loading
 	if (this->active == true)
 	{
 		app->player->Enable();
@@ -38,7 +40,17 @@ bool Scene::Start()
 		background = app->tex->Load("Assets/textures/background.png");
 
 		// L03: DONE: Load map
-		app->map->Load("world1Meta.tmx");
+		if (app->map->Load("world1Meta.tmx") == true)
+		{
+			int w, h;
+			uchar* data = NULL;
+
+			if (app->map->CreateWalkabilityMap(w, h, &data)) app->pathfinding->SetMap(w, h, data);
+
+			RELEASE_ARRAY(data);
+		}
+
+		debugTex = app->tex->Load("maps/path2.png");
 
 		// Load music
 		app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");

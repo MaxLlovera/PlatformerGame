@@ -126,8 +126,6 @@ public:
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
-	
-	bool Start();
 
 	// Called each loop iteration
 	void Draw();
@@ -146,18 +144,27 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
+	// BFS/Dijkstra methods not required any more: Using PathFinding class
+	/*
 	// L10: BFS Pathfinding methods
 	void ResetPath(iPoint start);
 	void DrawPath();
-	bool IsWalkable(int x, int y) const;
 
 	// L11: More pathfinding methods
 	int MovementCost(int x, int y) const;
 	void ComputePath(int x, int y);
 
+	// L12a: AStar pathfinding
+	void ComputePathAStar(int x, int y);
+
 	// Propagation methods
 	void PropagateBFS();
 	void PropagateDijkstra();
+	// L12a: AStar propagation
+	void PropagateAStar(int heuristic);
+	*/
+	// L12b: Create walkability map for pathfinding
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
 private:
 
@@ -191,8 +198,14 @@ private:
 
 	// L11: Additional variables
 	List<iPoint> breadcrumbs;
-	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
 	DynArray<iPoint> path;
+
+	// L11: Dijkstra cost
+	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
+
+	// L12a: AStar (A*) variables
+	iPoint goalAStar;			// Store goal target tile
+	bool finishAStar = false;	// Detect when reached goal
 
 	SDL_Texture* tileX = nullptr;
 };

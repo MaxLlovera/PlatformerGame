@@ -11,6 +11,7 @@
 #include "SceneIntro.h"
 #include "SceneWin.h"
 #include "SceneLose.h"
+#include "PathFinding.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -35,6 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
+	pathfinding = new PathFinding();
 	scene = new Scene();
 	map = new Map();
 	player = new Player();
@@ -49,6 +51,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input, true);
 	AddModule(tex, true);
 	AddModule(audio, true);
+	AddModule(pathfinding, true);
 	AddModule(sceneIntro, true);
 	AddModule(sceneWin, false);
 	AddModule(sceneLose, false);
@@ -206,23 +209,29 @@ void App::FinishUpdate()
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
 
-	// L07: TODO 4: Framerate calculations
+	// L07: DONE 4: Framerate calculations
    // Amount of frames since startup
    // Amount of time since game start (use a low resolution timer)
    // Average FPS for the whole game life
    // Amount of ms took the last update
    // Amount of frames during the last second
+	if (lastSecFrameTime.Read() > 1000)
+	{
+		lastSecFrameTime.Start();
+		prevLastSecFrameCount = lastSecFrameCount;
+		lastSecFrameCount = 0;
+	}
 
-	float averageFps = 0.0f;
-	float secondsSinceStartup = 0.0f;
-	uint32 lastFrameMs = 0;
-	uint32 framesOnLastSec = 0;
+	float averageFps = float(frameCount) / startupTime.ReadSec();
+	float secondsSinceStartup = startupTime.ReadSec();
+	uint32 lastFrameMs = frameTime.Read();
+	uint32 framesOnLastUpdate = prevLastSecFrameCount;
 
 	static char title[256];
 	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
-		averageFps, lastFrameMs, framesOnLastSec, dt, secondsSinceStartup, frameCount);
+		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
 
-	app->win->SetTitle(title);
+	//app->win->SetTitle(title);
 
 	// L08: TODO 2: Use SDL_Delay to make sure you get your capped framerate
 	if ((cappedMs > 0) && (lastFrameMs < cappedMs))

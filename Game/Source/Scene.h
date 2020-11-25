@@ -38,6 +38,8 @@ public:
 private:
 	SDL_Texture* background;
 	int volume;
+	SDL_Texture* debugTex;
+
 };
 
 #endif // __SCENE_H__

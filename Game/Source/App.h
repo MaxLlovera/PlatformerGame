@@ -19,6 +19,7 @@ class Textures;
 class Audio;
 class Scene;
 class Map;
+class PathFinding;
 class Player;
 class FadeToBlack;
 class SceneIntro;
@@ -95,6 +96,7 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
+	PathFinding* pathfinding;
 	Scene* scene;
 	Map* map;
 	Player* player;
@@ -123,7 +125,7 @@ private:
 	SString loadedGame;
 	mutable SString savedGame;
 
-	// L07: TODO 4: Calculate some timing measures
+	// L07: DONE 4: Calculate some timing measures
 	// required variables are provided:
 	PerfTimer ptimer;
 	uint64 frameCount = 0;

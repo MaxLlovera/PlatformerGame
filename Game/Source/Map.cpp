@@ -46,6 +46,8 @@ bool Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+// L12a: Methods not required anymore -> Using PathFinding class
+/*
 bool Map::Start()
 {
 	tileX = app->tex->Load("Assets/maps/x.png");
@@ -127,23 +129,33 @@ void Map::ComputePath(int x, int y)
 	path.Clear();
 	iPoint goal = WorldToMap(x, y);
 
-	// L11: TODO 2: Follow the breadcrumps to goal back to the origin
+	// L11: DONE 2: Follow the breadcrumps to goal back to the origin
 	// add each step into "path" dyn array (it will then draw automatically)
+	path.PushBack(goal);
+	int index = visited.Find(goal);
+
+	while ((index >= 0) && (goal != breadcrumbs[index]))
+	{
+		goal = breadcrumbs[index];
+		path.PushBack(goal);
+		index = visited.Find(goal);
+	}
 }
 
-bool Map::IsWalkable(int x, int y) const
+void Map::ComputePathAStar(int x, int y)
 {
-	// L10: TODO 3: return true only if x and y are within map limits
-	// and the tile is walkable (tile id 0 in the navigation layer)
-
-	return true;
+	// L12a: Compute AStart pathfinding
 }
 
 void Map::PropagateBFS()
 {
+	// L10: DONE 1: If frontier queue contains elements
+	// pop the last one and calculate its 4 neighbors
 	iPoint curr;
 	if (frontier.Pop(curr))
 	{
+		// L10: DONE 2: For each neighbor, if not visited, add it
+		// to the frontier queue and visited list
 		iPoint neighbors[4];
 		neighbors[0].Create(curr.x + 1, curr.y + 0);
 		neighbors[1].Create(curr.x + 0, curr.y + 1);
@@ -161,6 +173,7 @@ void Map::PropagateBFS()
 
 					// L11: TODO 1: Record the direction to the previous node 
 					// with the new list "breadcrumps"
+					breadcrumbs.Add(curr);
 				}
 			}
 		}
@@ -173,6 +186,12 @@ void Map::PropagateDijkstra()
 	// use the 2 dimensional array "costSoFar" to track the accumulated costs
 	// on each cell (is already reset to 0 automatically)
 }
+void Map::PropagateAStar(int heuristic)
+{
+	// L12a: TODO 2: Implement AStar algorythm
+	// Consider the different heuristics
+}
+*/
 
 // Draw the map (all requried layers)
 void Map::Draw()
@@ -554,5 +573,49 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 		property->value = pnode.attribute("value").as_int();
 		properties.list.Add(property);
 	}
+	return ret;
+}
+
+// L12b: Create walkability map for pathfinding
+bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+{
+	bool ret = false;
+	ListItem<MapLayer*>* item;
+	item = data.layers.start;
+
+	for (item = data.layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->properties.GetProperty("Navigation", 0) == 0)
+			continue;
+
+		uchar* map = new uchar[layer->width * layer->height];
+		memset(map, 1, layer->width * layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y * layer->width) + x;
+
+				int tileId = layer->Get(x, y);
+				TileSet* tileset = (tileId > 0) ? GetTilesetFromTileId(tileId) : NULL;
+
+				if (tileset != NULL)
+				{
+					map[i] = (tileId - tileset->firstgid) > 0 ? 0 : 1;
+				}
+			}
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
+	}
+
 	return ret;
 }
