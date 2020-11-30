@@ -77,14 +77,14 @@ bool Scene::Update(float dt)
 	//restart from first level
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 60);
+		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
 		app->render->RestartValues();
 	}
 	
 	//restart the current level
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 60);
+		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
 		app->render->RestartValues();
 	}
 
@@ -98,14 +98,14 @@ bool Scene::Update(float dt)
 	//SceneWin
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->player->win)
 	{
-		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 60);
+		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 1 / dt);
 		app->render->RestartValues();
 	}
 	
 	//SceneLose
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN || app->player->dead)
 	{
-		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 60);
+		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
 		app->render->RestartValues();
 	}
 

@@ -29,7 +29,7 @@
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
-	PERF_START(ptimer);
+	//PERF_START(ptimer);
 
 	win = new Window();
 	input = new Input();
@@ -64,7 +64,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Render last to swap buffer
 	AddModule(render, true);
 
-	PERF_PEEK(ptimer);
+	//PERF_PEEK(ptimer);
 }
 
 
@@ -161,6 +161,8 @@ bool App::Start()
 // Called each loop iteration
 bool App::Update()
 {
+	PERF_START(ptimer);
+
 	bool ret = true;
 	PrepareUpdate();
 
@@ -231,12 +233,15 @@ void App::FinishUpdate()
 	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
 		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
 
-	//app->win->SetTitle(title);
+	app->win->SetTitle(title);
 
-	// L08: TODO 2: Use SDL_Delay to make sure you get your capped framerate
+	// L08: DONE 2: Use SDL_Delay to make sure you get your capped framerate
 	if ((cappedMs > 0) && (lastFrameMs < cappedMs))
 	{
-		// L08: TODO 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
+		// L08: DONE 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
+		PERF_START(ptimer);
+		SDL_Delay(cappedMs);
+		LOG("We waited for %i ms and got back in %f", cappedMs, ptimer.ReadMs());
 	}
 }
 
