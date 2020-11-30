@@ -251,7 +251,7 @@ bool Player::ThereIsRightWall()
 //		}
 //	}
 //	return valid;
-//}º
+//}
 
 bool Player::ThereAreSpikes()
 {

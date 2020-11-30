@@ -136,7 +136,7 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 
 	// BFS/Dijkstra methods not required any more: Using PathFinding class
-	/*
+	
 	// L10: BFS Pathfinding methods
 	void ResetPath(iPoint start);
 	void DrawPath();
@@ -153,7 +153,7 @@ public:
 	void PropagateDijkstra();
 	// L12a: AStar propagation
 	void PropagateAStar(int heuristic);
-	*/
+	
 	// L12b: Create walkability map for pathfinding
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 

@@ -1,13 +1,14 @@
 <!-- Config file for the game -->
 <!-- L01: DONE 1: Create configuration file-->
 <config>
-  <app>
+  <app framerate_cap="60">
     <title>Platformer Game by Fake Xeics</title>
     <organization>UPC</organization>
+
   </app>
 
   <renderer>
-    <vsync value="true"/>
+    <vsync value="false"/>
   </renderer>
 
   <window>

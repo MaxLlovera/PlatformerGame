@@ -54,7 +54,7 @@ bool Map::Start()
 
 	return true;
 }
-
+*/
 
 void Map::ResetPath(iPoint start)
 {
@@ -191,7 +191,7 @@ void Map::PropagateAStar(int heuristic)
 	// L12a: TODO 2: Implement AStar algorythm
 	// Consider the different heuristics
 }
-*/
+
 
 // Draw the map (all requried layers)
 void Map::Draw()
