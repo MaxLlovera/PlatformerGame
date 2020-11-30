@@ -56,15 +56,6 @@ struct Properties
 
 	~Properties()
 	{
-		ListItem<Property*>* item;
-		item = list.start;
-
-		while (item != NULL)
-		{
-			RELEASE(item->data);
-			item = item->next;
-		}
-
 		list.Clear();
 	}
 
