@@ -63,7 +63,7 @@ private:
 	//int playerHeight = 85;
 	//int playerWidth = 64;
 	//bool isJumping = false;
-	//SDL_Texture* texPlayer;
+	SDL_Texture* texEnemy;
 	//uint playerDeathFx = 0;
 
 };

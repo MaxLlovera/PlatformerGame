@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "FadeToBlack.h"
 #include "SceneWin.h"
 #include "SceneIntro.h"
@@ -37,6 +38,7 @@ bool SceneWin::Start()
 		LOG("Loading background assets");
 		winText = app->tex->Load("Assets/textures/sceneWin.png");
 		app->player->Disable();
+		app->enemy->Disable();
 		app->map->Disable();
 		app->audio->PlayMusic("Assets/audio/music/Victory.ogg");
 		

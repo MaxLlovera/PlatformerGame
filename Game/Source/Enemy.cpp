@@ -21,8 +21,25 @@
 Enemy::Enemy() : Module()
 {
 	name.Create("enemy");
-	//position.x = 350;
-	//position.y = 875;
+	position.x = 400;
+	position.y = 875;
+
+	//idlanim
+	idlAnim.PushBack({ 0, 0, 64, 85 });
+	//idlAnim.PushBack({ 156, 310, 64, 85 });
+	idlAnim.speed = 0.1f;
+
+
+	//move right
+	rightAnim.PushBack({ 0, 85, 64, 85 });
+	rightAnim.PushBack({ 0, 170, 64, 85 });
+	rightAnim.speed = 0.1f;
+
+	//move left
+	leftAnim.PushBack({ 0, 255, 64, 85 });
+	leftAnim.PushBack({ 0, 340, 64, 85 });
+	leftAnim.speed = 0.1f;
+
 
 }
 
@@ -43,7 +60,7 @@ bool Enemy::Start()
 	if (this->active == true)
 	{
 		dead = false;
-		//texPlayer = app->tex->Load("Assets/textures/player_textures.png");
+		texEnemy = app->tex->Load("Assets/textures/enemy_texture.png");
 		//playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
 
 		currentAnimation = &idlAnim;
@@ -56,6 +73,34 @@ bool Enemy::Update(float dt)
 
 	currentAnimation = &idlAnim;
 
+	if (app->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
+	{
+		position.y -= speedX;
+		currentAnimation = &leftAnim;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+	{
+		position.y += speedX;
+		currentAnimation = &leftAnim;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
+	{
+		if (!ThereIsLeftWall())
+		{
+			position.x -= speedX;
+			currentAnimation = &leftAnim;
+		}
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
+	{
+		if (!ThereIsRightWall())
+		{
+			position.x += speedX;
+			currentAnimation = &rightAnim;
+		}
+	}
+
 	currentAnimation->Update();
 	return true;
 }
@@ -63,7 +108,7 @@ bool Enemy::Update(float dt)
 bool Enemy::PostUpdate()
 {
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	//app->render->DrawTexture(texPlayer, position.x, position.y, &rect);
+	app->render->DrawTexture(texEnemy, position.x, position.y, &rect);
 	return true;
 }
 

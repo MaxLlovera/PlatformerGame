@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Map.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Scene.h"
 #include "FadeToBlack.h"
 #include "SceneLose.h"
@@ -37,6 +38,7 @@ bool SceneLose::Start()
 		LOG("Loading background assets");
 		loseText = app->tex->Load("Assets/textures/sceneLose.png");
 		app->player->Disable();
+		app->enemy->Disable();
 		app->map->Disable();
 		app->audio->PlayMusic("Assets/audio/music/GameOver.ogg");
 	}
