@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "FlyingEnemy.h"
 #include "Scene.h"
 #include "FadeToBlack.h"
 #include "SceneLose.h"
@@ -39,6 +40,7 @@ bool SceneLose::Start()
 		loseText = app->tex->Load("Assets/textures/sceneLose.png");
 		app->player->Disable();
 		app->enemy->Disable();
+		app->flyingEnemy->Disable();
 		app->map->Disable();
 		app->audio->PlayMusic("Assets/audio/music/GameOver.ogg");
 	}

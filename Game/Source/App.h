@@ -22,6 +22,7 @@ class Map;
 class PathFinding;
 class Player;
 class Enemy;
+class FlyingEnemy;
 class FadeToBlack;
 class SceneIntro;
 class SceneWin;
@@ -102,6 +103,7 @@ public:
 	Map* map;
 	Player* player;
 	Enemy* enemy;
+	FlyingEnemy* flyingEnemy;
 	FadeToBlack* fadetoblack;
 	SceneIntro* sceneIntro;
 	SceneWin* sceneWin;

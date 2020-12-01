@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "FlyingEnemy.h"
 #include "FadeToBlack.h"
 #include "PathFinding.h"
 
@@ -38,6 +39,7 @@ bool Scene::Start()
 	{
 		app->player->Enable();
 		app->enemy->Enable();
+		app->flyingEnemy->Enable();
 		app->map->Enable();
 		background = app->tex->Load("Assets/textures/background.png");
 

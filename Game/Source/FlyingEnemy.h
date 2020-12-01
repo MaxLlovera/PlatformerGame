@@ -1,5 +1,5 @@
-#ifndef __ENEMY_H__
-#define __ENEMY_H__
+#ifndef __FLYINGENEMY_H__
+#define __FLYINGENEMY_H__
 
 #include "Module.h"
 #include "Point.h"
@@ -8,14 +8,14 @@
 struct SDL_Texture;
 
 
-class Enemy : public Module
+class FlyingEnemy : public Module
 {
 public:
 
-	Enemy();
+	FlyingEnemy();
 
 	// Destructor
-	virtual ~Enemy();
+	virtual ~FlyingEnemy();
 
 	// Called before render is available
 	bool Awake();
@@ -63,9 +63,9 @@ private:
 	//int playerHeight = 85;
 	//int playerWidth = 64;
 	//bool isJumping = false;
-	SDL_Texture* texEnemy;
+	SDL_Texture* texFlyingEnemy;
 	//uint playerDeathFx = 0;
 
 };
 
-#endif // __ENEMY_H__
+#endif // __FLYINGENEMY_H__
