@@ -69,7 +69,7 @@ const DynArray<iPoint>* PathFinding::GetLastPath() const
 // PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL
 // ---------------------------------------------------------------------------------
-const ListItem<PathNode>* PathList::Find(const iPoint& point) const
+ListItem<PathNode>* PathList::Find(const iPoint& point) const
 {
 	ListItem<PathNode>* item = list.start;
 	while(item)
@@ -170,25 +170,70 @@ int PathNode::CalculateF(const iPoint& destination)
 int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	// L12b: TODO 1: if origin or destination are not walkable, return -1
-
+	if (IsWalkable(origin) == false || IsWalkable(destination) == false)
+	{
+		return -1;
+	}
 	// L12b: TODO 2: Create two lists: open, close
-	// Add the origin tile to open
-	// Iterate while we have tile in the open list
+	lastPath.Clear();
 
+	PathList open;
+	PathList closed;
+	// Add the origin tile to open
+	open.list.Add(PathNode(0, origin.DistanceTo(destination), origin, NULL));
+	// Iterate while we have tile in the open list
 	// L12b: TODO 3: Move the lowest score cell from open list to the closed list
-	
+	PathNode* currentNode;
+
+	while (open.GetNodeLowestScore() != NULL)
+	{
+		currentNode = new PathNode(open.GetNodeLowestScore()->data);
+		closed.list.Add(*currentNode);
+		open.list.Del(open.Find(currentNode->pos));
+
 	// L12b: TODO 4: If we just added the destination, we are done!
 	// Backtrack to create the final path
+		if (currentNode->pos == destination)
+		{
+			// Backtrack to create the final path
+			const PathNode* iterator = currentNode;
+
+			for (iterator; iterator->pos != origin; iterator = iterator->parent)
+			{
+				lastPath.PushBack(iterator->pos);
+			}
+			lastPath.PushBack(origin);
 	// Use the Pathnode::parent and Flip() the path when you are finish
+			lastPath.Flip();
+			return 0;
+		}
 
 	// L12b: TODO 5: Fill a list of all adjancent nodes
-
+		PathList adjacentList;
+		uint limit = currentNode->FindWalkableAdjacents(adjacentList);
 	// L12b: TODO 6: Iterate adjancent nodes:
 	// ignore nodes in the closed list
+		for (uint i = 0; i < limit; i++) {
 	// If it is NOT found, calculate its F and add it to the open list
+			if ((closed.Find(adjacentList.list[i].pos)) == NULL)
+			{
+				if ((open.Find(adjacentList.list[i].pos)) == NULL)
+				{
+					adjacentList.list[i].CalculateF(destination);
+					open.list.Add(adjacentList.list[i]);
+				}
 	// If it is already in the open list, check if it is a better path (compare G)
 	// If it is a better path, Update the parent
-
-	return -1;
+				else {
+					if (adjacentList.list[i].g < open.Find(adjacentList.list[i].pos)->data.g) {
+						// If it is a better path, Update the parent
+						adjacentList.list[i].CalculateF(destination);
+						open.list.Del(open.Find(adjacentList.list[i].pos));
+						open.list.Add(adjacentList.list[i]);
+					}
+				}
+			}
+		}
+	}
 }
 
