@@ -39,7 +39,7 @@ private:
 	SDL_Texture* background;
 	int volume;
 	SDL_Texture* debugTex;
-
+	SDL_Texture* heart;
 };
 
 #endif // __SCENE_H__

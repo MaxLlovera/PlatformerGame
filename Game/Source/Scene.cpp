@@ -42,7 +42,7 @@ bool Scene::Start()
 		app->flyingEnemy->Enable();
 		app->map->Enable();
 		background = app->tex->Load("Assets/textures/background.png");
-
+		heart = app->tex->Load("Assets/textures/heart_full.png");
 		// L03: DONE: Load map
 		if (app->map->Load("world1Meta.tmx") == true)
 		{
@@ -176,6 +176,8 @@ bool Scene::PostUpdate()
 	app->render->DrawTexture(background, 0, 0);
 	app->map->Draw();
 
+	app->render->DrawTexture(heart, app->player->position.x+50, app->player->position.y + 50);
+
 	if (!app->map->keyTaken) app->map->DrawKey();
 	else if (app->map->keyTaken) app->map->DrawKeyTaken();
 	return ret;
@@ -186,5 +188,7 @@ bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
 	app->tex->UnLoad(background);
+	app->tex->UnLoad(heart);
+
 	return true;
 }
