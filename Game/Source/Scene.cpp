@@ -84,6 +84,13 @@ bool Scene::Update(float dt)
 		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
 		app->render->RestartValues();
 	}
+
+	//restart when dies
+	if (app->player->spiked && !app->player->dead)
+	{
+		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
+		app->render->RestartValues();
+	}
 	
 	//restart the current level
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -112,6 +119,7 @@ bool Scene::Update(float dt)
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
 		app->render->RestartValues();
 	}
+
 
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);

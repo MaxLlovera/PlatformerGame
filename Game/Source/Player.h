@@ -46,7 +46,9 @@ public:
 
 	void GravityPlayer();
 
-	bool IsDead();
+	bool lossLifes(); //when player loses a life
+
+	//bool IsDead(); //when player loses his last life
 	
 
 	iPoint position;
@@ -69,6 +71,8 @@ public:
 	bool win = false;
 	bool godModeEnabled = false;
 	
+	int lifes = 3; //player lifes
+	bool spiked; //if player lose a life
 
 private:
 	float speedX = 3.0f;

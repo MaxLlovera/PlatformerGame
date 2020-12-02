@@ -73,6 +73,7 @@ bool Player::Start()
 	{
 		dead = false;
 		win = false;
+		lifes = 3;
 		texPlayer = app->tex->Load("Assets/textures/player_textures.png");
 		playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
 		
@@ -86,7 +87,12 @@ bool Player::Update(float dt)
 
 	currentAnimation = &idlAnim;
 
-	if (ThereAreSpikes()) IsDead();
+	if (ThereAreSpikes()&&!spiked) 
+	{ 
+		lossLifes();
+		spiked = true;
+	}
+	
 	if (ThereIsDoor() && app->map->keyTaken) win = true;
 	else
 	{
@@ -349,18 +355,37 @@ void Player::GravityPlayer()
 	}
 }
 
-bool Player::IsDead()
+bool Player::lossLifes()
 {
 	bool ret = false;
 
-	dead = true;
+	lifes--;
+
+	if (lifes == 0) dead=true;
+
 	currentAnimation = &deathAnim;
-	app->audio->PlayFx(playerDeathFx,0);
+	app->audio->PlayFx(playerDeathFx, 0);
 	ret = true;
-	
+	spiked = false;
+
 
 	return ret;
 }
+
+
+//bool Player::IsDead()
+//{
+//	bool ret = false;
+//
+//	dead = true;
+//
+//	//currentAnimation = &deathAnim;
+//	//app->audio->PlayFx(playerDeathFx,0);
+//	ret = true;
+//	
+//
+//	return ret;
+//}
 
 bool Player::CleanUp()
 {
