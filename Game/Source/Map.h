@@ -121,7 +121,7 @@ public:
 	// Called each loop iteration
 	void Draw();
 	void DrawKey();
-	void DrawKeyTaken();
+	void DrawColliders();
 
 	// Called before quitting
 	bool CleanUp();
@@ -137,22 +137,22 @@ public:
 
 	// BFS/Dijkstra methods not required any more: Using PathFinding class
 	
-	// L10: BFS Pathfinding methods
-	void ResetPath(iPoint start);
-	void DrawPath();
+	//// L10: BFS Pathfinding methods
+	//void ResetPath(iPoint start);
+	//void DrawPath();
 
-	// L11: More pathfinding methods
-	int MovementCost(int x, int y) const;
-	void ComputePath(int x, int y);
+	//// L11: More pathfinding methods
+	//int MovementCost(int x, int y) const;
+	//void ComputePath(int x, int y);
 
-	// L12a: AStar pathfinding
-	void ComputePathAStar(int x, int y);
+	//// L12a: AStar pathfinding
+	//void ComputePathAStar(int x, int y);
 
-	// Propagation methods
-	void PropagateBFS();
-	void PropagateDijkstra();
-	// L12a: AStar propagation
-	void PropagateAStar(int heuristic);
+	//// Propagation methods
+	//void PropagateBFS();
+	//void PropagateDijkstra();
+	//// L12a: AStar propagation
+	//void PropagateAStar(int heuristic);
 	
 	// L12b: Create walkability map for pathfinding
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
@@ -183,22 +183,21 @@ private:
 	SString folder;
 	bool mapLoaded;
 
-	// L10: BFS Pathfinding variables
-	PQueue<iPoint> frontier;
-	List<iPoint> visited;
+	//// L10: BFS Pathfinding variables
+	//PQueue<iPoint> frontier;
+	//List<iPoint> visited;
 
-	// L11: Additional variables
-	List<iPoint> breadcrumbs;
-	DynArray<iPoint> path;
+	//// L11: Additional variables
+	//List<iPoint> breadcrumbs;
+	//DynArray<iPoint> path;
 
-	// L11: Dijkstra cost
-	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
+	//// L11: Dijkstra cost
+	//uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
 
-	// L12a: AStar (A*) variables
-	iPoint goalAStar;			// Store goal target tile
-	bool finishAStar = false;	// Detect when reached goal
-
-	SDL_Texture* tileX = nullptr;
+	//// L12a: AStar (A*) variables
+	//iPoint goalAStar;			// Store goal target tile
+	//bool finishAStar = false;	// Detect when reached goal
+	//SDL_Texture* tileX = nullptr;
 };
 
 #endif // __MAP_H__

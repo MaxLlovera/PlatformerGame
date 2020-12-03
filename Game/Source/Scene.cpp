@@ -175,11 +175,12 @@ bool Scene::PostUpdate()
 	// Draw map
 	app->render->DrawTexture(background, 0, 0);
 	app->map->Draw();
+	app->map->Draw();
+	app->map->DrawColliders();
+	app->map->DrawKey();
 
 	app->render->DrawTexture(heart, app->player->position.x+50, app->player->position.y + 50);
 
-	if (!app->map->keyTaken) app->map->DrawKey();
-	else if (app->map->keyTaken) app->map->DrawKeyTaken();
 	return ret;
 }
 

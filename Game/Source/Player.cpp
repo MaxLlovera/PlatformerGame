@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Map.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
@@ -74,6 +75,7 @@ bool Player::Start()
 		dead = false;
 		win = false;
 		lifes = 3;
+		app->map->keyTaken = false;
 		texPlayer = app->tex->Load("Assets/textures/player_textures.png");
 		playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
 		
@@ -87,9 +89,9 @@ bool Player::Update(float dt)
 
 	currentAnimation = &idlAnim;
 
-	if (ThereAreSpikes()&&!spiked) 
+	if ((ThereAreSpikes() || ThereIsEnemy()) &&!spiked)
 	{ 
-		lossLifes();
+		loseLifes();
 		spiked = true;
 	}
 	
@@ -282,6 +284,27 @@ bool Player::ThereAreSpikes()
 		}
 	}
 	return valid;
+
+
+}bool Player::ThereIsEnemy()
+{
+	bool valid = false;
+	if (!godModeEnabled)
+	{
+		for (int i = 0; i < 30; i++)
+		{
+			for (int j = 0; j < 30; j++)
+			{
+				if (app->enemy->position.x + 16 + i == position.x + 16 + j)
+				{
+					valid = true;
+				}
+			}
+			
+		}
+		
+	}
+	return valid;
 }
 
 bool Player::TakeKey()
@@ -355,13 +378,13 @@ void Player::GravityPlayer()
 	}
 }
 
-bool Player::lossLifes()
+bool Player::loseLifes()
 {
 	bool ret = false;
 
 	lifes--;
 
-	if (lifes == 0) dead=true;
+	if (lifes == 0) dead = true;
 
 	currentAnimation = &deathAnim;
 	app->audio->PlayFx(playerDeathFx, 0);

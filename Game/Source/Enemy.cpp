@@ -21,7 +21,7 @@
 Enemy::Enemy() : Module()
 {
 	name.Create("enemy");
-	position.x = 400;
+	position.x = 750;
 	position.y = 875;
 
 	//idlanim

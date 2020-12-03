@@ -218,11 +218,11 @@ void App::FinishUpdate()
 	if (saveGameRequested == true) SaveGame();
 
 	// L07: DONE 4: Framerate calculations
-   // Amount of frames since startup
-   // Amount of time since game start (use a low resolution timer)
-   // Average FPS for the whole game life
-   // Amount of ms took the last update
-   // Amount of frames during the last second
+	// Amount of frames since startup
+	// Amount of time since game start (use a low resolution timer)
+	// Average FPS for the whole game life
+	// Amount of ms took the last update
+	// Amount of frames during the last second
 	if (lastSecFrameTime.Read() > 1000)
 	{
 		lastSecFrameTime.Start();

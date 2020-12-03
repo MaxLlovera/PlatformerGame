@@ -37,6 +37,7 @@ public:
 	bool ThereIsRightWall();
 	//bool ThereIsTopWall();
 	bool ThereAreSpikes();
+	bool ThereIsEnemy();
 	bool TakeKey();
 	bool ThereIsDoor();
 
@@ -46,7 +47,7 @@ public:
 
 	void GravityPlayer();
 
-	bool lossLifes(); //when player loses a life
+	bool loseLifes(); //when player loses a life
 
 	//bool IsDead(); //when player loses his last life
 	
