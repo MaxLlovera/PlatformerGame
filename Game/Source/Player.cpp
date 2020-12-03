@@ -74,7 +74,6 @@ bool Player::Start()
 	if (this->active == true)
 	{
 		dead = false;
-		spiked = false;
 		win = false;
 		lifes = 3;
 		counterKey = 0;
@@ -99,7 +98,7 @@ bool Player::Update(float dt)
 	if ((ThereAreSpikes() || ThereIsEnemy() || ThereIsFlyingEnemy()) &&!spiked)
 	{ 
 		loseLifes();
-		
+		spiked = true;
 	}
 	
 	if (ThereIsDoor() && app->map->keyTaken) win = true;
@@ -468,10 +467,11 @@ bool Player::loseLifes()
 	lifes--;
 
 	if (lifes == 0) dead = true;
-	if(lifes !=0) spiked = true;
+
 	currentAnimation = &deathAnim;
 	app->audio->PlayFx(playerDeathFx, 0);
 	ret = true;
+	spiked = false;
 
 
 	return ret;

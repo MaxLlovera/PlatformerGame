@@ -75,7 +75,7 @@ public:
 	bool godModeEnabled = false;
 	
 	int lifes = 3; //player lifes
-	bool spiked = false; //if player lose a life
+	bool spiked; //if player lose a life
 
 private:
 	float speedX = 3.0f;

@@ -73,8 +73,8 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
-	//if (app->player->spiked) DeadRestart();
-	//if (app->player->dead) DeadRestart();
+
+	if (app->player->dead) DeadRestart();
 
 	return true;
 }
@@ -102,12 +102,12 @@ void Render::RestartValues()
 	app->player->position.y = 875;
 	app->render->camera.x = app->player->position.x - app->player->position.x;
 	app->render->camera.y = app->player->position.y - (app->render->camera.h * 2) + 10;
-	//counter = 0;
-	//app->player->spiked = false;
+	counter = 0;
+	app->player->spiked = false;
 	
 }
 
-/*void Render::DeadRestart()
+void Render::DeadRestart()
 {
 	if (app->player->currentAnimation == &app->player->deathAnim)
 	{
@@ -116,12 +116,10 @@ void Render::RestartValues()
 		{
 			RestartValues();
 			app->player->dead = false;
-			app->player->spiked = false;
-
 		}
 		else counter++;
 	}
-}*/
+}
 
 
 // L02: DONE 6: Implement a method to load the state, for now load camera's x and y
