@@ -86,10 +86,12 @@ bool Scene::Update(float dt)
 	}
 
 	//restart when dies
-	if (app->player->spiked && !app->player->dead)
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || app->player->spiked)
 	{
-		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
+		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
 		app->render->RestartValues();
+		app->player->spiked = false;
+
 	}
 	
 	//restart the current level
@@ -127,7 +129,7 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
 
 	//camera x
-	if (app->render->counter==0||app->player->godModeEnabled)
+	if (/*app->render->counter==0||*/app->player->godModeEnabled)
 	{
 		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->player->position.x > 350 && app->player->position.x <= 4400&&!app->player->ThereIsLeftWall()) app->render->camera.x += 3.0f;
 		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 4400 && !app->player->ThereIsRightWall()) app->render->camera.x -= 3.0f;

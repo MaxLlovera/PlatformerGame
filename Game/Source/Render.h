@@ -48,9 +48,9 @@ public:
 
 	//restart values
 	void RestartValues();
-	void DeadRestart();
+	//void DeadRestart();
 
-	int counter = 0;
+	//int counter = 0;
 
 public:
 

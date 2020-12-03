@@ -6,6 +6,8 @@
 #include "Render.h"
 #include "Window.h"
 
+#include "Player.h"
+
 #include "Log.h"
 
 FadeToBlack::FadeToBlack()
@@ -33,6 +35,7 @@ bool FadeToBlack::Awake()
 
 bool FadeToBlack::Start()
 {
+
 	if (this->active == true)
 	{
 		uint w, h;
@@ -50,6 +53,7 @@ bool FadeToBlack::Start()
 
 bool FadeToBlack::Update(float dt)
 {
+
 	// Exit this function if we are not performing a fade
 	if (currentStep == FadeStep::NONE) return true;
 
