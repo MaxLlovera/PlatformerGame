@@ -84,9 +84,12 @@ private:
 	int playerHeight = 85;
 	int playerWidth = 64;
 	bool isJumping = false;
+	int counterKey = 0;
+	int counterCheckpoint = 0;
 	SDL_Texture* texPlayer;
 	uint playerDeathFx = 0;
-	
+	uint keyTakenFx = 0;
+	uint checkpointFx = 0;
 };
 
 #endif // __PLAYER_H__

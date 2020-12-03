@@ -76,10 +76,14 @@ bool Player::Start()
 		dead = false;
 		win = false;
 		lifes = 3;
+		counterKey = 0;
+		counterCheckpoint = 0;
 		app->map->keyTaken = false;
 		app->map->checkpointTaken = false;
 		texPlayer = app->tex->Load("Assets/textures/player_textures.png");
 		playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
+		keyTakenFx = app->audio->LoadFx("Assets/audio/fx/key.wav");
+		checkpointFx = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
 		
 		currentAnimation = &idlAnim;
 	}
@@ -147,9 +151,19 @@ bool Player::Update(float dt)
 
 	if (TakeKey()) {
 		app->map->keyTaken = true;
+		if (counterKey == 0)
+		{
+			app->audio->PlayFx(keyTakenFx, 0);
+		}
+		counterKey = 1;
 	}
 	if (TakeCheckpoint()) {
 		app->map->checkpointTaken = true;
+		if (counterCheckpoint == 0) 
+		{
+			app->audio->PlayFx(checkpointFx, 0);
+		}
+		counterCheckpoint = 1;
 	}
 
 	currentAnimation->Update();
@@ -359,8 +373,8 @@ bool Player::TakeKey()
 		int key;
 		while (layer != NULL)
 		{
-			//if (layer->data->properties.GetProperty("Navigation") == 0)
-			//{
+			if (layer->data->properties.GetProperty("Navigation") == 0)
+			{
 				for (int i = 0; i < 3; ++i)
 				{
 					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
@@ -368,7 +382,7 @@ bool Player::TakeKey()
 					if (key == COLLIDER_BLUE) valid = true;
 				}
 
-			//}
+			}
 			layer = layer->next;
 		}
 	}
@@ -482,6 +496,7 @@ bool Player::CleanUp()
 {
 	LOG("Freeing scene");
 	app->tex->UnLoad(texPlayer);
+	
 	return true;
 }
 
