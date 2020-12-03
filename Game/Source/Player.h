@@ -38,6 +38,7 @@ public:
 	//bool ThereIsTopWall();
 	bool ThereAreSpikes();
 	bool ThereIsEnemy();
+	bool ThereIsFlyingEnemy();
 	bool TakeKey();
 	bool TakeCheckpoint();
 	bool ThereIsDoor();

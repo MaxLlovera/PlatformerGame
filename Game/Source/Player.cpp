@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "FlyingEnemy.h"
 #include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
@@ -90,7 +91,7 @@ bool Player::Update(float dt)
 
 	currentAnimation = &idlAnim;
 
-	if ((ThereAreSpikes() || ThereIsEnemy()) &&!spiked)
+	if ((ThereAreSpikes() || ThereIsEnemy() || ThereIsFlyingEnemy()) &&!spiked)
 	{ 
 		loseLifes();
 		spiked = true;
@@ -290,24 +291,61 @@ bool Player::ThereAreSpikes()
 	return valid;
 
 
-}bool Player::ThereIsEnemy()
+}
+
+bool Player::ThereIsEnemy()
 {
 	bool valid = false;
+	bool positionX = false;
+	bool positionY = false;
+
 	if (!godModeEnabled)
 	{
 		for (int i = 0; i < 30; i++)
 		{
 			for (int j = 0; j < 30; j++)
 			{
-				if (app->enemy->position.x + 16 + i == position.x + 16 + j)
-				{
-					valid = true;
-				}
+				if (app->enemy->position.x + 16 + i == position.x + 16 + j) positionX = true;
 			}
-			
 		}
-		
+		for (int i = 0; i < 62; i++)
+		{
+			for (int j = 0; j < 62; j++)
+			{
+				if (app->enemy->position.y + 22 + i == position.y + 22 + j) positionY = true;
+			}
+		}
 	}
+	if (positionX && positionY) valid = true;
+
+	return valid;
+}
+
+bool Player::ThereIsFlyingEnemy()
+{
+	bool valid = false;
+	bool positionX = false;
+	bool positionY = false;
+
+	if (!godModeEnabled)
+	{
+		for (int i = 0; i < 50; i++)
+		{
+			for (int j = 0; j < 30; j++)
+			{
+				if (app->flyingEnemy->position.x + 6 + i == position.x + 16 + j) positionX = true;
+			}
+		}
+		for (int i = 0; i < 42; i++)
+		{
+			for (int j = 0; j < 62; j++)
+			{
+				if (app->flyingEnemy->position.y + 4 + i == position.y + 22 + j) positionY = true;
+			}
+		}
+	}
+	if (positionX && positionY) valid = true;
+
 	return valid;
 }
 
@@ -321,8 +359,8 @@ bool Player::TakeKey()
 		int key;
 		while (layer != NULL)
 		{
-			if (layer->data->properties.GetProperty("Navigation") == 0)
-			{
+			//if (layer->data->properties.GetProperty("Navigation") == 0)
+			//{
 				for (int i = 0; i < 3; ++i)
 				{
 					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
@@ -330,7 +368,7 @@ bool Player::TakeKey()
 					if (key == COLLIDER_BLUE) valid = true;
 				}
 
-			}
+			//}
 			layer = layer->next;
 		}
 	}
