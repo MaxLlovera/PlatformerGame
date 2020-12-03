@@ -178,8 +178,21 @@ bool Scene::PostUpdate()
 	app->map->DrawColliders();
 	app->map->DrawKey();
 	app->map->DrawCheckpoint();
-
-	app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
+	if (app->player->lifes == 3)
+	{
+		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
+		app->render->DrawTexture(heart, -app->render->camera.x + 64, -app->render->camera.y);
+		app->render->DrawTexture(heart, -app->render->camera.x + 128, -app->render->camera.y);
+	}
+	if (app->player->lifes == 2)
+	{
+		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
+		app->render->DrawTexture(heart, -app->render->camera.x + 64, -app->render->camera.y);
+	}
+	if (app->player->lifes == 1)
+	{
+		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
+	}
 
 	return ret;
 }
