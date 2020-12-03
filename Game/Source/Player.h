@@ -39,6 +39,7 @@ public:
 	bool ThereAreSpikes();
 	bool ThereIsEnemy();
 	bool TakeKey();
+	bool TakeCheckpoint();
 	bool ThereIsDoor();
 
 	bool LoadState(pugi::xml_node&);

@@ -16,7 +16,7 @@
 #define COLLIDER_RED 266
 #define COLLIDER_BLUE 267
 #define COLLIDER_YELLOW 268
-
+#define COLLIDER_PINK 269
 
 Player::Player() : Module()
 {
@@ -76,6 +76,7 @@ bool Player::Start()
 		win = false;
 		lifes = 3;
 		app->map->keyTaken = false;
+		app->map->checkpointTaken = false;
 		texPlayer = app->tex->Load("Assets/textures/player_textures.png");
 		playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
 		
@@ -145,6 +146,9 @@ bool Player::Update(float dt)
 
 	if (TakeKey()) {
 		app->map->keyTaken = true;
+	}
+	if (TakeCheckpoint()) {
+		app->map->checkpointTaken = true;
 	}
 
 	currentAnimation->Update();
@@ -334,6 +338,32 @@ bool Player::TakeKey()
 
 }
 
+bool Player::TakeCheckpoint()
+{
+	bool valid = false;
+	if (!godModeEnabled)
+	{
+		iPoint tilePosition;
+		ListItem<MapLayer*>* layer = app->map->data.layers.start;
+		int checkpoint;
+		while (layer != NULL)
+		{
+			if (layer->data->properties.GetProperty("Navigation") == 0)
+			{
+				for (int i = 0; i < 3; ++i)
+				{
+					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
+					checkpoint = layer->data->Get(tilePosition.x, tilePosition.y);
+					if (checkpoint == COLLIDER_PINK) valid = true;
+				}
+
+			}
+			layer = layer->next;
+		}
+	}
+	return valid;
+
+}
 bool Player::ThereIsDoor()
 {
 	bool valid = false;

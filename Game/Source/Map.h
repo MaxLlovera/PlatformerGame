@@ -121,6 +121,7 @@ public:
 	// Called each loop iteration
 	void Draw();
 	void DrawKey();
+	void DrawCheckpoint();
 	void DrawColliders();
 
 	// Called before quitting
@@ -177,6 +178,7 @@ public:
 	MapData data;
 	bool colliders = false;
 	bool keyTaken = false;
+	bool checkpointTaken = false;
 private:
 
 	pugi::xml_document mapFile;
