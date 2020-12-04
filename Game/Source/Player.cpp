@@ -28,8 +28,8 @@ Player::Player() : Module()
 
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 85 });
-	//idlAnim.PushBack({ 156, 310, 64, 85 });
-	idlAnim.speed = 0.1f;
+	idlAnim.PushBack({ 0, 681, 64, 85 });
+	idlAnim.speed = 0.02f;
 
 
 	//move right

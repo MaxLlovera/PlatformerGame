@@ -26,8 +26,8 @@ Enemy::Enemy() : Module()
 
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 85 });
-	//idlAnim.PushBack({ 156, 310, 64, 85 });
-	idlAnim.speed = 0.1f;
+	idlAnim.PushBack({ 0, 430, 64, 85 });
+	idlAnim.speed = 0.05f;
 
 
 	//move right

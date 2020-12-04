@@ -25,8 +25,8 @@ FlyingEnemy::FlyingEnemy() : Module()
 
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 52 });
-	//idlAnim.PushBack({ 156, 310, 64, 85 });
-	idlAnim.speed = 0.1f;
+	idlAnim.PushBack({ 0, 52, 64, 52 });
+	idlAnim.speed = 0.03f;
 
 
 	//move right
