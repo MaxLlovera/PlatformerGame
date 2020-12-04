@@ -43,6 +43,7 @@ public:
 	bool TakeCheckpoint();
 	bool TakeHeart();
 	bool ThereIsDoor();
+	bool FireBallKill();
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
@@ -53,6 +54,11 @@ public:
 	bool loseLifes(); //when player loses a life
 	
 	iPoint position;
+
+
+	//iPoint fireBallPos;
+
+
 
 	Animation* currentAnimation = nullptr;
 
@@ -72,9 +78,13 @@ public:
 	int lifes = 3; //player lifes
 	bool spiked; //if player lose a life
 
+	int shotMaxCountdown = 20;
+	int shotCountdown = 0;
+
 private:
 	float speedX = 3.0f;
 	float speedY = 0.0f;
+	float fireBallSpeed = 3.0f;
 	float gravity = 0.15f;
 	int playerHeight = 85;
 	int playerWidth = 64;
@@ -83,6 +93,7 @@ private:
 	int counterCheckpoint = 0;
 	int counterHeart = 0;
 	SDL_Texture* texPlayer;
+	SDL_Texture* texFireBall;
 	uint playerDeathFx = 0;
 	uint keyTakenFx = 0;
 	uint checkpointFx = 0;

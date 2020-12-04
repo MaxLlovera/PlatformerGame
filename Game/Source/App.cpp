@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
+#include "ModuleParticles.h"
 #include "Enemy.h"
 #include "FlyingEnemy.h"
 #include "FadeToBlack.h"
@@ -42,6 +43,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	map = new Map();
 	player = new Player();
+	particles = new ModuleParticles();
 	enemy = new Enemy();
 	flyingEnemy = new FlyingEnemy();
 	fadetoblack = new FadeToBlack();
@@ -62,6 +64,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene, false);
 	AddModule(map, false);
 	AddModule(player, false);
+	AddModule(particles, true);
 	AddModule(enemy, false);
 	AddModule(flyingEnemy, false);
 	AddModule(fadetoblack, true);

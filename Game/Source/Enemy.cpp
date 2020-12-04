@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "ModuleParticles.h"
 #include "Pathfinding.h"
 #include "FadeToBlack.h"
 #include "Defs.h"
@@ -138,6 +139,7 @@ bool Enemy::Update(float dt)
 			}
 		}
 	}
+
 
 	currentAnimation->Update();
 	return true;
@@ -271,7 +273,7 @@ bool Enemy::IsDead()
 	bool ret = false;
 
 	dead = true;
-	currentAnimation = &deathAnim;
+	this->Disable();
 	//app->audio->PlayFx(playerDeathFx, 0);
 	ret = true;
 

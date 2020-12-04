@@ -21,6 +21,7 @@ class Scene;
 class Map;
 class PathFinding;
 class Player;
+class ModuleParticles;
 class Enemy;
 class FlyingEnemy;
 class FadeToBlack;
@@ -102,6 +103,7 @@ public:
 	Scene* scene;
 	Map* map;
 	Player* player;
+	ModuleParticles* particles;
 	Enemy* enemy;
 	FlyingEnemy* flyingEnemy;
 	FadeToBlack* fadetoblack;

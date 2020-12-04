@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "ModuleParticles.h"
 #include "FlyingEnemy.h"
 #include "FadeToBlack.h"
 #include "Defs.h"
@@ -25,6 +26,7 @@ Player::Player() : Module()
 	name.Create("player");
 	position.x = 350;
 	position.y = 875;
+
 
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 85 });
@@ -84,6 +86,7 @@ bool Player::Start()
 		app->map->checkpointTaken = false;
 		app->map->heartTaken = false;
 		texPlayer = app->tex->Load("Assets/Textures/player_textures.png");
+		texFireBall = app->tex->Load("Assets/Textures/shot_fireball.png");
 		playerDeathFx = app->audio->LoadFx("Assets/Audio/Fx/death_sound.wav");
 		keyTakenFx = app->audio->LoadFx("Assets/Audio/Fx/key.wav");
 		checkpointFx = app->audio->LoadFx("Assets/Audio/Fx/checkpoint.wav");
@@ -145,12 +148,35 @@ bool Player::Update(float dt)
 			Jump();
 			isJumping = false;
 		}
+		if (app->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT)
+		{
+			if (currentAnimation == &leftAnim)
+			{
+				if (shotCountdown == 0)
+				{
+					Particle* newParticle = app->particles->AddParticle(app->particles->fireBallLeft, position.x, position.y + 50);
+					shotCountdown = shotMaxCountdown;
+				}
+			}
+			else
+			{
+				if (shotCountdown == 0)
+				{
+					Particle* newParticle = app->particles->AddParticle(app->particles->fireBallRight, position.x + 50, position.y + 50);
+					shotCountdown = shotMaxCountdown;
+				}
+			}
+		}
+
 		if (!godModeEnabled)
 		{
 			GravityPlayer();
 		}
 	}
-	
+
+	if (shotCountdown > 0) --shotCountdown;
+
+
 
 	if (TakeKey()) {
 		app->map->keyTaken = true;
@@ -185,6 +211,7 @@ bool Player::PostUpdate()
 {
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(texPlayer, position.x, position.y, &rect);
+	
 	return true;
 }
 
@@ -214,6 +241,8 @@ bool Player::ThereIsGround()
 	return valid;
 
 }
+
+
 
 bool Player::ThereIsLeftWall()
 {
@@ -320,11 +349,12 @@ bool Player::ThereAreSpikes()
 
 bool Player::ThereIsEnemy()
 {
+	
 	bool valid = false;
 	bool positionX = false;
 	bool positionY = false;
 
-	if (!godModeEnabled)
+	if (!godModeEnabled && !app->enemy->dead)
 	{
 		for (int i = 0; i < 30; i++)
 		{
@@ -352,7 +382,7 @@ bool Player::ThereIsFlyingEnemy()
 	bool positionX = false;
 	bool positionY = false;
 
-	if (!godModeEnabled)
+	if (!godModeEnabled && !app->flyingEnemy->dead)
 	{
 		for (int i = 0; i < 50; i++)
 		{
@@ -481,6 +511,13 @@ bool Player::ThereIsDoor()
 
 }
 
+bool Player::FireBallKill()
+{
+	
+
+	
+	return true;
+}
 
 void Player::Jump() 
 {
