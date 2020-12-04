@@ -205,9 +205,12 @@ bool FlyingEnemy::IsDead()
 {
 	bool ret = false;
 
-	dead = true;
+
+	app->audio->PlayFx(flyingEnemyDeathFx, 0);
 	this->Disable();
-	//app->audio->PlayFx(playerDeathFx, 0);
+
+	dead = true;
+
 	ret = true;
 
 

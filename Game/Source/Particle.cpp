@@ -59,19 +59,29 @@ bool Particle::Update()
 		position.y += speed.y;
 
 	}
-	if (ThereIsEnemy() )
+	if (ThereIsEnemy())
 	{
-		app->enemy->IsDead();
+		if (!app->enemy->dead)
+		{
+			app->enemy->IsDead();
+			SetToDelete();
+		}
+
 	}
 	if (ThereIsFlyingEnemy())
 	{
-		app->flyingEnemy->IsDead();
+		if (!app->flyingEnemy->dead)
+		{
+			app->flyingEnemy->IsDead();
+			SetToDelete();
+		}
 	}
 	return ret;
 }
 
 void Particle::SetToDelete()
 {
+
 	pendingToDelete = true;
 
 }

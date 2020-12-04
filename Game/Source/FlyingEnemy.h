@@ -63,7 +63,7 @@ private:
 	//int playerWidth = 64;
 	//bool isJumping = false;
 	SDL_Texture* texFlyingEnemy;
-	//uint playerDeathFx = 0;
+	uint flyingEnemyDeathFx = 0;
 
 };
 

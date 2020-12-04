@@ -42,7 +42,10 @@ Enemy::Enemy() : Module()
 	leftAnim.PushBack({ 0, 340, 64, 85 });
 	leftAnim.speed = 0.1f;
 
-
+	//deathAnim
+	deathAnim.PushBack({ 0, 518, 64, 85 });
+	deathAnim.speed = 0.1f;
+	deathAnim.loop = false;
 }
 
 // Destructor
@@ -63,7 +66,7 @@ bool Enemy::Start()
 	{
 		dead = false;
 		texEnemy = app->tex->Load("Assets/Textures/enemy_texture.png");
-		//playerDeathFx = app->audio->LoadFx("Assets/Audio/Fx/death_sound.wav");
+		enemyDeathFx = app->audio->LoadFx("Assets/Audio/Fx/death_sound.wav");
 
 		currentAnimation = &idlAnim;
 	}
@@ -257,9 +260,12 @@ bool Enemy::IsDead()
 {
 	bool ret = false;
 
-	dead = true;
+	currentAnimation = &deathAnim;
+	app->audio->PlayFx(enemyDeathFx, 0);
+
 	this->Disable();
-	//app->audio->PlayFx(playerDeathFx, 0);
+	
+	dead = true;
 	ret = true;
 
 

@@ -56,17 +56,18 @@ public:
 	Animation deathAnim;
 	Animation upAnim;
 
+
 	bool dead = false;
 
 private:
-	float speedX = 3.0f;
+	float speedX = 2.0f;
 	float speedY = 0.0f;
 	float gravity = 0.15f;
 	//int playerHeight = 85;
 	//int playerWidth = 64;
 	//bool isJumping = false;
 	SDL_Texture* texEnemy;
-	//uint playerDeathFx = 0;
+	uint enemyDeathFx = 0;
 
 };
 

@@ -88,8 +88,10 @@ bool Scene::Update(float dt)
 	//restart when dies
 	if (app->player->spiked && !app->player->dead)
 	{
+
 		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
 		app->render->RestartValues();
+
 	}
 	
 	//restart the current level
