@@ -50,7 +50,7 @@ bool Map::Awake(pugi::xml_node& config)
 /*
 bool Map::Start()
 {
-	tileX = app->tex->Load("Assets/maps/x.png");
+	tileX = app->tex->Load("Assets/Maps/x.png");
 
 	return true;
 }

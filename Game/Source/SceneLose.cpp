@@ -37,12 +37,12 @@ bool SceneLose::Start()
 	if (this->active == true)
 	{
 		LOG("Loading background assets");
-		loseText = app->tex->Load("Assets/textures/sceneLose.png");
+		loseText = app->tex->Load("Assets/Textures/scene_lose.png");
 		app->player->Disable();
 		app->enemy->Disable();
 		app->flyingEnemy->Disable();
 		app->map->Disable();
-		app->audio->PlayMusic("Assets/audio/music/GameOver.ogg");
+		app->audio->PlayMusic("Assets/Audio/Music/game_over.ogg");
 	}
 	
 

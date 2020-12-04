@@ -41,8 +41,8 @@ bool Scene::Start()
 		app->enemy->Enable();
 		app->flyingEnemy->Enable();
 		app->map->Enable();
-		background = app->tex->Load("Assets/textures/background.png");
-		heart = app->tex->Load("Assets/textures/headShock.png");
+		background = app->tex->Load("Assets/Textures/background.png");
+		heart = app->tex->Load("Assets/Textures/head_shock.png");
 		// L03: DONE: Load map
 		if (app->map->Load("world1Meta.tmx") == true)
 		{
@@ -53,11 +53,11 @@ bool Scene::Start()
 
 			RELEASE_ARRAY(data);
 		}
-
+		////QUE ES AIXO?
 		debugTex = app->tex->Load("maps/path2.png");
 
 		// Load music
-		app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+		app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 	}
 
 	return true;

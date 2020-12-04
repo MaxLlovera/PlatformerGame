@@ -37,12 +37,12 @@ bool SceneWin::Start()
 	if (this->active == true)
 	{
 		LOG("Loading background assets");
-		winText = app->tex->Load("Assets/textures/sceneWin.png");
+		winText = app->tex->Load("Assets/Textures/scene_win.png");
 		app->player->Disable();
 		app->enemy->Disable();
 		app->flyingEnemy->Disable();
 		app->map->Disable();
-		app->audio->PlayMusic("Assets/audio/music/Victory.ogg");
+		app->audio->PlayMusic("Assets/Audio/Music/victory.ogg");
 		
 	}
 	return ret;

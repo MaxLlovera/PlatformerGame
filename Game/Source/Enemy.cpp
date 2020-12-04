@@ -60,8 +60,8 @@ bool Enemy::Start()
 	if (this->active == true)
 	{
 		dead = false;
-		texEnemy = app->tex->Load("Assets/textures/enemy_texture.png");
-		//playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
+		texEnemy = app->tex->Load("Assets/Textures/enemy_texture.png");
+		//playerDeathFx = app->audio->LoadFx("Assets/Audio/Fx/death_sound.wav");
 
 		currentAnimation = &idlAnim;
 	}

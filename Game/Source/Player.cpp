@@ -80,10 +80,10 @@ bool Player::Start()
 		counterCheckpoint = 0;
 		app->map->keyTaken = false;
 		app->map->checkpointTaken = false;
-		texPlayer = app->tex->Load("Assets/textures/player_textures.png");
-		playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
-		keyTakenFx = app->audio->LoadFx("Assets/audio/fx/key.wav");
-		checkpointFx = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
+		texPlayer = app->tex->Load("Assets/Textures/player_textures.png");
+		playerDeathFx = app->audio->LoadFx("Assets/Audio/Fx/death_sound.wav");
+		keyTakenFx = app->audio->LoadFx("Assets/Audio/Fx/key.wav");
+		checkpointFx = app->audio->LoadFx("Assets/Audio/Fx/checkpoint.wav");
 		
 		currentAnimation = &idlAnim;
 	}

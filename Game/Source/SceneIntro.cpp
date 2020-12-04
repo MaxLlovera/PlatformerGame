@@ -31,11 +31,11 @@ bool SceneIntro::Awake(pugi::xml_node& node)
 bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
-	introText = app->tex->Load("Assets/textures/sceneIntro.png");
+	introText = app->tex->Load("Assets/Textures/scene_intro.png");
 	bool ret = true;
 	app->sceneLose->Disable();
 	app->sceneWin->Disable();
-	app->audio->PlayMusic("Assets/audio/music/IntroTheme.ogg");
+	app->audio->PlayMusic("Assets/Audio/Music/intro_theme.ogg");
 	return ret;
 }
 

@@ -59,8 +59,8 @@ bool FlyingEnemy::Start()
 	if (this->active == true)
 	{
 		dead = false;
-		texFlyingEnemy = app->tex->Load("Assets/textures/flyingenemy_texture.png");
-		//playerDeathFx = app->audio->LoadFx("Assets/audio/fx/DeathSound.wav");
+		texFlyingEnemy = app->tex->Load("Assets/Textures/flyingenemy_texture.png");
+		//playerDeathFx = app->audio->LoadFx("Assets/Audio/Fx/death_sound.wav");
 
 		currentAnimation = &idlAnim;
 	}
