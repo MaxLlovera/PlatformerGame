@@ -74,8 +74,8 @@ bool FlyingEnemy::Update(float dt)
 		iPoint posOrigin;
 		iPoint posDestination = app->player->position;
 
-		posOrigin = app->map->WorldToMap(position.x+32, position.y-16);
-		posDestination = app->map->WorldToMap(posDestination.x +64, posDestination.y);
+		posOrigin = app->map->WorldToMap(position.x+33, position.y+31);
+		posDestination = app->map->WorldToMap(posDestination.x +64, posDestination.y+64);
 
 		app->pathfinding->CreatePath(posOrigin, posDestination);
 		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
