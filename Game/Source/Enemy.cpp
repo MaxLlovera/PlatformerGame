@@ -75,41 +75,14 @@ bool Enemy::Update(float dt)
 
 	currentAnimation = &idlAnim;
 
-	/*if (app->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
-	{
-		position.y -= speedX;
-		currentAnimation = &leftAnim;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-	{
-		position.y += speedX;
-		currentAnimation = &leftAnim;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
-	{
-		if (!ThereIsLeftWall())
-		{
-			position.x -= speedX;
-			currentAnimation = &leftAnim;
-		}
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
-	{
-		if (!ThereIsRightWall())
-		{
-			position.x += speedX;
-			currentAnimation = &rightAnim;
-		}
-	}*/
 	if ((position.DistanceTo(app->player->position) < 200))
 	{
 		currentAnimation = &idlAnim;
 		iPoint posOrigin;
 		iPoint posDestination = app->player->position;
 
-		posOrigin = app->map->WorldToMap(position.x - 16, position.y);
-		posDestination = app->map->WorldToMap(posDestination.x - 32, posDestination.y);
+		posOrigin = app->map->WorldToMap(position.x - 32, position.y);
+		posDestination = app->map->WorldToMap(posDestination.x - 64, posDestination.y);
 
 		app->pathfinding->CreatePath(posOrigin, posDestination);
 		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();

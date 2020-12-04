@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "FlyingEnemy.h"
+#include "Pathfinding.h"
 #include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
@@ -21,7 +22,7 @@ FlyingEnemy::FlyingEnemy() : Module()
 {
 	name.Create("flyingenemy");
 	position.x = 400;
-	position.y = 700;
+	position.y = 1500;
 
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 52 });
@@ -30,14 +31,9 @@ FlyingEnemy::FlyingEnemy() : Module()
 
 
 	//move right
-	rightAnim.PushBack({ 0, 52, 64, 52 });
-	rightAnim.PushBack({ 0, 0, 64, 52 });
-	rightAnim.speed = 0.1f;
-
-	//move left
-	leftAnim.PushBack({ 0, 52, 64, 52 });
-	leftAnim.PushBack({ 0, 0, 64, 52 });
-	leftAnim.speed = 0.1f;
+	moveAnim.PushBack({ 0, 52, 64, 52 });
+	moveAnim.PushBack({ 0, 0, 64, 52 });
+	moveAnim.speed = 0.1f;
 
 
 }
@@ -72,31 +68,36 @@ bool FlyingEnemy::Update(float dt)
 
 	currentAnimation = &idlAnim;
 
-	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
+	if ((position.DistanceTo(app->player->position) < 500))
 	{
-		position.y -= speedX;
-		currentAnimation = &leftAnim;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
-	{
-		position.y += speedX;
-		currentAnimation = &leftAnim;
-	}
+		currentAnimation = &idlAnim;
+		iPoint posOrigin;
+		iPoint posDestination = app->player->position;
 
-	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
-	{
-		if (!ThereIsLeftWall())
+		posOrigin = app->map->WorldToMap(position.x+32, position.y-16);
+		posDestination = app->map->WorldToMap(posDestination.x +64, posDestination.y);
+
+		app->pathfinding->CreatePath(posOrigin, posDestination);
+		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+		if (path->At(1) != NULL)
 		{
-			position.x -= speedX;
-			currentAnimation = &leftAnim;
-		}
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
-	{
-		if (!ThereIsRightWall())
-		{
-			position.x += speedX;
-			currentAnimation = &rightAnim;
+			if (path->At(1)->x < posOrigin.x /*&& ThereIsGroundLeft()*/)
+			{
+				position.x -= speedX;
+			}
+			if (path->At(1)->x > posOrigin.x /*&& ThereIsGroundRight()*/)
+			{
+				position.x += speedX;
+			}
+			if (path->At(1)->y < posOrigin.y /*&& ThereIsGroundRight()*/)
+			{
+				position.y -= speedX;
+			}
+			if (path->At(1)->y > posOrigin.y /*&& ThereIsGroundRight()*/)
+			{
+				position.y += speedX;
+			}
 		}
 	}
 
@@ -241,5 +242,5 @@ bool FlyingEnemy::SaveState(pugi::xml_node& node) const
 void FlyingEnemy::FlyingEnemyInitialPosition()
 {
 	position.x = 400;
-	position.y = 700;
+	position.y = 1500;
 }
