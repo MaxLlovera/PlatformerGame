@@ -303,3 +303,11 @@ bool Enemy::SaveState(pugi::xml_node& node) const
 	pnode.append_attribute("y") = position.y;
 	return ret;
 }
+
+
+void Enemy::EnemyPosIni()
+{
+	position.x = 900;
+	position.y = 875;
+}
+

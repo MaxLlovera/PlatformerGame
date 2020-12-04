@@ -237,3 +237,9 @@ bool FlyingEnemy::SaveState(pugi::xml_node& node) const
 	pnode.append_attribute("y") = position.y;
 	return ret;
 }
+
+void FlyingEnemy::FlyEnemyPosIni()
+{
+	position.x = 400;
+	position.y = 700;
+}

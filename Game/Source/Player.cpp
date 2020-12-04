@@ -506,6 +506,9 @@ bool Player::loseLifes()
 	lifes--;
 
 	if (lifes == 0) dead = true;
+	
+	app->enemy->EnemyPosIni();
+	app->flyingEnemy->FlyEnemyPosIni();
 
 	currentAnimation = &deathAnim;
 	app->audio->PlayFx(playerDeathFx, 0);
