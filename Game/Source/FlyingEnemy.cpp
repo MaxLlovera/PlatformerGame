@@ -22,7 +22,7 @@ FlyingEnemy::FlyingEnemy() : Module()
 {
 	name.Create("flyingenemy");
 	position.x = 400;
-	position.y = 1500;
+	position.y = 500;
 
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 52 });
@@ -74,8 +74,8 @@ bool FlyingEnemy::Update(float dt)
 		iPoint posOrigin;
 		iPoint posDestination = app->player->position;
 
-		posOrigin = app->map->WorldToMap(position.x+33, position.y+31);
-		posDestination = app->map->WorldToMap(posDestination.x +64, posDestination.y+64);
+		posOrigin = app->map->WorldToMap(position.x, position.y);
+		posDestination = app->map->WorldToMap(posDestination.x, posDestination.y);
 
 		app->pathfinding->CreatePath(posOrigin, posDestination);
 		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
@@ -86,7 +86,7 @@ bool FlyingEnemy::Update(float dt)
 			{
 				position.x -= speedX;
 			}
-			if (path->At(1)->x > posOrigin.x /*&& ThereIsGroundRight()*/)
+			else if (path->At(1)->x > posOrigin.x /*&& ThereIsGroundRight()*/)
 			{
 				position.x += speedX;
 			}
@@ -94,7 +94,26 @@ bool FlyingEnemy::Update(float dt)
 			{
 				position.y -= speedX;
 			}
-			if (path->At(1)->y > posOrigin.y /*&& ThereIsGroundRight()*/)
+			else if (path->At(1)->y > posOrigin.y /*&& ThereIsGroundRight()*/)
+			{
+				position.y += speedX;
+			}
+		}
+		if (posOrigin == posDestination)
+		{
+			if (position.x > app->player->position.x)
+			{
+				position.x -= speedX;
+			}
+			else if (position.x < app->player->position.x)
+			{
+				position.x += speedX;
+			}
+			if (position.y > app->player->position.y)
+			{
+				position.y -= speedX;
+			}
+			else if (position.y < app->player->position.y)
 			{
 				position.y += speedX;
 			}
@@ -245,5 +264,5 @@ bool FlyingEnemy::SaveState(pugi::xml_node& node) const
 void FlyingEnemy::FlyingEnemyInitialPosition()
 {
 	position.x = 400;
-	position.y = 1500;
+	position.y = 500;
 }
