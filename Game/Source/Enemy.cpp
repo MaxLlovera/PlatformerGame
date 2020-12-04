@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Pathfinding.h"
 #include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
@@ -21,13 +22,13 @@
 Enemy::Enemy() : Module()
 {
 	name.Create("enemy");
-	position.x = 750;
+	position.x = 900;
 	position.y = 875;
 
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 85 });
 	idlAnim.PushBack({ 0, 430, 64, 85 });
-	idlAnim.speed = 0.05f;
+	idlAnim.speed = 0.04f;
 
 
 	//move right
@@ -73,7 +74,7 @@ bool Enemy::Update(float dt)
 
 	currentAnimation = &idlAnim;
 
-	if (app->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
+	/*if (app->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
 	{
 		position.y -= speedX;
 		currentAnimation = &leftAnim;
@@ -99,6 +100,43 @@ bool Enemy::Update(float dt)
 			position.x += speedX;
 			currentAnimation = &rightAnim;
 		}
+	}*/
+	if ((position.DistanceTo(app->player->position) < 200))
+	{
+		currentAnimation = &idlAnim;
+		iPoint posOrigin;
+		iPoint posDestination = app->player->position;
+
+		posOrigin = app->map->WorldToMap(position.x - 16, position.y);
+		posDestination = app->map->WorldToMap(posDestination.x - 32, posDestination.y);
+
+		app->pathfinding->CreatePath(posOrigin, posDestination);
+		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+		
+		if (path->At(1) != NULL)
+		{
+			if (path->At(1)->x < posOrigin.x && ThereIsGroundLeft())
+			{
+				speedX = 2.0f;
+				position.x -= speedX;
+				currentAnimation = &leftAnim;
+			}
+			else if (path->At(1)->x > posOrigin.x && ThereIsGroundRight())
+			{
+				speedX = 2.0f;
+				position.x += speedX;
+				currentAnimation = &rightAnim;
+			}
+		}
+		if (app->map->colliders)
+		{
+			for (uint i = 0; i < path->Count(); ++i)
+			{
+				iPoint nextPoint = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+				SDL_Rect pathRect = { nextPoint.x, nextPoint.y, 16, 16 };
+				app->render->DrawRectangle(pathRect, 255, 0, 0);
+			}
+		}
 	}
 
 	currentAnimation->Update();
@@ -112,7 +150,7 @@ bool Enemy::PostUpdate()
 	return true;
 }
 
-bool Enemy::ThereIsGround()
+bool Enemy::ThereIsGroundLeft()
 {
 	bool valid = false;
 	//if (!godModeEnabled)
@@ -126,8 +164,35 @@ bool Enemy::ThereIsGround()
 			{
 				for (int i = 0; i < 3; ++i)
 				{
-					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y /*+ playerHeight*/);
-					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y +85);
+					groundId = layer->data->Get(tilePosition.x-1, tilePosition.y);
+					if (groundId == COLLIDER_RED) valid = true;
+				}
+
+			}
+			layer = layer->next;
+		}
+	//}
+	return valid;
+
+}
+
+bool Enemy::ThereIsGroundRight()
+{
+	bool valid = false;
+	//if (!godModeEnabled)
+	//{
+		iPoint tilePosition;
+		ListItem<MapLayer*>* layer = app->map->data.layers.start;
+		int groundId;
+		while (layer != NULL)
+		{
+			if (layer->data->properties.GetProperty("Navigation") == 0)
+			{
+				for (int i = 0; i < 3; ++i)
+				{
+					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y +85);
+					groundId = layer->data->Get(tilePosition.x+1, tilePosition.y);
 					if (groundId == COLLIDER_RED) valid = true;
 				}
 
@@ -190,16 +255,16 @@ bool Enemy::ThereIsRightWall()
 	return valid;
 }
 
-void Enemy::GravityPlayer()
-{
-	if (!ThereIsGround())
-	{
-		speedY -= gravity;
-		position.y -= speedY;
-		//if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnimation = &jumpAnimLeft;
-		//else currentAnimation = &jumpAnimRight;
-	}
-}
+//void Enemy::GravityPlayer()
+//{
+//	if (!ThereIsGround())
+//	{
+//		speedY -= gravity;
+//		position.y -= speedY;
+//		//if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnimation = &jumpAnimLeft;
+//		//else currentAnimation = &jumpAnimRight;
+//	}
+//}
 
 bool Enemy::IsDead()
 {

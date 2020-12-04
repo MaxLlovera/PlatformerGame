@@ -32,14 +32,15 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool ThereIsGround();
+	bool ThereIsGroundLeft();
+	bool ThereIsGroundRight();
 	bool ThereIsLeftWall();
 	bool ThereIsRightWall();
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
-	void GravityPlayer();
+	//void GravityPlayer();
 
 	bool IsDead();
 
