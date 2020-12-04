@@ -290,24 +290,23 @@ bool Enemy::CleanUp()
 bool Enemy::LoadState(pugi::xml_node& node)
 {
 	bool ret = true;
-	position.x = node.child("positionPlayer").attribute("x").as_int();
-	position.y = node.child("positionPlayer").attribute("y").as_int();
+	position.x = node.child("positionEnemy").attribute("x").as_int();
+	position.y = node.child("positionEnemy").attribute("y").as_int();
 	return ret;
 }
 
 bool Enemy::SaveState(pugi::xml_node& node) const
 {
 	bool ret = true;
-	pugi::xml_node pnode = node.append_child("positionPlayer");
+	pugi::xml_node pnode = node.append_child("positionEnemy");
 	pnode.append_attribute("x") = position.x;
 	pnode.append_attribute("y") = position.y;
 	return ret;
 }
 
 
-void Enemy::EnemyPosIni()
+void Enemy::EnemyInitialPosition()
 {
 	position.x = 900;
 	position.y = 875;
 }
-

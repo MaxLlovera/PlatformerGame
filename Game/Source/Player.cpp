@@ -507,8 +507,8 @@ bool Player::loseLifes()
 
 	if (lifes == 0) dead = true;
 	
-	app->enemy->EnemyPosIni();
-	app->flyingEnemy->FlyEnemyPosIni();
+	app->enemy->EnemyInitialPosition();
+	app->flyingEnemy->FlyingEnemyInitialPosition();
 
 	currentAnimation = &deathAnim;
 	app->audio->PlayFx(playerDeathFx, 0);
@@ -519,20 +519,6 @@ bool Player::loseLifes()
 	return ret;
 }
 
-
-//bool Player::IsDead()
-//{
-//	bool ret = false;
-//
-//	dead = true;
-//
-//	//currentAnimation = &deathAnim;
-//	//app->audio->PlayFx(playerDeathFx,0);
-//	ret = true;
-//	
-//
-//	return ret;
-//}
 
 bool Player::CleanUp()
 {

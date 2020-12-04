@@ -44,7 +44,7 @@ public:
 
 	bool IsDead();
 
-	void EnemyPosIni();
+	void EnemyInitialPosition();
 
 	iPoint position;
 

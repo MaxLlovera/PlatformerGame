@@ -51,14 +51,8 @@ public:
 	void GravityPlayer();
 
 	bool loseLifes(); //when player loses a life
-
-	//bool IsDead(); //when player loses his last life
 	
-
 	iPoint position;
-
-
-
 
 	Animation* currentAnimation = nullptr;
 

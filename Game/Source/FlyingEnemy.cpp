@@ -19,7 +19,7 @@
 
 FlyingEnemy::FlyingEnemy() : Module()
 {
-	name.Create("enemy");
+	name.Create("flyingenemy");
 	position.x = 400;
 	position.y = 700;
 
@@ -48,7 +48,7 @@ FlyingEnemy::~FlyingEnemy()
 
 bool FlyingEnemy::Awake()
 {
-	LOG("Loading Enemy");
+	LOG("Loading Flying Enemy");
 	bool ret = true;
 
 	return ret;
@@ -224,21 +224,21 @@ bool FlyingEnemy::CleanUp()
 bool FlyingEnemy::LoadState(pugi::xml_node& node)
 {
 	bool ret = true;
-	position.x = node.child("positionPlayer").attribute("x").as_int();
-	position.y = node.child("positionPlayer").attribute("y").as_int();
+	position.x = node.child("positionFlyingEnemy").attribute("x").as_int();
+	position.y = node.child("positionFlyingEnemy").attribute("y").as_int();
 	return ret;
 }
 
 bool FlyingEnemy::SaveState(pugi::xml_node& node) const
 {
 	bool ret = true;
-	pugi::xml_node pnode = node.append_child("positionPlayer");
+	pugi::xml_node pnode = node.append_child("positionFlyingEnemy");
 	pnode.append_attribute("x") = position.x;
 	pnode.append_attribute("y") = position.y;
 	return ret;
 }
 
-void FlyingEnemy::FlyEnemyPosIni()
+void FlyingEnemy::FlyingEnemyInitialPosition()
 {
 	position.x = 400;
 	position.y = 700;

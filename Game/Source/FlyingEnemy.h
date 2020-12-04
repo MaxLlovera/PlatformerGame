@@ -42,7 +42,7 @@ public:
 	void GravityPlayer();
 
 	bool IsDead();
-	void FlyEnemyPosIni();
+	void FlyingEnemyInitialPosition();
 
 	iPoint position;
 
