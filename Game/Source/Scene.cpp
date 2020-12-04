@@ -44,7 +44,7 @@ bool Scene::Start()
 		background = app->tex->Load("Assets/Textures/background.png");
 		heart = app->tex->Load("Assets/Textures/head_shock.png");
 		// L03: DONE: Load map
-		if (app->map->Load("world1Meta.tmx") == true)
+		if (app->map->Load("world_meta.tmx") == true)
 		{
 			int w, h;
 			uchar* data = NULL;
