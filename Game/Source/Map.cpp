@@ -362,6 +362,37 @@ void Map::DrawCheckpoint()
 	}
 }
 
+
+void Map::DrawHeart()
+{
+	if (mapLoaded == false) return;
+
+	ListItem<MapLayer*>* layerHeart = data.layers.start;
+
+	while (layerHeart != NULL)
+	{
+
+		if (layerHeart->data->name == "heart")
+		{
+			for (int y = 0; y < data.height; ++y)
+			{
+				for (int x = 0; x < data.width; ++x)
+				{
+					int tileId = layerHeart->data->Get(x, y);
+					if (tileId > 0)
+					{
+						TileSet* set = GetTilesetFromTileId(tileId);
+						SDL_Rect rect = set->GetTileRect(tileId);
+						iPoint pos = MapToWorld(x, y);
+						if (!heartTaken) app->render->DrawTexture(set->texture, pos.x, pos.y, &rect);
+					}
+				}
+			}
+		}
+		layerHeart = layerHeart->next;
+	}
+}
+
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 iPoint Map::MapToWorld(int x, int y) const
 {

@@ -122,6 +122,7 @@ public:
 	void Draw();
 	void DrawKey();
 	void DrawCheckpoint();
+	void DrawHeart();
 	void DrawColliders();
 
 	// Called before quitting
@@ -179,6 +180,7 @@ public:
 	bool colliders = false;
 	bool keyTaken = false;
 	bool checkpointTaken = false;
+	bool heartTaken = false;
 private:
 
 	pugi::xml_document mapFile;

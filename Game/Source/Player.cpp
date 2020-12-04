@@ -18,6 +18,7 @@
 #define COLLIDER_BLUE 267
 #define COLLIDER_YELLOW 268
 #define COLLIDER_PINK 269
+#define COLLIDER_GREY 270
 
 Player::Player() : Module()
 {
@@ -78,13 +79,15 @@ bool Player::Start()
 		lifes = 3;
 		counterKey = 0;
 		counterCheckpoint = 0;
+		counterHeart = 0;
 		app->map->keyTaken = false;
 		app->map->checkpointTaken = false;
+		app->map->heartTaken = false;
 		texPlayer = app->tex->Load("Assets/Textures/player_textures.png");
 		playerDeathFx = app->audio->LoadFx("Assets/Audio/Fx/death_sound.wav");
 		keyTakenFx = app->audio->LoadFx("Assets/Audio/Fx/key.wav");
 		checkpointFx = app->audio->LoadFx("Assets/Audio/Fx/checkpoint.wav");
-		
+		heartFx = app->audio->LoadFx("Assets/Audio/Fx/heart.wav");
 		currentAnimation = &idlAnim;
 	}
 	return true;
@@ -165,7 +168,15 @@ bool Player::Update(float dt)
 		}
 		counterCheckpoint = 1;
 	}
-
+	if (TakeHeart()) {
+		app->map->heartTaken = true;
+		if (counterHeart == 0)
+		{
+			lifes++;
+			app->audio->PlayFx(heartFx, 0);
+		}
+		counterHeart = 1;
+	}
 	currentAnimation->Update();
 	return true;
 }
@@ -416,6 +427,34 @@ bool Player::TakeCheckpoint()
 	return valid;
 
 }
+
+bool Player::TakeHeart()
+{
+	bool valid = false;
+	if (!godModeEnabled)
+	{
+		iPoint tilePosition;
+		ListItem<MapLayer*>* layer = app->map->data.layers.start;
+		int heart;
+		while (layer != NULL)
+		{
+			if (layer->data->properties.GetProperty("Navigation") == 0)
+			{
+				for (int i = 0; i < 3; ++i)
+				{
+					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
+					heart = layer->data->Get(tilePosition.x, tilePosition.y);
+					if (heart == COLLIDER_GREY) valid = true;
+				}
+
+			}
+			layer = layer->next;
+		}
+	}
+	return valid;
+
+}
+
 bool Player::ThereIsDoor()
 {
 	bool valid = false;
