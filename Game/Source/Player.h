@@ -63,7 +63,6 @@ public:
 	//iPoint fireBallPos;
 
 
-
 	Animation* currentAnimation = nullptr;
 
 	Animation idlAnim;

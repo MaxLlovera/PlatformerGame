@@ -53,8 +53,7 @@ bool Scene::Start()
 
 			RELEASE_ARRAY(data);
 		}
-		////QUE ES AIXO?
-		debugTex = app->tex->Load("maps/path2.png");
+
 
 		// Load music
 		app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");

@@ -97,11 +97,24 @@ bool Render::CleanUp()
 //restart values
 void Render::RestartValues()
 {
-	
-	app->player->position.x = 350;
-	app->player->position.y = 875;
-	app->render->camera.x = app->player->position.x - app->player->position.x;
-	app->render->camera.y = app->player->position.y - (app->render->camera.h * 2) + 10;
+	if (app->map->checkpointTaken)
+	{
+		app->player->position.x = 938;
+		app->player->position.y = 171;
+
+		app->render->camera.x = app->player->position.x - (app->render->camera.w)-250;
+		app->render->camera.y = app->player->position.y - (app->render->camera.h)+450;
+	}
+	if (!app->map->checkpointTaken)
+	{
+		app->player->position.x = 350;
+		app->player->position.y = 875;
+
+		app->render->camera.x = app->player->position.x - app->player->position.x;
+		app->render->camera.y = app->player->position.y - (app->render->camera.h * 2) + 10;
+	}
+
+
 	counter = 0;
 	app->player->spiked = false;
 	

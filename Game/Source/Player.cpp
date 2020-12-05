@@ -102,6 +102,9 @@ bool Player::Update(float dt)
 
 	currentAnimation = &idlAnim;
 
+	if (ThereIsGround()) speedY = 0;
+
+
 	if ((ThereAreSpikes() || ThereIsEnemy() || ThereIsFlyingEnemy()) &&!spiked)
 	{ 
 		loseLifes();
@@ -539,7 +542,12 @@ bool Player::TakeCheckpoint()
 				{
 					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
 					checkpoint = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (checkpoint == COLLIDER_PINK) valid = true;
+					if (checkpoint == COLLIDER_PINK)
+					{
+						app->SaveGameRequest();
+						app->map->checkpointTaken = true;
+						valid = true;
+					}
 				}
 
 			}
