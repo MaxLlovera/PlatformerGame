@@ -44,8 +44,9 @@ Enemy::Enemy() : Module()
 
 	//deathAnim
 	deathAnim.PushBack({ 0, 518, 64, 85 });
-	deathAnim.speed = 0.1f;
 	deathAnim.loop = false;
+	deathAnim.speed = 0.02f;
+	
 }
 
 // Destructor
@@ -66,7 +67,7 @@ bool Enemy::Start()
 	{
 		dead = false;
 		texEnemy = app->tex->Load("Assets/Textures/enemy_texture.png");
-		enemyDeathFx = app->audio->LoadFx("Assets/Audio/Fx/death_sound.wav");
+		enemyDeathFx = app->audio->LoadFx("Assets/Audio/Fx/enemy_death.wav");
 
 		currentAnimation = &idlAnim;
 	}
@@ -75,72 +76,79 @@ bool Enemy::Start()
 
 bool Enemy::Update(float dt)
 {
-
-	currentAnimation = &idlAnim;
-
-	if ((position.DistanceTo(app->player->position) < 200))
+	if (!dead && !app->player->spiked)
 	{
 		currentAnimation = &idlAnim;
-		iPoint posOrigin;
-		iPoint posDestination = app->player->position;
 
-		posOrigin = app->map->WorldToMap(position.x, position.y);
-		posDestination = app->map->WorldToMap(posDestination.x, posDestination.y);
-
-		app->pathfinding->CreatePath(posOrigin, posDestination);
-		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-		
-		if (path->At(1) != NULL)
+		if ((position.DistanceTo(app->player->position) < 200))
 		{
-			if (path->At(1)->x < posOrigin.x && ThereIsGroundLeft())
+			currentAnimation = &idlAnim;
+			iPoint posOrigin;
+			iPoint posDestination = app->player->position;
+
+			posOrigin = app->map->WorldToMap(position.x, position.y);
+			posDestination = app->map->WorldToMap(posDestination.x, posDestination.y);
+
+			app->pathfinding->CreatePath(posOrigin, posDestination);
+			const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+			if (path->At(1) != NULL)
 			{
-				position.x -= speedX;
-				currentAnimation = &leftAnim;
-			}
-			else if (path->At(1)->x > posOrigin.x && ThereIsGroundRight())
-			{
-				position.x += speedX;
-				currentAnimation = &rightAnim;
-			}
-			if (!ThereIsGroundLeft() && (position.x+10) % 64 != 0)
-			{
-				position.x--;
-				currentAnimation = &leftAnim;
-			}
-			else if (!ThereIsGroundRight() && (position.x) % 64 != 0)
-			{
-				position.x++;
-				currentAnimation = &rightAnim;
-			}
+				if (path->At(1)->x < posOrigin.x && ThereIsGroundLeft())
+				{
+					position.x -= speed;
+					currentAnimation = &leftAnim;
+				}
+				else if (path->At(1)->x > posOrigin.x && ThereIsGroundRight())
+				{
+					position.x += speed;
+					currentAnimation = &rightAnim;
+				}
+				if (!ThereIsGroundLeft() && (position.x + 10) % 64 != 0)
+				{
+					position.x--;
+					currentAnimation = &leftAnim;
+				}
+				else if (!ThereIsGroundRight() && (position.x) % 64 != 0)
+				{
+					position.x++;
+					currentAnimation = &rightAnim;
+				}
 
 
-		}
-		if (posOrigin == posDestination)
-		{
-			if (position.x > app->player->position.x)
-			{
-				position.x -= speedX;
-				currentAnimation = &leftAnim;
 			}
-			else if (position.x < app->player->position.x)
+			if (posOrigin == posDestination)
 			{
-				position.x += speedX;
-				currentAnimation = &rightAnim;
+				if (position.x > app->player->position.x)
+				{
+					position.x -= speed;
+					currentAnimation = &leftAnim;
+				}
+				else if (position.x < app->player->position.x)
+				{
+					position.x += speed;
+					currentAnimation = &rightAnim;
+				}
 			}
-		}
 
-		if (app->map->colliders)
-		{
-			for (uint i = 0; i < path->Count(); ++i)
+			if (app->map->colliders)
 			{
-				iPoint nextPoint = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				SDL_Rect pathRect = { nextPoint.x, nextPoint.y, 16, 16 };
-				app->render->DrawRectangle(pathRect, 255, 0, 0);
+				for (uint i = 0; i < path->Count(); ++i)
+				{
+					iPoint nextPoint = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+					SDL_Rect pathRect = { nextPoint.x, nextPoint.y, 16, 16 };
+					app->render->DrawRectangle(pathRect, 255, 0, 0);
+				}
 			}
 		}
 	}
+	if (app->player->spiked) currentAnimation = &idlAnim;
 
-
+	if (deathAnim.HasFinished())
+	{
+		this->Disable();
+		deathAnim.Reset();
+	}
 	currentAnimation->Update();
 	return true;
 }
@@ -206,82 +214,12 @@ bool Enemy::ThereIsGroundRight()
 
 }
 
-bool Enemy::ThereIsLeftWall()
-{
-	bool valid = false;
-	//if (!godModeEnabled)
-	//{
-		iPoint tilePosition;
-		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int groundId;
-		while (layer != NULL)
-		{
-			if (layer->data->properties.GetProperty("Navigation") == 0)
-			{
-				for (int i = 0; i < 4; ++i)
-				{
-					tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
-					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (groundId == COLLIDER_RED) valid = true;
-				}
-			}
-			layer = layer->next;
-		}
-	//}
-	return valid;
-
-}
-
-bool Enemy::ThereIsRightWall()
-{
-	bool valid = false;
-	//if (!godModeEnabled)
-	//{
-		iPoint tilePosition;
-		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int groundId;
-		while (layer != NULL)
-		{
-			if (layer->data->properties.GetProperty("Navigation") == 0)
-			{
-				for (int i = 0; i < 4; ++i)
-				{
-					tilePosition = app->map->WorldToMap(position.x /*+ playerWidth*/, position.y + 21 + i * 16);
-					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (groundId == COLLIDER_RED) valid = true;
-				}
-			}
-			layer = layer->next;
-		}
-	//}
-	return valid;
-}
-
-//void Enemy::GravityPlayer()
-//{
-//	if (!ThereIsGround())
-//	{
-//		speedY -= gravity;
-//		position.y -= speedY;
-//		//if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnimation = &jumpAnimLeft;
-//		//else currentAnimation = &jumpAnimRight;
-//	}
-//}
-
 bool Enemy::IsDead()
 {
-	bool ret = false;
-
+	dead = true;
 	currentAnimation = &deathAnim;
 	app->audio->PlayFx(enemyDeathFx, 0);
-
-	this->Disable();
-	
-	dead = true;
-	ret = true;
-
-
-	return ret;
+	return true;
 }
 
 bool Enemy::CleanUp()

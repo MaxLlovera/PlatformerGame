@@ -6,6 +6,8 @@
 #include "Window.h"
 #include "Map.h"
 #include "Player.h"
+#include "Scene.h"
+#include "SceneLose.h"
 #include "Enemy.h"
 #include "ModuleParticles.h"
 #include "FlyingEnemy.h"
@@ -57,8 +59,9 @@ Player::Player() : Module()
 
 	//deathAnim
 	deathAnim.PushBack({ 0, 595, 64, 85 });
-	//leftAnim.PushBack({ 0, 340, 64, 85 });
-	deathAnim.speed = 0.1f;
+	deathAnim.PushBack({ 0, 1100, 64, 85 });
+	deathAnim.speed = 0.02f;
+	deathAnim.loop = false;
 }
 
 // Destructor
@@ -78,6 +81,7 @@ bool Player::Start()
 	if (this->active == true)
 	{
 		dead = false;
+		spiked = false;
 		win = false;
 		lifes = 3;
 		counterKey = 0;
@@ -99,118 +103,142 @@ bool Player::Start()
 
 bool Player::Update(float dt)
 {
-
-	currentAnimation = &idlAnim;
-
-	if (ThereIsGround()) speedY = 0;
-
-
-	if ((ThereAreSpikes() || ThereIsEnemy() || ThereIsFlyingEnemy()) &&!spiked)
-	{ 
-		loseLifes();
-		spiked = true;
-	}
-	
-	if (ThereIsDoor() && app->map->keyTaken) win = true;
-	else
+	if (!spiked && !dead)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godModeEnabled)
+		currentAnimation = &idlAnim;
+
+		if (ThereIsGround()) speedY = 0;
+
+
+		if ((ThereAreSpikes() || ThereIsEnemy() || ThereIsFlyingEnemy()))
 		{
-			position.y -= speedX;
-			currentAnimation = &leftAnim;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godModeEnabled)
-		{
-			position.y += speedX;
-			currentAnimation = &leftAnim;
+			LoseLifes();
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !ThereAreSpikes())
+		if (ThereIsDoor() && app->map->keyTaken) win = true;
+		else
 		{
-			if (!ThereIsLeftWall() && !ThereIsChestLeft())
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godModeEnabled)
 			{
-				position.x -= speedX;
+				position.y -= speedX;
 				currentAnimation = &leftAnim;
 			}
-		}
-		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !ThereAreSpikes())
-		{
-			if (!ThereIsRightWall() && !ThereIsChestRight())
+			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godModeEnabled)
 			{
-				position.x += speedX;
-				currentAnimation = &rightAnim;
+				position.y += speedX;
+				currentAnimation = &leftAnim;
 			}
-		}
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && (ThereIsGround() || ThereIsChestBelow()) && !ThereAreSpikes())
-		{
-			isJumping = true;
-			speedY = 5.0f;
-		}
-		if (isJumping)
-		{
-			Jump();
-			isJumping = false;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-		{
-			if (currentAnimation == &leftAnim)
+
+			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !ThereAreSpikes())
 			{
-				if (shotCountdown == 0)
+				if (!ThereIsLeftWall() && !ThereIsChestLeft())
 				{
-					Particle* newParticle = app->particles->AddParticle(app->particles->fireBallLeft, position.x, position.y + 50);
-					shotCountdown = shotMaxCountdown;
+					position.x -= speedX;
+					currentAnimation = &leftAnim;
 				}
 			}
-			else
+			else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !ThereAreSpikes())
 			{
-				if (shotCountdown == 0)
+				if (!ThereIsRightWall() && !ThereIsChestRight())
 				{
-					Particle* newParticle = app->particles->AddParticle(app->particles->fireBallRight, position.x + 50, position.y + 50);
-					shotCountdown = shotMaxCountdown;
+					position.x += speedX;
+					currentAnimation = &rightAnim;
 				}
+			}
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && (ThereIsGround() || ThereIsChestBelow()) && !ThereAreSpikes())
+			{
+				isJumping = true;
+				speedY = 5.0f;
+			}
+			if (isJumping)
+			{
+				Jump();
+				isJumping = false;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+			{
+				if (currentAnimation == &leftAnim)
+				{
+					if (shotCountdown == 0)
+					{
+						Particle* newParticle = app->particles->AddParticle(app->particles->fireBallLeft, position.x, position.y + 50);
+						shotCountdown = shotMaxCountdown;
+					}
+				}
+				else
+				{
+					if (shotCountdown == 0)
+					{
+						Particle* newParticle = app->particles->AddParticle(app->particles->fireBallRight, position.x + 50, position.y + 50);
+						shotCountdown = shotMaxCountdown;
+					}
+				}
+			}
+
+			if (!godModeEnabled) GravityPlayer();
+		}
+
+		if (shotCountdown > 0) --shotCountdown;
+
+		if (ThereIsChestBelow() || ThereIsChestLeft() || ThereIsChestRight())
+		{
+			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->map->puzzleTaken)
+			{
+				app->map->chestTaken = true;
 			}
 		}
 
-		if (!godModeEnabled) GravityPlayer();
-	}
-
-	if (shotCountdown > 0) --shotCountdown;
-
-	if (ThereIsChestBelow() || ThereIsChestLeft() || ThereIsChestRight())
-	{
-		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->map->puzzleTaken)
+		if (TakeKey())
 		{
-			app->map->chestTaken = true;
+			app->map->keyTaken = true;
+			if (counterKey == 0) app->audio->PlayFx(keyTakenFx, 0);
+			counterKey = 1;
+		}
+		if (TakePuzzle())
+		{
+			app->map->puzzleTaken = true;
+		}
+		if (TakeCheckpoint())
+		{
+			app->map->checkpointTaken = true;
+			if (counterCheckpoint == 0) app->audio->PlayFx(checkpointFx, 0);
+			counterCheckpoint = 1;
+		}
+		if (TakeHeart() && app->map->chestTaken)
+		{
+			app->map->heartTaken = true;
+			if (counterHeart == 0)
+			{
+				lifes++;
+				app->audio->PlayFx(heartFx, 0);
+			}
+			counterHeart = 1;
 		}
 	}
-
-	if (TakeKey())
+	//restart when dies
+	if (spiked && !dead)
 	{
-		app->map->keyTaken = true;
-		if (counterKey == 0) app->audio->PlayFx(keyTakenFx, 0);
-		counterKey = 1;
-	}
-	if (TakePuzzle())
-	{
-		app->map->puzzleTaken = true;
-	}
-	if (TakeCheckpoint())
-	{
-		app->map->checkpointTaken = true;
-		if (counterCheckpoint == 0) app->audio->PlayFx(checkpointFx, 0);
-		counterCheckpoint = 1;
-	}
-	if (TakeHeart() && app->map->chestTaken) 
-	{
-		app->map->heartTaken = true;
-		if (counterHeart == 0)
+		currentAnimation = &deathAnim;
+		if (deathAnim.HasFinished())
 		{
-			lifes++;
-			app->audio->PlayFx(heartFx, 0);
+			app->fadetoblack->FadeToBlk(app->scene, app->scene, 1 / dt);
+			app->render->RestartValues();
+			deathAnim.Reset();
 		}
-		counterHeart = 1;
-	}
 
+	}
+	
+	if (dead)
+	{
+		currentAnimation = &deathAnim;
+		if (deathAnim.HasFinished())
+		{
+			app->fadetoblack->FadeToBlk(app->scene, app->sceneLose, 1 / dt);
+			app->render->RestartValues();
+			deathAnim.Reset();
+		}
+
+	}
 	currentAnimation->Update();
 	return true;
 }
@@ -629,24 +657,16 @@ void Player::GravityPlayer()
 	if ((ThereIsGround() || ThereIsChestBelow()) && (position.y + 85) % 64 != 0) position.y--;
 }
 
-bool Player::loseLifes()
+bool Player::LoseLifes()
 {
-	bool ret = false;
-
 	lifes--;
-
 	if (lifes == 0) dead = true;
 	
-	app->enemy->EnemyInitialPosition();
-	app->flyingEnemy->FlyingEnemyInitialPosition();
-
-	currentAnimation = &deathAnim;
 	app->audio->PlayFx(playerDeathFx, 0);
-	ret = true;
-	spiked = false;
 
+	spiked = true;
 
-	return ret;
+	return true;
 }
 
 

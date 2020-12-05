@@ -1,10 +1,10 @@
 <!-- Config file for the game -->
 <!-- L01: DONE 1: Create configuration file-->
 <config>
-  <app framerate_cap="60">
+  <app>
     <title>Platformer Game by Fake Xeics</title>
     <organization>UPC</organization>
-
+    <fps capMax="60" capMin="30"/>
   </app>
 
   <renderer>

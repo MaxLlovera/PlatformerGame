@@ -12,18 +12,18 @@
 	<SceneWin />
 	<scene />
 	<map />
-	<player>
-		<positionPlayer x="350" y="875" />
-	</player>
 	<:anonymous />
 	<enemy>
-		<positionEnemy x="1024" y="875" />
+		<positionEnemy x="874" y="875" />
 	</enemy>
 	<flyingenemy>
-		<positionFlyingEnemy x="400" y="500" />
+		<positionFlyingEnemy x="534" y="764" />
 	</flyingenemy>
+	<player>
+		<positionPlayer x="722" y="875" />
+	</player>
 	<fadetoblack />
 	<renderer>
-		<camera x="0" y="-556" />
+		<camera x="-372" y="-555" />
 	</renderer>
 </save_state>

@@ -110,7 +110,7 @@ public:
 	SceneIntro* sceneIntro;
 	SceneWin* sceneWin;
 	SceneLose* sceneLose;
-
+	bool capped = false;
 private:
 
 	int argc;
@@ -142,8 +142,9 @@ private:
 	uint32 lastSecFrameCount = 0;
 	uint32 prevLastSecFrameCount = 0;
 	float dt = 0.0f;
-
+	
 	float cappedMs = -1;
+	float cappedMsMin = -1;
 };
 
 extern App* app;

@@ -32,9 +32,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool cameraUP = false;
+	bool cameraUp = false;
 	
-
+	bool animWork = false;
 private:
 	SDL_Texture* background;
 	int volume;

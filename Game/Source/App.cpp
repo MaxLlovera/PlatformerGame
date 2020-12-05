@@ -63,10 +63,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(sceneLose, false);
 	AddModule(scene, false);
 	AddModule(map, false);
-	AddModule(player, false);
 	AddModule(particles, true);
 	AddModule(enemy, false);
 	AddModule(flyingEnemy, false);
+	AddModule(player, false);
 	AddModule(fadetoblack, true);
 	
 
@@ -122,9 +122,11 @@ bool App::Awake()
 		organization.Create(configApp.child("organization").child_value());
 
 		// L08: DONE 1: Read from config file your framerate cap
-		int cap = configApp.attribute("framerate_cap").as_int(-1);
+		int cap = configApp.child("fps").attribute("capMax").as_int();
+		int capMin = configApp.child("fps").attribute("capMin").as_int();
 
 		if (cap > 0) cappedMs = 1000 / cap;
+		if (capMin > 0) cappedMsMin = 1000 / capMin;
 	}
 
 	if (ret == true)
@@ -239,8 +241,8 @@ void App::FinishUpdate()
 	uint32 framesOnLastUpdate = prevLastSecFrameCount;
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
-		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
+	sprintf_s(title, 256, "FPS: %i // Avg. FPS: %.2f // Last-frame MS: %02u // Vsync : off",
+		framesOnLastUpdate, averageFps, lastFrameMs);
 
 	app->win->SetTitle(title);
 
@@ -249,8 +251,8 @@ void App::FinishUpdate()
 	{
 		// L08: DONE 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
 		PERF_START(ptimer);
-		SDL_Delay(cappedMs);
-		LOG("We waited for %i ms and got back in %f", cappedMs, ptimer.ReadMs());
+		if(!capped) SDL_Delay(cappedMs - lastFrameMs);
+		if(capped) SDL_Delay(cappedMsMin - lastFrameMs);
 	}
 }
 
@@ -399,7 +401,7 @@ bool App::LoadGame()
 			item = item->next;
 		}
 
-		data.reset();
+		//data.reset();
 		if (ret == true) LOG("...finished loading");
 
 		else LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : 0);
@@ -437,7 +439,7 @@ bool App::SaveGame() const
 	}
 	else LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : 0);
 
-	data.reset();
+	//data.reset();
 
 	saveGameRequested = false;
 

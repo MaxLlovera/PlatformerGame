@@ -55,7 +55,7 @@ public:
 
 	void GravityPlayer();
 
-	bool loseLifes(); //when player loses a life
+	bool LoseLifes(); //when player loses a life
 	
 	iPoint position;
 

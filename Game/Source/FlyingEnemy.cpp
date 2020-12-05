@@ -29,13 +29,10 @@ FlyingEnemy::FlyingEnemy() : Module()
 	idlAnim.PushBack({ 0, 52, 64, 52 });
 	idlAnim.speed = 0.03f;
 
-
-	//move right
-	moveAnim.PushBack({ 0, 52, 64, 52 });
-	moveAnim.PushBack({ 0, 0, 64, 52 });
-	moveAnim.speed = 0.1f;
-
-
+	//deathAnim
+	deathAnim.PushBack({ 0, 107, 64, 52 });
+	deathAnim.loop = false;
+	deathAnim.speed = 0.02f;
 }
 
 // Destructor
@@ -56,7 +53,7 @@ bool FlyingEnemy::Start()
 	{
 		dead = false;
 		texFlyingEnemy = app->tex->Load("Assets/Textures/flyingenemy_texture.png");
-		//playerDeathFx = app->audio->LoadFx("Assets/Audio/Fx/death_sound.wav");
+		flyingEnemyDeathFx = app->audio->LoadFx("Assets/Audio/Fx/enemy_death.wav");
 
 		currentAnimation = &idlAnim;
 	}
@@ -66,60 +63,49 @@ bool FlyingEnemy::Start()
 bool FlyingEnemy::Update(float dt)
 {
 
-	currentAnimation = &idlAnim;
-
-	if ((position.DistanceTo(app->player->position) < 500))
+	if (!dead && !app->player->spiked)
 	{
 		currentAnimation = &idlAnim;
-		iPoint posOrigin;
-		iPoint posDestination = app->player->position;
-
-		posOrigin = app->map->WorldToMap(position.x, position.y);
-		posDestination = app->map->WorldToMap(posDestination.x, posDestination.y);
-
-		app->pathfinding->CreatePath(posOrigin, posDestination);
-		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-
-		if (path->At(1) != NULL)
+		if ((position.DistanceTo(app->player->position) < 500))
 		{
-			if (path->At(1)->x < posOrigin.x /*&& ThereIsGroundLeft()*/)
+			currentAnimation = &idlAnim;
+			iPoint posOrigin;
+			iPoint posDestination = app->player->position;
+
+			posOrigin = app->map->WorldToMap(position.x, position.y);
+			posDestination = app->map->WorldToMap(posDestination.x, posDestination.y);
+
+			app->pathfinding->CreatePath(posOrigin, posDestination);
+			const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+			if (path->At(1) != NULL)
 			{
-				position.x -= speedX;
+				if (path->At(1)->x < posOrigin.x) position.x -= speed;
+
+				else if (path->At(1)->x > posOrigin.x) position.x += speed;
+
+				if (path->At(1)->y < posOrigin.y) position.y -= speed;
+
+				else if (path->At(1)->y > posOrigin.y) position.y += speed;
 			}
-			else if (path->At(1)->x > posOrigin.x /*&& ThereIsGroundRight()*/)
+
+			if (posOrigin == posDestination)
 			{
-				position.x += speedX;
-			}
-			if (path->At(1)->y < posOrigin.y /*&& ThereIsGroundRight()*/)
-			{
-				position.y -= speedX;
-			}
-			else if (path->At(1)->y > posOrigin.y /*&& ThereIsGroundRight()*/)
-			{
-				position.y += speedX;
-			}
-		}
-		if (posOrigin == posDestination)
-		{
-			if (position.x > app->player->position.x)
-			{
-				position.x -= speedX;
-			}
-			else if (position.x < app->player->position.x)
-			{
-				position.x += speedX;
-			}
-			if (position.y > app->player->position.y)
-			{
-				position.y -= speedX;
-			}
-			else if (position.y < app->player->position.y)
-			{
-				position.y += speedX;
+				if (position.x > app->player->position.x) position.x -= speed;
+
+				else if (position.x < app->player->position.x) position.x += speed;
+
+				if (position.y > app->player->position.y) position.y -= speed;
+
+				else if (position.y < app->player->position.y) position.y += speed;
 			}
 		}
 	}
-
+	if (deathAnim.HasFinished())
+	{
+		this->Disable();
+		deathAnim.Reset();
+	}
 	currentAnimation->Update();
 	return true;
 }
@@ -209,31 +195,13 @@ bool FlyingEnemy::ThereIsRightWall()
 	return valid;
 }
 
-void FlyingEnemy::GravityPlayer()
-{
-	if (!ThereIsGround())
-	{
-		speedY -= gravity;
-		position.y -= speedY;
-		//if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnimation = &jumpAnimLeft;
-		//else currentAnimation = &jumpAnimRight;
-	}
-}
 
 bool FlyingEnemy::IsDead()
 {
-	bool ret = false;
-
-
-	app->audio->PlayFx(flyingEnemyDeathFx, 0);
-	this->Disable();
-
 	dead = true;
-
-	ret = true;
-
-
-	return ret;
+	currentAnimation = &deathAnim;
+	app->audio->PlayFx(flyingEnemyDeathFx, 0);
+	return true;
 }
 
 bool FlyingEnemy::CleanUp()

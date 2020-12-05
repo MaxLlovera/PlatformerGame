@@ -39,7 +39,6 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
-	void GravityPlayer();
 
 	bool IsDead();
 	void FlyingEnemyInitialPosition();
@@ -49,19 +48,12 @@ public:
 	Animation* currentAnimation = nullptr;
 
 	Animation idlAnim;
-	Animation moveAnim;
 	Animation deathAnim;
-	Animation upAnim;
 
 	bool dead = false;
 
 private:
-	float speedX = 2.0f;
-	float speedY = 0.0f;
-	float gravity = 0.15f;
-	//int playerHeight = 85;
-	//int playerWidth = 64;
-	//bool isJumping = false;
+	float speed = 2.0f;
 	SDL_Texture* texFlyingEnemy;
 	uint flyingEnemyDeathFx = 0;
 

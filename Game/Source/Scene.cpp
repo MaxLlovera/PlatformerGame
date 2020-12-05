@@ -54,7 +54,6 @@ bool Scene::Start()
 			RELEASE_ARRAY(data);
 		}
 
-
 		// Load music
 		app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 	}
@@ -86,14 +85,7 @@ bool Scene::Update(float dt)
 		app->render->RestartValues();
 	}
 
-	//restart when dies
-	if (app->player->spiked && !app->player->dead)
-	{
-
-		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
-		app->render->RestartValues();
-
-	}
+	
 	
 	//restart the current level
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -109,6 +101,9 @@ bool Scene::Update(float dt)
 	//god mode
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) app->player->godModeEnabled = !app->player->godModeEnabled;
 	
+	//cap fps
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) app->capped = !app->capped;
+
 	//SceneWin
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->player->win)
 	{
@@ -117,7 +112,7 @@ bool Scene::Update(float dt)
 	}
 	
 	//SceneLose
-	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN || app->player->dead)
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
 		app->render->RestartValues();
@@ -130,26 +125,27 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
 
 	//camera x
-	if (app->render->counter==0||app->player->godModeEnabled)
+	if ((app->render->counter == 0 || app->player->godModeEnabled) && !app->player->spiked)
 	{
 		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->player->position.x > 350 && app->player->position.x <= 4400 && !app->player->ThereIsLeftWall() && !app->player->ThereIsChestLeft()) app->render->camera.x += 3.0f;
 		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 4400 && !app->player->ThereIsRightWall() && !app->player->ThereIsChestRight()) app->render->camera.x -= 3.0f;
 	}
 
 	//camera y
-	if (app->player->position.y < 550&&!cameraUP)
+	if (app->player->position.y < 550 && !cameraUp)
 	{
 		app->render->camera.y += 6.0f;
 		if (app->render->camera.y >= -100) 
 		{
 			app->render->camera.y += 0.0f;
-			cameraUP = true;
+			cameraUp = true;
 		}
 	}	
-	if (app->player->position.y > 551 && cameraUP)
+
+	if (app->player->position.y > 550 && cameraUp)
 	{
 		app->render->camera.y -= 6.0f;
-		if (app->render->camera.y < -550) cameraUP = false;
+		if (app->render->camera.y < -550) cameraUp = false;
 	}
 
 	//camera movement (comented)
