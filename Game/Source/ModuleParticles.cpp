@@ -120,8 +120,8 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, u
 		if (particles[i] == nullptr)
 		{
 			newParticle = new Particle(particle);
-			newParticle->frameCount = -(int)delay;			// We start the frameCount as the negative delay
-			newParticle->position.x = x;						// so when frameCount reaches 0 the particle will be activated
+			newParticle->frameCount = -(int)delay;
+			newParticle->position.x = x;
 			newParticle->position.y = y;
 
 			//Adding the particle's collider
