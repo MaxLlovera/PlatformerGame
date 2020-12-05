@@ -221,11 +221,10 @@ bool Player::Update(float dt)
 		currentAnimation = &deathAnim;
 		if (deathAnim.HasFinished())
 		{
-			app->fadetoblack->FadeToBlk(app->scene, app->scene, 1 / dt);
 			app->render->RestartValues();
-			deathAnim.Reset();
-		}
+			//spiked = true;
 
+		}
 	}
 	
 	if (dead)
@@ -235,10 +234,12 @@ bool Player::Update(float dt)
 		{
 			app->fadetoblack->FadeToBlk(app->scene, app->sceneLose, 1 / dt);
 			app->render->RestartValues();
-			deathAnim.Reset();
+
 		}
 
 	}
+
+
 	currentAnimation->Update();
 	return true;
 }

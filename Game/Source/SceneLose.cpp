@@ -43,11 +43,13 @@ bool SceneLose::Start()
 		app->flyingEnemy->Disable();
 		app->map->Disable();
 		app->audio->PlayMusic("Assets/Audio/Music/game_over.ogg");
-
+		app->map->checkpointTaken = false;
+		app->player->dead = false;
 		app->render->camera.x = 0;
 		app->render->camera.y = -556;
-		app->player->position.x = 350;
-		app->player->position.y = 875;
+		
+		//app->player->position.x = 350;
+		//app->player->position.y = 875;
 
 	}
 	

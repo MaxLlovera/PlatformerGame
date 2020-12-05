@@ -14,16 +14,16 @@
 	<map />
 	<:anonymous />
 	<enemy>
-		<positionEnemy x="874" y="875" />
+		<positionEnemy x="832" y="875" />
 	</enemy>
 	<flyingenemy>
-		<positionFlyingEnemy x="534" y="764" />
+		<positionFlyingEnemy x="1024" y="374" />
 	</flyingenemy>
 	<player>
-		<positionPlayer x="722" y="875" />
+		<positionPlayer x="938" y="171" />
 	</player>
 	<fadetoblack />
 	<renderer>
-		<camera x="-372" y="-555" />
+		<camera x="-588" y="-99" />
 	</renderer>
 </save_state>

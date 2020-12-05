@@ -99,13 +99,14 @@ bool Render::CleanUp()
 //restart values
 void Render::RestartValues()
 {
+
 	if (app->map->checkpointTaken)
 	{
 		app->player->position.x = 938;
 		app->player->position.y = 171;
 
-		app->render->camera.x = app->player->position.x - (app->render->camera.w)-250;
-		app->render->camera.y = app->player->position.y - (app->render->camera.h)+450;
+		app->render->camera.x = app->player->position.x - (app->render->camera.w) - 250;
+		app->render->camera.y = app->player->position.y - (app->render->camera.h) + 450;
 	}
 	if (!app->map->checkpointTaken)
 	{
@@ -115,12 +116,17 @@ void Render::RestartValues()
 		app->render->camera.x = app->player->position.x - app->player->position.x;
 		app->render->camera.y = app->player->position.y - (app->render->camera.h * 2) + 10;
 	}
+	if (app->player->dead)
+	{
+		app->render->camera.y = -2000;
+	}
 	app->enemy->EnemyInitialPosition();
 	app->flyingEnemy->FlyingEnemyInitialPosition();
-
+	app->player->deathAnim.Reset();
 	counter = 0;
 	app->player->spiked = false;
-	
+
+
 }
 
 void Render::DeadRestart()

@@ -6,6 +6,9 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "FlyingEnemy.h"
 #include "SceneWin.h"
 #include "SceneLose.h"
 #include "FadeToBlack.h"
@@ -36,12 +39,26 @@ bool SceneIntro::Start()
 	app->sceneLose->Disable();
 	app->sceneWin->Disable();
 	app->audio->PlayMusic("Assets/Audio/Music/intro_theme.ogg");
+	app->render->camera.x = 0;
+	app->render->camera.y = -555;
+	app->player->position.x = 350;
+	app->player->position.y = 875;
+	app->enemy->position.x = 900;
+	app->enemy->position.y = 875;
+	app->flyingEnemy->position.x = 400;
+	app->flyingEnemy->position.y = 500;
 	return ret;
 }
 
 bool SceneIntro::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
+
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	{
+		app->render->RestartValues();
+		app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
+	}
+
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
 	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);

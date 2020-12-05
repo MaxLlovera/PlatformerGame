@@ -43,6 +43,7 @@ bool Scene::Start()
 		app->map->Enable();
 		background = app->tex->Load("Assets/Textures/background.png");
 		heart = app->tex->Load("Assets/Textures/head_shock.png");
+		app->player->spiked = false;
 		// L03: DONE: Load map
 		if (app->map->Load("world_meta.tmx") == true)
 		{
@@ -85,7 +86,6 @@ bool Scene::Update(float dt)
 		app->render->RestartValues();
 	}
 
-	
 	
 	//restart the current level
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)

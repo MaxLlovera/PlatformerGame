@@ -21,6 +21,7 @@ public:
 
 	bool FadeToBlk(Module* toDisable, Module* toEnable, float frames = 60);
 	bool CleanUp() override;
+
 private:
 
 	enum FadeStep

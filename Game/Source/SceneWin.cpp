@@ -45,12 +45,7 @@ bool SceneWin::Start()
 		app->audio->PlayMusic("Assets/Audio/Music/victory.ogg");
 		app->render->camera.x = 0;
 		app->render->camera.y = -556;
-		app->player->position.x = 350;
-		app->player->position.y = 875;
-		app->enemy->position.x = 900;
-		app->enemy->position.y = 875;
-		app->flyingEnemy->position.x = 400;
-		app->flyingEnemy->position.y = 500;
+
 	}
 	return ret;
 }

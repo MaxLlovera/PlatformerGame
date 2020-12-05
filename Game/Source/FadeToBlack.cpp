@@ -99,6 +99,7 @@ bool FadeToBlack::FadeToBlk(Module* moduleToDisable, Module* moduleToEnable, flo
 		this->moduleToDisable = moduleToDisable;
 		this->moduleToEnable = moduleToEnable;
 		ret = true;
+
 	}
 
 	return ret;
