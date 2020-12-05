@@ -14,6 +14,8 @@
 #include "Defs.h"
 #include "Log.h"
 
+#define COLLIDER_RED 266
+
 Particle::Particle()
 {
 	position.SetToZero();
@@ -71,6 +73,14 @@ bool Particle::Update()
 			app->flyingEnemy->IsDead();
 			SetToDelete();
 		}
+	}
+	if (ThereIsLeftWall())
+	{
+		SetToDelete();
+	}
+	if (ThereIsRightWall())
+	{
+		SetToDelete();
 	}
 	return ret;
 }
@@ -130,6 +140,55 @@ bool Particle::ThereIsFlyingEnemy()
 	}
 
 	if (positionX && positionY) valid = true;
+
+	return valid;
+}
+
+bool Particle::ThereIsLeftWall()
+{
+	bool valid = false;
+
+	iPoint tilePosition;
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int groundId;
+	while (layer != NULL)
+	{
+		if (layer->data->properties.GetProperty("Navigation") == 0)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				tilePosition = app->map->WorldToMap(position.x, position.y);
+				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (groundId == COLLIDER_RED) valid = true;
+			}
+		}
+		layer = layer->next;
+	}
+
+	return valid;
+
+}
+
+bool Particle::ThereIsRightWall()
+{
+	bool valid = false;
+
+	iPoint tilePosition;
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int groundId;
+	while (layer != NULL)
+	{
+		/*if (layer->data->properties.GetProperty("Navigation") == 1)
+		{*/
+		for (int i = 0; i < 4; ++i)
+		{
+			tilePosition = app->map->WorldToMap(position.x+25, position.y);
+			groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+			if (groundId == COLLIDER_RED) valid = true;
+		}
+		//}
+		layer = layer->next;
+	}
 
 	return valid;
 }

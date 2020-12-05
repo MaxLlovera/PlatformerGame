@@ -28,6 +28,8 @@ public:
 
 	bool ThereIsEnemy();
 	bool ThereIsFlyingEnemy();
+	bool ThereIsLeftWall();
+	bool ThereIsRightWall();
 public:
 	// Defines the position in the screen
 	iPoint position;
