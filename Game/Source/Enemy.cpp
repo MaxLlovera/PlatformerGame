@@ -102,6 +102,18 @@ bool Enemy::Update(float dt)
 				position.x += speedX;
 				currentAnimation = &rightAnim;
 			}
+			if (!ThereIsGroundLeft() && (position.x+10) % 64 != 0)
+			{
+				position.x--;
+				currentAnimation = &leftAnim;
+			}
+			else if (!ThereIsGroundRight() && (position.x) % 64 != 0)
+			{
+				position.x++;
+				currentAnimation = &rightAnim;
+			}
+
+
 		}
 		if (posOrigin == posDestination)
 		{

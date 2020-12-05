@@ -122,6 +122,8 @@ public:
 	void Draw();
 	void DrawKey();
 	void DrawCheckpoint();
+	void DrawPuzzle();
+	void DrawChest();
 	void DrawHeart();
 	void DrawColliders();
 
@@ -180,7 +182,9 @@ public:
 	bool colliders = false;
 	bool keyTaken = false;
 	bool checkpointTaken = false;
+	bool puzzleTaken = false;
 	bool heartTaken = false;
+	bool chestTaken = false;
 private:
 
 	pugi::xml_document mapFile;

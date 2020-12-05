@@ -266,7 +266,7 @@ void Map::DrawKey()
 	while (layerNoKey != NULL)
 	{
 
-		if (layerNoKey->data->name == "takenkey")
+		if (layerNoKey->data->name == "keyTaken")
 		{
 			for (int y = 0; y < data.height; ++y)
 			{
@@ -362,6 +362,59 @@ void Map::DrawCheckpoint()
 	}
 }
 
+void Map::DrawPuzzle()
+{
+	if (mapLoaded == false) return;
+
+	ListItem<MapLayer*>* layerPuzzleTaken = data.layers.start;
+	ListItem<MapLayer*>* layerPuzzle = data.layers.start;
+
+	while (layerPuzzleTaken != NULL)
+	{
+
+		if (layerPuzzleTaken->data->name == "puzzleTaken")
+		{
+			for (int y = 0; y < data.height; ++y)
+			{
+				for (int x = 0; x < data.width; ++x)
+				{
+					int tileId = layerPuzzleTaken->data->Get(x, y);
+					if (tileId > 0)
+					{
+						TileSet* set = GetTilesetFromTileId(tileId);
+						SDL_Rect rect = set->GetTileRect(tileId);
+						iPoint pos = MapToWorld(x, y);
+						if (puzzleTaken) app->render->DrawTexture(set->texture, pos.x, pos.y, &rect);
+					}
+				}
+			}
+		}
+		layerPuzzleTaken = layerPuzzleTaken->next;
+	}
+	while (layerPuzzle != NULL)
+	{
+
+		if (layerPuzzle->data->name == "puzzle")
+		{
+			for (int y = 0; y < data.height; ++y)
+			{
+				for (int x = 0; x < data.width; ++x)
+				{
+					int tileId = layerPuzzle->data->Get(x, y);
+					if (tileId > 0)
+					{
+						TileSet* set = GetTilesetFromTileId(tileId);
+						SDL_Rect rect = set->GetTileRect(tileId);
+						iPoint pos = MapToWorld(x, y);
+						if (!puzzleTaken) app->render->DrawTexture(set->texture, pos.x, pos.y, &rect);
+					}
+				}
+			}
+		}
+		layerPuzzle = layerPuzzle->next;
+	}
+}
+
 
 void Map::DrawHeart()
 {
@@ -373,6 +426,36 @@ void Map::DrawHeart()
 	{
 
 		if (layerHeart->data->name == "heart")
+		{
+			for (int y = 0; y < data.height; ++y)
+			{
+				for (int x = 0; x < data.width; ++x)
+				{
+					int tileId = layerHeart->data->Get(x, y);
+					if (tileId > 0)
+					{
+						TileSet* set = GetTilesetFromTileId(tileId);
+						SDL_Rect rect = set->GetTileRect(tileId);
+						iPoint pos = MapToWorld(x, y);
+						if (!heartTaken) app->render->DrawTexture(set->texture, pos.x, pos.y, &rect);
+					}
+				}
+			}
+		}
+		layerHeart = layerHeart->next;
+	}
+}
+
+void Map::DrawChest()
+{
+	if (mapLoaded == false) return;
+
+	ListItem<MapLayer*>* layerHeart = data.layers.start;
+
+	while (layerHeart != NULL)
+	{
+
+		if (layerHeart->data->name == "chest")
 		{
 			for (int y = 0; y < data.height; ++y)
 			{

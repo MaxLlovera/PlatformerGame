@@ -35,11 +35,16 @@ public:
 	bool ThereIsGround();
 	bool ThereIsLeftWall();
 	bool ThereIsRightWall();
+	
+	bool ThereIsChestBelow();
+	bool ThereIsChestLeft();
+	bool ThereIsChestRight();
 	//bool ThereIsTopWall();
 	bool ThereAreSpikes();
 	bool ThereIsEnemy();
 	bool ThereIsFlyingEnemy();
 	bool TakeKey();
+	bool TakePuzzle();
 	bool TakeCheckpoint();
 	bool TakeHeart();
 	bool ThereIsDoor();

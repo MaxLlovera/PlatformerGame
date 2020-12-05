@@ -20,6 +20,7 @@
 #define COLLIDER_YELLOW 268
 #define COLLIDER_PINK 269
 #define COLLIDER_GREY 270
+#define COLLIDER_ORANGE 271
 
 Player::Player() : Module()
 {
@@ -123,7 +124,7 @@ bool Player::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !ThereAreSpikes())
 		{
-			if (!ThereIsLeftWall())
+			if (!ThereIsLeftWall() && !ThereIsChestLeft())
 			{
 				position.x -= speedX;
 				currentAnimation = &leftAnim;
@@ -131,24 +132,23 @@ bool Player::Update(float dt)
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !ThereAreSpikes())
 		{
-			if (!ThereIsRightWall())
+			if (!ThereIsRightWall() && !ThereIsChestRight())
 			{
 				position.x += speedX;
 				currentAnimation = &rightAnim;
 			}
 		}
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ThereIsGround() && !ThereAreSpikes())
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && (ThereIsGround() || ThereIsChestBelow()) && !ThereAreSpikes())
 		{
 			isJumping = true;
 			speedY = 5.0f;
-			//GravityPlayer();
 		}
 		if (isJumping)
 		{
 			Jump();
 			isJumping = false;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT)
+		if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		{
 			if (currentAnimation == &leftAnim)
 			{
@@ -168,33 +168,37 @@ bool Player::Update(float dt)
 			}
 		}
 
-		if (!godModeEnabled)
-		{
-			GravityPlayer();
-		}
+		if (!godModeEnabled) GravityPlayer();
 	}
 
 	if (shotCountdown > 0) --shotCountdown;
 
-
-
-	if (TakeKey()) {
-		app->map->keyTaken = true;
-		if (counterKey == 0)
+	if (ThereIsChestBelow() || ThereIsChestLeft() || ThereIsChestRight())
+	{
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->map->puzzleTaken)
 		{
-			app->audio->PlayFx(keyTakenFx, 0);
+			app->map->chestTaken = true;
 		}
+	}
+
+	if (TakeKey())
+	{
+		app->map->keyTaken = true;
+		if (counterKey == 0) app->audio->PlayFx(keyTakenFx, 0);
 		counterKey = 1;
 	}
-	if (TakeCheckpoint()) {
+	if (TakePuzzle())
+	{
+		app->map->puzzleTaken = true;
+	}
+	if (TakeCheckpoint())
+	{
 		app->map->checkpointTaken = true;
-		if (counterCheckpoint == 0) 
-		{
-			app->audio->PlayFx(checkpointFx, 0);
-		}
+		if (counterCheckpoint == 0) app->audio->PlayFx(checkpointFx, 0);
 		counterCheckpoint = 1;
 	}
-	if (TakeHeart()) {
+	if (TakeHeart() && app->map->chestTaken) 
+	{
 		app->map->heartTaken = true;
 		if (counterHeart == 0)
 		{
@@ -203,6 +207,7 @@ bool Player::Update(float dt)
 		}
 		counterHeart = 1;
 	}
+
 	currentAnimation->Update();
 	return true;
 }
@@ -227,9 +232,9 @@ bool Player::ThereIsGround()
 		{
 			if (layer->data->properties.GetProperty("Navigation") == 0)
 			{
-				for (int i = 0; i < 3; ++i)
+				for (int i = 0; i < 5; ++i)
 				{
-					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + playerHeight);
+					tilePosition = app->map->WorldToMap(position.x + 24 + i * 4, position.y + playerHeight);
 					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
 					if (groundId == COLLIDER_RED) valid = true;
 				}
@@ -241,8 +246,6 @@ bool Player::ThereIsGround()
 	return valid;
 
 }
-
-
 
 bool Player::ThereIsLeftWall()
 {
@@ -280,15 +283,15 @@ bool Player::ThereIsRightWall()
 		int groundId;
 		while (layer != NULL)
 		{
-			if (layer->data->properties.GetProperty("Navigation") == 0)
-			{
+			/*if (layer->data->properties.GetProperty("Navigation") == 1)
+			{*/
 				for (int i = 0; i < 4; ++i)
 				{
 					tilePosition = app->map->WorldToMap(position.x + playerWidth, position.y + 21 + i * 16);
 					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
 					if (groundId == COLLIDER_RED) valid = true;
 				}
-			}
+			//}
 			layer = layer->next;
 		}
 	}
@@ -319,6 +322,72 @@ bool Player::ThereIsRightWall()
 //	}
 //	return valid;
 //}
+
+bool Player::ThereIsChestBelow()
+{
+	bool valid = false;
+	if (!godModeEnabled && !app->map->chestTaken)
+	{
+		iPoint tilePosition;
+		ListItem<MapLayer*>* layer = app->map->data.layers.start;
+		int groundId;
+		while (layer != NULL)
+		{
+			for (int i = 0; i < 5; ++i)
+			{
+				tilePosition = app->map->WorldToMap(position.x + 24 + i * 4, position.y + playerHeight);
+				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (groundId == COLLIDER_GREY) valid = true;
+			}
+			layer = layer->next;
+		}
+	}
+	return valid;
+}
+bool Player::ThereIsChestLeft()
+{
+	bool valid = false;
+	if (!godModeEnabled && !app->map->chestTaken)
+	{
+		iPoint tilePosition;
+		ListItem<MapLayer*>* layer = app->map->data.layers.start;
+		int groundId;
+		while (layer != NULL)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
+				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (groundId == COLLIDER_GREY) valid = true;
+			}
+			layer = layer->next;
+		}
+	}
+	return valid;
+
+}
+
+bool Player::ThereIsChestRight()
+{
+	bool valid = false;
+	if (!godModeEnabled && !app->map->chestTaken)
+	{
+		iPoint tilePosition;
+		ListItem<MapLayer*>* layer = app->map->data.layers.start;
+		int groundId;
+		while (layer != NULL)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				tilePosition = app->map->WorldToMap(position.x + playerWidth, position.y + 21 + i * 16);
+				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (groundId == COLLIDER_GREY) valid = true;
+			}
+			layer = layer->next;
+		}
+	}
+	return valid;
+}
 
 bool Player::ThereAreSpikes()
 {
@@ -431,6 +500,29 @@ bool Player::TakeKey()
 
 }
 
+bool Player::TakePuzzle()
+{
+	bool valid = false;
+	if (!godModeEnabled)
+	{
+		iPoint tilePosition;
+		ListItem<MapLayer*>* layer = app->map->data.layers.start;
+		int key;
+		while (layer != NULL)
+		{
+			for (int i = 0; i < 3; ++i)
+			{
+				tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
+				key = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (key == COLLIDER_ORANGE) valid = true;
+			}
+			layer = layer->next;
+		}
+	}
+	return valid;
+
+}
+
 bool Player::TakeCheckpoint()
 {
 	bool valid = false;
@@ -519,17 +611,14 @@ void Player::Jump()
 
 void Player::GravityPlayer()
 {
-	if (!ThereIsGround())
+	if (!ThereIsGround() && !ThereIsChestBelow())
 	{
 		speedY -= gravity;
 		position.y -= speedY;
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnimation = &jumpAnimLeft;
 		else currentAnimation = &jumpAnimRight;
 	}
-	if (ThereIsGround())
-	{
-		if ((position.y + 85) % 64 != 0) position.y--;
-	}
+	if ((ThereIsGround() || ThereIsChestBelow()) && (position.y + 85) % 64 != 0) position.y--;
 }
 
 bool Player::loseLifes()
