@@ -72,8 +72,10 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	// L02: DONE 3: Request Load / Save when pressing L/S
-	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadGameRequest();
-
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	{
+		app->LoadGameRequest();
+	}
 	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveGameRequest();
 
 	
@@ -144,7 +146,7 @@ bool Scene::Update(float dt)
 			cameraUP = true;
 		}
 	}	
-	if (app->player->position.y > 700 && cameraUP)
+	if (app->player->position.y > 551 && cameraUP)
 	{
 		app->render->camera.y -= 6.0f;
 		if (app->render->camera.y < -550) cameraUP = false;

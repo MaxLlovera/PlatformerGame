@@ -68,7 +68,7 @@ bool FlyingEnemy::Update(float dt)
 
 	currentAnimation = &idlAnim;
 
-	if ((position.DistanceTo(app->player->position) < 10))
+	if ((position.DistanceTo(app->player->position) < 500))
 	{
 		currentAnimation = &idlAnim;
 		iPoint posOrigin;

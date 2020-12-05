@@ -13,17 +13,17 @@
 	<scene />
 	<map />
 	<player>
-		<positionPlayer x="377" y="617" />
+		<positionPlayer x="350" y="875" />
 	</player>
 	<:anonymous />
 	<enemy>
-		<positionEnemy x="900" y="875" />
+		<positionEnemy x="1024" y="875" />
 	</enemy>
 	<flyingenemy>
 		<positionFlyingEnemy x="400" y="500" />
 	</flyingenemy>
 	<fadetoblack />
 	<renderer>
-		<camera x="-27" y="-555" />
+		<camera x="0" y="-556" />
 	</renderer>
 </save_state>
