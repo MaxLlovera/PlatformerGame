@@ -43,7 +43,6 @@ public:
 	bool TakeCheckpoint();
 	bool TakeHeart();
 	bool ThereIsDoor();
-	bool FireBallKill();
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;

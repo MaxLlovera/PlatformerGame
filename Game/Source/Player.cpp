@@ -511,14 +511,6 @@ bool Player::ThereIsDoor()
 
 }
 
-bool Player::FireBallKill()
-{
-	
-
-	
-	return true;
-}
-
 void Player::Jump() 
 {
 	speedY -= gravity;
@@ -533,6 +525,10 @@ void Player::GravityPlayer()
 		position.y -= speedY;
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnimation = &jumpAnimLeft;
 		else currentAnimation = &jumpAnimRight;
+	}
+	if (ThereIsGround())
+	{
+		if ((position.y + 85) % 64 != 0) position.y--;
 	}
 }
 
