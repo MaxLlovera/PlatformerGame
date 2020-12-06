@@ -14,7 +14,7 @@ public:
 
 	// Called when the module is activated
 	bool Awake(pugi::xml_node& config) override;
-// Loads the necessary textures for the map background
+	// Loads the necessary textures for the map background
 	bool Start();
 
 	// Called at the middle of the application loop
@@ -29,9 +29,7 @@ public:
 	bool CleanUp() override;
 
 private:
-
 	SDL_Texture* introText = nullptr;
-
 
 };
 

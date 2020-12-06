@@ -39,7 +39,6 @@ public:
 	bool ThereIsChestBelow();
 	bool ThereIsChestLeft();
 	bool ThereIsChestRight();
-	//bool ThereIsTopWall();
 	bool ThereAreSpikes();
 	bool ThereIsEnemy();
 	bool ThereIsFlyingEnemy();
@@ -55,13 +54,9 @@ public:
 
 	void GravityPlayer();
 
-	bool LoseLifes(); //when player loses a life
+	bool LoseLifes();
 	
 	iPoint position;
-
-
-	//iPoint fireBallPos;
-
 
 	Animation* currentAnimation = nullptr;
 

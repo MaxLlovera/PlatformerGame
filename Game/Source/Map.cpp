@@ -27,8 +27,7 @@ int Properties::GetProperty(const char* value, int defaultValue) const
 
 	while (item)
 	{
-		if (item->data->name == value)
-			return item->data->value;
+		if (item->data->name == value) return item->data->value;
 		item = item->next;
 	}
 

@@ -30,12 +30,10 @@ Player::Player() : Module()
 	position.x = 350;
 	position.y = 875;
 
-
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 85 });
 	idlAnim.PushBack({ 0, 681, 64, 85 });
 	idlAnim.speed = 0.02f;
-
 
 	//move right
 	rightAnim.PushBack({ 0, 85, 64, 85 });
@@ -236,8 +234,6 @@ bool Player::Update(float dt)
 			app->render->RestartValues();
 			app->enemy->Enable();
 			app->flyingEnemy->Enable();
-
-			//spiked = true;
 		}
 	}
 	
@@ -250,7 +246,6 @@ bool Player::Update(float dt)
 			app->render->RestartValues();
 		}
 	}
-
 
 	currentAnimation->Update();
 	return true;
@@ -314,7 +309,6 @@ bool Player::ThereIsLeftWall()
 		}
 	}
 	return valid;
-
 }
 
 bool Player::ThereIsRightWall()
@@ -342,30 +336,6 @@ bool Player::ThereIsRightWall()
 	return valid;
 }
 
-//bool Player::thereIsTopWall()
-//{
-//	bool valid = false;
-//	if (!godModeEnabled)
-//	{
-//		iPoint tilePosition;
-//		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-//		int groundId;
-//		while (layer != NULL)
-//		{
-//			if (layer->data->properties.GetProperty("Navigation") == 0)
-//			{
-//				for (int i = 0; i < 4; ++i)
-//				{
-//					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y+21);
-//					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-//					if (groundId == 266) valid = true;
-//				}
-//			}
-//			layer = layer->next;
-//		}
-//	}
-//	return valid;
-//}
 
 bool Player::ThereIsChestBelow()
 {
@@ -687,7 +657,7 @@ bool Player::CleanUp()
 {
 	LOG("Freeing scene");
 	app->tex->UnLoad(texPlayer);
-	
+	app->tex->UnLoad(texFireBall);
 	return true;
 }
 

@@ -37,7 +37,9 @@ FlyingEnemy::FlyingEnemy() : Module()
 
 // Destructor
 FlyingEnemy::~FlyingEnemy()
-{}
+{
+
+}
 
 bool FlyingEnemy::Awake()
 {
@@ -219,7 +221,7 @@ bool FlyingEnemy::IsDead()
 bool FlyingEnemy::CleanUp()
 {
 	LOG("Freeing scene");
-	//app->tex->UnLoad(texPlayer);
+	app->tex->UnLoad(texFlyingEnemy);
 	return true;
 }
 

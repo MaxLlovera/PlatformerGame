@@ -204,6 +204,8 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 	app->tex->UnLoad(background);
 	app->tex->UnLoad(heart);
+	app->tex->UnLoad(key);
+	app->tex->UnLoad(puzzle);
 
 	return true;
 }

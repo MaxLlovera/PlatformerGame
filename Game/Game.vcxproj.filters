@@ -24,7 +24,6 @@
     <ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
-    <ClCompile Include="Source\Source.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\FlyingEnemy.cpp" />
     <ClCompile Include="Source\ModuleParticles.cpp" />

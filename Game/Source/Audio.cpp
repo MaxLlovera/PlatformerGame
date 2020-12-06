@@ -61,8 +61,7 @@ bool Audio::Awake(pugi::xml_node& config)
 // Called before quitting
 bool Audio::CleanUp()
 {
-	if(!active)
-		return true;
+	if(!active) return true;
 
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
 
@@ -89,8 +88,7 @@ bool Audio::PlayMusic(const char* path, float fade_time)
 {
 	bool ret = true;
 
-	if(!active)
-		return false;
+	if(!active) return false;
 
 	if(music != NULL)
 	{
@@ -143,8 +141,7 @@ unsigned int Audio::LoadFx(const char* path)
 {
 	unsigned int ret = 0;
 
-	if(!active)
-		return 0;
+	if(!active) return 0;
 
 	Mix_Chunk* chunk = Mix_LoadWAV(path);
 
@@ -166,13 +163,10 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 {
 	bool ret = false;
 
-	if(!active)
-		return false;
+	if(!active) return false;
 
-	if(id > 0 && id <= fx.Count())
-	{
-		Mix_PlayChannel(-1, fx[id - 1], repeat);
-	}
+	if(id > 0 && id <= fx.Count()) Mix_PlayChannel(-1, fx[id - 1], repeat);
+	
 
 	return ret;
 }

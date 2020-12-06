@@ -178,15 +178,12 @@ bool Particle::ThereIsRightWall()
 	int groundId;
 	while (layer != NULL)
 	{
-		/*if (layer->data->properties.GetProperty("Navigation") == 1)
-		{*/
 		for (int i = 0; i < 4; ++i)
 		{
 			tilePosition = app->map->WorldToMap(position.x+25, position.y);
 			groundId = layer->data->Get(tilePosition.x, tilePosition.y);
 			if (groundId == COLLIDER_RED) valid = true;
 		}
-		//}
 		layer = layer->next;
 	}
 

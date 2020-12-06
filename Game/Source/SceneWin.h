@@ -33,8 +33,4 @@ private:
 	SDL_Texture* winText = nullptr;
 
 };
-
-
-
-
 #endif //__SCENE_WIN_H__

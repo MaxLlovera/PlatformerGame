@@ -219,7 +219,7 @@ bool Enemy::IsDead()
 bool Enemy::CleanUp()
 {
 	LOG("Freeing scene");
-	//app->tex->UnLoad(texPlayer);
+	app->tex->UnLoad(texEnemy);
 	return true;
 }
 

@@ -50,7 +50,6 @@ bool Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = app->win->screenSurface->w;
 		camera.h = app->win->screenSurface->h;
-		//camera.x = app->player->position.x+(camera.w/2);
 		camera.y = app->player->position.y-(camera.h*2)+10;
 	}
 
@@ -61,7 +60,6 @@ bool Render::Awake(pugi::xml_node& config)
 bool Render::Start()
 {
 	LOG("render start");
-	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
 	return true;
 }
@@ -127,14 +125,12 @@ void Render::RestartValues()
 	counter = 0;
 	app->player->spiked = false;
 
-
 }
 
 void Render::DeadRestart()
 {
 	if (app->player->currentAnimation == &app->player->deathAnim)
 	{
-		//SDL_Delay(1000);
 		if (counter > 100)
 		{
 			RestartValues();
@@ -143,7 +139,6 @@ void Render::DeadRestart()
 		else counter++;
 	}
 }
-
 
 // L02: DONE 6: Implement a method to load the state, for now load camera's x and y
 // Load Game State
