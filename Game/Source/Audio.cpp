@@ -203,8 +203,8 @@ void Audio::ChangeVolume(int index)
 
 bool Audio::LoadState(pugi::xml_node& audioNode)
 {
-	volume = audioNode.child("volume").attribute("value").as_int();
-	Mix_VolumeMusic(volume);
+	//volume = audioNode.child("volume").attribute("value").as_int();
+	//Mix_VolumeMusic(volume);
 
 	return true;
 }

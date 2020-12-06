@@ -111,6 +111,9 @@ public:
 	SceneWin* sceneWin;
 	SceneLose* sceneLose;
 	bool capped = false;
+	bool loadGameRequested;
+
+
 private:
 
 	int argc;
@@ -127,7 +130,6 @@ private:
 	//pugi::xml_node configApp;
 
 	mutable bool saveGameRequested;
-	bool loadGameRequested;
 	SString loadedGame;
 	mutable SString savedGame;
 

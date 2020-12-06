@@ -61,6 +61,8 @@ bool Scene::Start()
 		app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 	}
 
+
+
 	return true;
 }
 
@@ -79,6 +81,8 @@ bool Scene::Update(float dt)
 		app->LoadGameRequest();
 	}
 	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveGameRequest();
+
+
 
 	
 	//restart from first level
@@ -134,12 +138,13 @@ bool Scene::Update(float dt)
 	}
 
 	//camera y
+
 	if (app->player->position.y < 570 && app->render->camera.y < -100) app->render->camera.y += 4.0f;
 
 	if (app->player->position.y >= 570 && app->render->camera.y > -550) app->render->camera.y -= 4.0f;
 
 
-	
+
 
 	return true;
 }

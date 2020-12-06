@@ -360,6 +360,8 @@ void App::LoadGameRequest()
 {
 	// NOTE: We should check if SAVE_STATE_FILENAME actually exist
 	loadGameRequested = true;
+	
+
 }
 
 // ---------------------------------------
