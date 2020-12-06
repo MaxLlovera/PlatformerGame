@@ -209,8 +209,8 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			return 0;
 		}
 		PathList adjacentNodes;
-		uint limit = node->FindWalkableAdjacents(adjacentNodes);
-		for (uint i = 0; i < limit; ++i) 
+		uint max = node->FindWalkableAdjacents(adjacentNodes);
+		for (uint i = 0; i < max; ++i)
 		{
 			if ((close.Find(adjacentNodes.list[i].pos)) == NULL)
 			{
@@ -219,7 +219,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 					adjacentNodes.list[i].CalculateF(destination);
 					open.list.Add(adjacentNodes.list[i]);
 				}
-				else if (adjacentNodes.list[i].g < open.Find(adjacentNodes.list[i].pos)->data.g) 
+				else if (adjacentNodes.list[i].g < open.Find(adjacentNodes.list[i].pos)->data.g)
 				{
 						adjacentNodes.list[i].CalculateF(destination);
 						open.list.Del(open.Find(adjacentNodes.list[i].pos));

@@ -124,15 +124,6 @@ bool Enemy::Update(float dt)
 					currentAnimation = &rightAnim;
 				}
 			}
-			if (app->map->colliders)
-			{
-				for (uint i = 0; i < path->Count(); ++i)
-				{
-					iPoint nextPoint = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-					SDL_Rect pathRect = { nextPoint.x, nextPoint.y, 16, 16 };
-					app->render->DrawRectangle(pathRect, 255, 0, 0);
-				}
-			}
 		}
 	}
 	if (app->player->spiked && !dead) currentAnimation = &idlAnim;
@@ -150,6 +141,19 @@ bool Enemy::PostUpdate()
 {
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(texEnemy, position.x, position.y, &rect);
+
+	const DynArray<iPoint>* pathDraw = app->pathfinding->GetLastPath();
+	if (app->map->colliders)
+	{
+		for (uint i = 0; i < pathDraw->Count(); ++i)
+		{
+			iPoint nextPos = app->map->MapToWorld(pathDraw->At(i)->x, pathDraw->At(i)->y + 1);
+			SDL_Rect rectPath = { nextPos.x, nextPos.y, 64, 64 };
+			app->render->DrawRectangle(rectPath, 0, 0, 255, 100);
+		}
+		app->pathfinding->lastPath.Clear();
+	}
+
 	return true;
 }
 

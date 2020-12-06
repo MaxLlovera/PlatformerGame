@@ -38,15 +38,16 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	pathfinding = new PathFinding();
 	scene = new Scene();
+	sceneIntro = new SceneIntro();
+	sceneWin = new SceneWin();
+	sceneLose = new SceneLose();
 	map = new Map();
 	player = new Player();
 	particles = new ModuleParticles();
 	enemy = new Enemy();
 	flyingEnemy = new FlyingEnemy();
 	fadetoblack = new FadeToBlack();
-	sceneIntro = new SceneIntro();
-	sceneWin = new SceneWin();
-	sceneLose = new SceneLose();
+	
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -360,8 +361,6 @@ void App::LoadGameRequest()
 {
 	// NOTE: We should check if SAVE_STATE_FILENAME actually exist
 	loadGameRequested = true;
-	
-
 }
 
 // ---------------------------------------

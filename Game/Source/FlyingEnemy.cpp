@@ -113,6 +113,19 @@ bool FlyingEnemy::PostUpdate()
 {
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(texFlyingEnemy, position.x, position.y, &rect);
+
+	const DynArray<iPoint>* pathDraw = app->pathfinding->GetLastPath();
+	if (app->map->colliders)
+	{
+		for (uint i = 0; i < pathDraw->Count(); ++i)
+		{
+			iPoint nextPos = app->map->MapToWorld(pathDraw->At(i)->x, pathDraw->At(i)->y);
+			SDL_Rect rectPath = { nextPos.x, nextPos.y, 64, 64 };
+			app->render->DrawRectangle(rectPath, 0, 0, 255, 100);
+		}
+		app->pathfinding->lastPath.Clear();
+	}
+
 	return true;
 }
 
