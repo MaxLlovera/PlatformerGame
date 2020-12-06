@@ -38,6 +38,8 @@ private:
 	int volume;
 	SDL_Texture* debugTex;
 	SDL_Texture* heart;
+	SDL_Texture* key;
+	SDL_Texture* puzzle;
 };
 
 #endif // __SCENE_H__

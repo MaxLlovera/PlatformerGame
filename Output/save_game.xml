@@ -17,13 +17,13 @@
 		<positionEnemy x="1000" y="875" />
 	</enemy>
 	<flyingenemy>
-		<positionFlyingEnemy x="2000" y="500" />
+		<positionFlyingEnemy x="4200" y="650" />
 	</flyingenemy>
 	<player>
 		<positionPlayer x="938" y="171" />
 	</player>
 	<fadetoblack />
 	<renderer>
-		<camera x="-588" y="-99" />
+		<camera x="0" y="-556" />
 	</renderer>
 </save_state>

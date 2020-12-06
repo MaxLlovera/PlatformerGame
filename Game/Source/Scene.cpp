@@ -42,7 +42,9 @@ bool Scene::Start()
 		app->flyingEnemy->Enable();
 		app->map->Enable();
 		background = app->tex->Load("Assets/Textures/background.png");
-		heart = app->tex->Load("Assets/Textures/head_shock.png");
+		heart = app->tex->Load("Assets/Textures/head_life.png");
+		key = app->tex->Load("Assets/Textures/key.png");
+		puzzle = app->tex->Load("Assets/Textures/puzzle.png");
 		app->player->spiked = false;
 		// L03: DONE: Load map
 		if (app->map->Load("world_meta.tmx") == true)
@@ -202,6 +204,10 @@ bool Scene::PostUpdate()
 	{
 		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
 	}
+	if(app->map->keyTaken) app->render->DrawTexture(key, -app->render->camera.x + 10, -app->render->camera.y + 75);
+
+	if(app->map->puzzleTaken) app->render->DrawTexture(puzzle, -app->render->camera.x + 70, -app->render->camera.y + 70);
+
 
 	return ret;
 }
