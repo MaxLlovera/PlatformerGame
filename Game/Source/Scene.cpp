@@ -134,35 +134,13 @@ bool Scene::Update(float dt)
 	}
 
 	//camera y
-	if (app->player->position.y < 550 && !cameraUp)
-	{
-		app->render->camera.y += 6.0f;
-		if (app->render->camera.y >= -100) 
-		{
-			app->render->camera.y += 0.0f;
-			cameraUp = true;
-		}
-	}	
+	if (app->player->position.y < 570 && app->render->camera.y < -100) app->render->camera.y += 4.0f;
 
-	if (app->player->position.y >= 550 && cameraUp)
-	{
-		app->render->camera.y -= 6.0f;
-		if (app->render->camera.y < -550) cameraUp = false;
-	}
+	if (app->player->position.y >= 570 && app->render->camera.y > -550) app->render->camera.y -= 4.0f;
 
-	//camera movement (comented)
-	// L08: DONE 6: Make the camera movement independent of framerate
-	/*if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y += floor(200.0f * dt);
 
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y -= floor(200.0f * dt);
+	
 
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x += floor(200.0f * dt);
-
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x -= floor(200.0f * dt);*/
 	return true;
 }
 

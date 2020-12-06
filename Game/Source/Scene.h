@@ -31,8 +31,6 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
-	bool cameraUp = false;
 private:
 	SDL_Texture* background;
 	int volume;
