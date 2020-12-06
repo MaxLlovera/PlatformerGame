@@ -116,7 +116,7 @@ void Render::RestartValues()
 		app->render->camera.x = app->player->position.x - app->player->position.x;
 		app->render->camera.y = app->player->position.y - (app->render->camera.h * 2) + 10;
 	}
-	if (app->player->dead)
+	if (app->player->dead || app->player->win)
 	{
 		app->render->camera.y = -2000;
 	}

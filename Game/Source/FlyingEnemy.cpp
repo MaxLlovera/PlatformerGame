@@ -21,7 +21,7 @@
 FlyingEnemy::FlyingEnemy() : Module()
 {
 	name.Create("flyingenemy");
-	position.x = 400;
+	position.x = 2000;
 	position.y = 500;
 
 	//idlanim
@@ -69,11 +69,9 @@ bool FlyingEnemy::Update(float dt)
 		if ((position.DistanceTo(app->player->position) < 500))
 		{
 			currentAnimation = &idlAnim;
-			iPoint posOrigin;
-			iPoint posDestination = app->player->position;
 
 			posOrigin = app->map->WorldToMap(position.x, position.y);
-			posDestination = app->map->WorldToMap(posDestination.x, posDestination.y);
+			posDestination = app->map->WorldToMap(app->player->position.x, app->player->position.y);
 
 			app->pathfinding->CreatePath(posOrigin, posDestination);
 			const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
@@ -185,7 +183,7 @@ bool FlyingEnemy::ThereIsRightWall()
 		{
 			for (int i = 0; i < 4; ++i)
 			{
-				tilePosition = app->map->WorldToMap(position.x /*+ playerWidth*/, position.y + 21 + i * 16);
+				tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
 				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
 				if (groundId == COLLIDER_RED) valid = true;
 			}
@@ -232,6 +230,6 @@ bool FlyingEnemy::SaveState(pugi::xml_node& node) const
 
 void FlyingEnemy::FlyingEnemyInitialPosition()
 {
-	position.x = 400;
+	position.x = 2000;
 	position.y = 500;
 }

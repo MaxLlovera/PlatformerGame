@@ -26,9 +26,6 @@
 // App constructor, Awake, Start and CleanUp
 // LOG the result
 
-// L09: TODO 3: Add OPTICK_EVENT() calls to all Update methods
-// Alternatively you can use OPTICK_CATEGORY()
-
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {

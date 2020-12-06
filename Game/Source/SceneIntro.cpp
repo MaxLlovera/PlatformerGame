@@ -47,6 +47,7 @@ bool SceneIntro::Start()
 	app->enemy->position.y = 875;
 	app->flyingEnemy->position.x = 400;
 	app->flyingEnemy->position.y = 500;
+	app->player->win = false;
 	return ret;
 }
 

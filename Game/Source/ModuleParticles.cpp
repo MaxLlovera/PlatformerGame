@@ -33,12 +33,12 @@ bool ModuleParticles::Start()
 
 	fireBallRight.anim.PushBack({ 0, 0, 22, 14 });
 	fireBallRight.speed.x = 5;
-	fireBallRight.lifetime = 150;
+	fireBallRight.lifetime = 70;
 	fireBallRight.anim.speed = 0.2f;
 
 	fireBallLeft.anim.PushBack({ 0, 14, 22, 14 });
 	fireBallLeft.speed.x = -5;
-	fireBallLeft.lifetime = 150;
+	fireBallLeft.lifetime = 70;
 	fireBallLeft.anim.speed = 0.2f;
 
 	return true;

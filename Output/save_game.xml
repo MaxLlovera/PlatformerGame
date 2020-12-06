@@ -14,10 +14,10 @@
 	<map />
 	<:anonymous />
 	<enemy>
-		<positionEnemy x="832" y="875" />
+		<positionEnemy x="1000" y="875" />
 	</enemy>
 	<flyingenemy>
-		<positionFlyingEnemy x="1024" y="374" />
+		<positionFlyingEnemy x="2000" y="500" />
 	</flyingenemy>
 	<player>
 		<positionPlayer x="938" y="171" />

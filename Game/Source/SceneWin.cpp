@@ -43,6 +43,8 @@ bool SceneWin::Start()
 		app->flyingEnemy->Disable();
 		app->map->Disable();
 		app->audio->PlayMusic("Assets/Audio/Music/victory.ogg");
+		app->map->checkpointTaken = false;
+		app->player->dead = false;
 		app->render->camera.x = 0;
 		app->render->camera.y = -556;
 

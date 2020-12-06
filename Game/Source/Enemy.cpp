@@ -23,7 +23,7 @@
 Enemy::Enemy() : Module()
 {
 	name.Create("enemy");
-	position.x = 900;
+	position.x = 1000;
 	position.y = 875;
 
 	//idlanim
@@ -80,15 +80,11 @@ bool Enemy::Update(float dt)
 	{
 		currentAnimation = &idlAnim;
 
-		if ((position.DistanceTo(app->player->position) < 200))
+		if ((position.DistanceTo(app->player->position) < 300))
 		{
 			currentAnimation = &idlAnim;
-			iPoint posOrigin;
-			iPoint posDestination = app->player->position;
-
 			posOrigin = app->map->WorldToMap(position.x, position.y);
-			posDestination = app->map->WorldToMap(posDestination.x, posDestination.y);
-
+			posDestination = app->map->WorldToMap(app->player->position.x, app->player->position.y);
 			app->pathfinding->CreatePath(posOrigin, posDestination);
 			const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 
@@ -114,8 +110,6 @@ bool Enemy::Update(float dt)
 					position.x++;
 					currentAnimation = &rightAnim;
 				}
-
-
 			}
 			if (posOrigin == posDestination)
 			{
@@ -130,7 +124,6 @@ bool Enemy::Update(float dt)
 					currentAnimation = &rightAnim;
 				}
 			}
-
 			if (app->map->colliders)
 			{
 				for (uint i = 0; i < path->Count(); ++i)
@@ -163,26 +156,23 @@ bool Enemy::PostUpdate()
 bool Enemy::ThereIsGroundLeft()
 {
 	bool valid = false;
-	//if (!godModeEnabled)
-	//{
-		iPoint tilePosition;
-		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int groundId;
-		while (layer != NULL)
+	iPoint tilePosition;
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int groundId;
+	while (layer != NULL)
+	{
+		if (layer->data->properties.GetProperty("Navigation") == 0)
 		{
-			if (layer->data->properties.GetProperty("Navigation") == 0)
+			for (int i = 0; i < 3; ++i)
 			{
-				for (int i = 0; i < 3; ++i)
-				{
-					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y +85);
-					groundId = layer->data->Get(tilePosition.x-1, tilePosition.y);
-					if (groundId == COLLIDER_RED) valid = true;
-				}
-
+				tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y +85);
+				groundId = layer->data->Get(tilePosition.x-1, tilePosition.y);
+				if (groundId == COLLIDER_RED) valid = true;
 			}
-			layer = layer->next;
+
 		}
-	//}
+		layer = layer->next;
+	}
 	return valid;
 
 }
@@ -250,6 +240,6 @@ bool Enemy::SaveState(pugi::xml_node& node) const
 
 void Enemy::EnemyInitialPosition()
 {
-	position.x = 900;
+	position.x = 1000;
 	position.y = 875;
 }

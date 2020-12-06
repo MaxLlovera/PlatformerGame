@@ -93,14 +93,17 @@ private:
 	int playerWidth = 64;
 	bool isJumping = false;
 	int counterKey = 0;
+	int counterPuzzle = 0;
 	int counterCheckpoint = 0;
 	int counterHeart = 0;
 	SDL_Texture* texPlayer;
 	SDL_Texture* texFireBall;
 	uint playerDeathFx = 0;
-	uint keyTakenFx = 0;
+	uint itemTakenFx = 0;
 	uint checkpointFx = 0;
+	uint chestFx = 0;
 	uint heartFx = 0;
+	uint fireFx = 0;
 };
 
 #endif // __PLAYER_H__

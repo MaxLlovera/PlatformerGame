@@ -87,15 +87,20 @@ bool Player::Start()
 		counterKey = 0;
 		counterCheckpoint = 0;
 		counterHeart = 0;
+		counterPuzzle = 0;
 		app->map->keyTaken = false;
 		app->map->checkpointTaken = false;
 		app->map->heartTaken = false;
+		app->map->chestTaken = false;
+		app->map->puzzleTaken = false;
 		texPlayer = app->tex->Load("Assets/Textures/player_textures.png");
 		texFireBall = app->tex->Load("Assets/Textures/shot_fireball.png");
 		playerDeathFx = app->audio->LoadFx("Assets/Audio/Fx/death_sound.wav");
-		keyTakenFx = app->audio->LoadFx("Assets/Audio/Fx/key.wav");
+		itemTakenFx = app->audio->LoadFx("Assets/Audio/Fx/item.wav");
 		checkpointFx = app->audio->LoadFx("Assets/Audio/Fx/checkpoint.wav");
+		chestFx = app->audio->LoadFx("Assets/Audio/Fx/chest.wav");
 		heartFx = app->audio->LoadFx("Assets/Audio/Fx/heart.wav");
+		fireFx = app->audio->LoadFx("Assets/Audio/Fx/fire.wav");
 		currentAnimation = &idlAnim;
 	}
 	return true;
@@ -162,6 +167,7 @@ bool Player::Update(float dt)
 					if (shotCountdown == 0)
 					{
 						Particle* newParticle = app->particles->AddParticle(app->particles->fireBallLeft, position.x, position.y + 50);
+						app->audio->PlayFx(fireFx, 0);
 						shotCountdown = shotMaxCountdown;
 					}
 				}
@@ -170,9 +176,11 @@ bool Player::Update(float dt)
 					if (shotCountdown == 0)
 					{
 						Particle* newParticle = app->particles->AddParticle(app->particles->fireBallRight, position.x + 50, position.y + 50);
+						app->audio->PlayFx(fireFx, 0);
 						shotCountdown = shotMaxCountdown;
 					}
 				}
+				
 			}
 
 			if (!godModeEnabled) GravityPlayer();
@@ -185,18 +193,22 @@ bool Player::Update(float dt)
 			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->map->puzzleTaken)
 			{
 				app->map->chestTaken = true;
+				app->audio->PlayFx(chestFx, 0);
+
 			}
 		}
 
 		if (TakeKey())
 		{
 			app->map->keyTaken = true;
-			if (counterKey == 0) app->audio->PlayFx(keyTakenFx, 0);
+			if (counterKey == 0) app->audio->PlayFx(itemTakenFx, 0);
 			counterKey = 1;
 		}
 		if (TakePuzzle())
 		{
 			app->map->puzzleTaken = true;
+			if (counterPuzzle == 0) app->audio->PlayFx(itemTakenFx, 0);
+			counterPuzzle = 1;
 		}
 		if (TakeCheckpoint())
 		{
@@ -457,16 +469,16 @@ bool Player::ThereIsEnemy()
 
 	if (!godModeEnabled && !app->enemy->dead)
 	{
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 30; ++i)
 		{
-			for (int j = 0; j < 30; j++)
+			for (int j = 0; j < 30; ++j)
 			{
 				if (app->enemy->position.x + 16 + i == position.x + 16 + j) positionX = true;
 			}
 		}
-		for (int i = 0; i < 62; i++)
+		for (int i = 0; i < 62; ++i)
 		{
-			for (int j = 0; j < 62; j++)
+			for (int j = 0; j < 62; ++j)
 			{
 				if (app->enemy->position.y + 22 + i == position.y + 22 + j) positionY = true;
 			}
@@ -485,16 +497,16 @@ bool Player::ThereIsFlyingEnemy()
 
 	if (!godModeEnabled && !app->flyingEnemy->dead)
 	{
-		for (int i = 0; i < 50; i++)
+		for (int i = 0; i < 50; ++i)
 		{
-			for (int j = 0; j < 30; j++)
+			for (int j = 0; j < 30; ++j)
 			{
 				if (app->flyingEnemy->position.x + 6 + i == position.x + 16 + j) positionX = true;
 			}
 		}
-		for (int i = 0; i < 42; i++)
+		for (int i = 0; i < 42; ++i)
 		{
-			for (int j = 0; j < 62; j++)
+			for (int j = 0; j < 62; ++j)
 			{
 				if (app->flyingEnemy->position.y + 4 + i == position.y + 22 + j) positionY = true;
 			}

@@ -625,7 +625,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="33"/>
    <tile/>
    <tile/>
    <tile gid="30"/>
@@ -696,11 +696,11 @@
    <tile/>
    <tile/>
    <tile gid="9"/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="109"/>
    <tile/>
    <tile gid="238"/>
+   <tile gid="237"/>
+   <tile gid="109"/>
    <tile/>
    <tile/>
    <tile/>
@@ -778,11 +778,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile gid="30"/>
-   <tile gid="3"/>
-   <tile gid="31"/>
-   <tile/>
+   <tile gid="2"/>
+   <tile gid="4"/>
+   <tile gid="109"/>
+   <tile gid="109"/>
+   <tile gid="9"/>
    <tile/>
    <tile/>
    <tile/>
@@ -857,10 +857,10 @@
    <tile/>
    <tile/>
    <tile gid="109"/>
-   <tile gid="9"/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="30"/>
+   <tile gid="28"/>
+   <tile gid="29"/>
+   <tile gid="31"/>
    <tile/>
    <tile/>
    <tile/>
@@ -937,8 +937,8 @@
    <tile gid="30"/>
    <tile gid="31"/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="109"/>
+   <tile gid="109"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1112,7 +1112,7 @@
    <tile gid="7"/>
    <tile gid="8"/>
    <tile gid="109"/>
-   <tile/>
+   <tile gid="32"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1200,7 +1200,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="10"/>
    <tile/>
    <tile/>
    <tile gid="5"/>
@@ -7763,7 +7763,7 @@
    <tile/>
    <tile/>
    <tile gid="266"/>
-   <tile/>
+   <tile gid="109"/>
    <tile/>
    <tile/>
    <tile/>
@@ -7845,53 +7845,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
    <tile gid="266"/>
    <tile gid="266"/>
+   <tile gid="109"/>
+   <tile gid="109"/>
    <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -7928,6 +7886,48 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile gid="266"/>
+   <tile gid="266"/>
+   <tile gid="266"/>
    <tile/>
    <tile/>
    <tile/>
@@ -8434,87 +8434,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile gid="266"/>
-   <tile gid="266"/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="266"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
    <tile gid="266"/>
@@ -8538,10 +8458,10 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="266"/>
+   <tile gid="266"/>
+   <tile gid="266"/>
+   <tile gid="266"/>
    <tile/>
    <tile/>
    <tile/>
@@ -8594,7 +8514,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="266"/>
    <tile/>
    <tile/>
    <tile gid="266"/>
@@ -8674,7 +8594,87 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="266"/>
    <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="266"/>
    <tile/>
    <tile/>
    <tile gid="266"/>
@@ -8754,7 +8754,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="266"/>
    <tile gid="268"/>
    <tile gid="268"/>
    <tile gid="266"/>
@@ -8834,7 +8834,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="266"/>
    <tile gid="266"/>
    <tile gid="266"/>
    <tile gid="266"/>
@@ -12372,7 +12372,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="16" name="chest" width="80" height="22" visible="0">
+ <layer id="16" name="chest" width="80" height="22">
   <data>
    <tile/>
    <tile/>

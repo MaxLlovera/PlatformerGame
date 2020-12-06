@@ -43,6 +43,8 @@ public:
 	void EnemyInitialPosition();
 
 	iPoint position;
+	iPoint posOrigin;
+	iPoint posDestination;
 
 	Animation* currentAnimation = nullptr;
 

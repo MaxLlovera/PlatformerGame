@@ -44,6 +44,8 @@ public:
 	void FlyingEnemyInitialPosition();
 
 	iPoint position;
+	iPoint posOrigin;
+	iPoint posDestination;
 
 	Animation* currentAnimation = nullptr;
 
