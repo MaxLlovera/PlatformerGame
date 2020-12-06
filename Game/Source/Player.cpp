@@ -34,33 +34,33 @@ Player::Player() : Module()
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 85 });
 	idlAnim.PushBack({ 0, 681, 64, 85 });
-	idlAnim.speed = 0.02f;
+	//idlAnim.speed = 5.02f;
 
 
 	//move right
 	rightAnim.PushBack({ 0, 85, 64, 85 });
 	rightAnim.PushBack({ 0, 170, 64, 85 });
-	rightAnim.speed = 0.1f;
+	//rightAnim.speed = 5.1f;
 
 	//move left
 	leftAnim.PushBack({ 0, 255, 64, 85 });
 	leftAnim.PushBack({ 0, 340, 64, 85 });
-	leftAnim.speed = 0.1f;
+	//leftAnim.speed = 5.1f;
 
 	//jumpAnimRight
 	jumpAnimRight.PushBack({ 0, 425, 64, 85 });
 	//leftAnim.PushBack({ 0, 340, 64, 85 });
-	jumpAnimRight.speed = 0.1f;
+	//jumpAnimRight.speed = 5.1f;
 	
 	//jumpAnimRight
 	jumpAnimLeft.PushBack({ 0, 510, 64, 85 });
 	//leftAnim.PushBack({ 0, 340, 64, 85 });
-	jumpAnimLeft.speed = 0.1f;
+//	jumpAnimLeft.speed = 5.1f;
 
 	//deathAnim
 	deathAnim.PushBack({ 0, 595, 64, 85 });
 	deathAnim.PushBack({ 0, 1100, 64, 85 });
-	deathAnim.speed = 0.02f;
+	//deathAnim.speed = 5.1f;
 	deathAnim.loop = false;
 }
 
@@ -108,6 +108,10 @@ bool Player::Start()
 
 bool Player::Update(float dt)
 {
+	idlAnim.speed = 1.02f * dt;
+	
+	
+
 	if (!spiked && !dead)
 	{
 		currentAnimation = &idlAnim;
@@ -125,12 +129,12 @@ bool Player::Update(float dt)
 		{
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godModeEnabled)
 			{
-				position.y -= speedX;
+				position.y -= speedX * dt;
 				currentAnimation = &leftAnim;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godModeEnabled)
 			{
-				position.y += speedX;
+				position.y += speedX * dt;
 				currentAnimation = &leftAnim;
 			}
 
@@ -138,7 +142,8 @@ bool Player::Update(float dt)
 			{
 				if (!ThereIsLeftWall() && !ThereIsChestLeft())
 				{
-					position.x -= speedX;
+					leftAnim.speed = 10.02f * dt;
+					position.x = position.x - speedX * dt;
 					currentAnimation = &leftAnim;
 				}
 			}
@@ -146,18 +151,19 @@ bool Player::Update(float dt)
 			{
 				if (!ThereIsRightWall() && !ThereIsChestRight())
 				{
-					position.x += speedX;
+					rightAnim.speed = 10.02f * dt;
+					position.x = position.x + speedX * dt;
 					currentAnimation = &rightAnim;
 				}
 			}
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && (ThereIsGround() || ThereIsChestBelow()) && !ThereAreSpikes())
 			{
 				isJumping = true;
-				speedY = 5.0f;
+				speedY = 500.0f * dt;
 			}
 			if (isJumping)
 			{
-				Jump();
+				Jump(dt);
 				isJumping = false;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
@@ -183,7 +189,7 @@ bool Player::Update(float dt)
 				
 			}
 
-			if (!godModeEnabled) GravityPlayer();
+			if (!godModeEnabled) GravityPlayer(dt);
 		}
 
 		if (shotCountdown > 0) --shotCountdown;
@@ -230,6 +236,7 @@ bool Player::Update(float dt)
 	//restart when dies
 	if (spiked && !dead)
 	{
+		deathAnim.speed = 5.02f * dt;
 		currentAnimation = &deathAnim;
 		if (deathAnim.HasFinished())
 		{
@@ -388,6 +395,7 @@ bool Player::ThereIsChestBelow()
 	}
 	return valid;
 }
+
 bool Player::ThereIsChestLeft()
 {
 	bool valid = false;
@@ -652,20 +660,28 @@ bool Player::ThereIsDoor()
 
 }
 
-void Player::Jump() 
+void Player::Jump(float dt) 
 {
-	speedY -= gravity;
-	position.y -= speedY;
+	speedY -= gravity * dt * 6.0f;
+	position.y -= speedY * dt *3.0f;
 }
 
-void Player::GravityPlayer()
+void Player::GravityPlayer(float dt)
 {
 	if (!ThereIsGround() && !ThereIsChestBelow())
 	{
-		speedY -= gravity;
-		position.y -= speedY;
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnimation = &jumpAnimLeft;
-		else currentAnimation = &jumpAnimRight;
+		speedY -= gravity * dt * 6.0f;
+		position.y -= speedY * dt * 3.0f;
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			jumpAnimLeft.speed *= dt;
+			currentAnimation = &jumpAnimLeft;
+		}
+		else
+		{
+			jumpAnimRight.speed *= dt;
+			currentAnimation = &jumpAnimRight;
+		}
 	}
 	if ((ThereIsGround() || ThereIsChestBelow()) && (position.y + 85) % 64 != 0) position.y--;
 }

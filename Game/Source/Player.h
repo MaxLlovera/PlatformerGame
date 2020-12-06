@@ -51,9 +51,9 @@ public:
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
-	void Jump();
+	void Jump(float dt);
 
-	void GravityPlayer();
+	void GravityPlayer(float dt);
 
 	bool LoseLifes(); //when player loses a life
 	
@@ -85,10 +85,10 @@ public:
 	int shotCountdown = 0;
 
 private:
-	float speedX = 3.0f;
+	float speedX = 300.0f;
 	float speedY = 0.0f;
 	float fireBallSpeed = 3.0f;
-	float gravity = 0.15f;
+	float gravity = 1.0f;
 	int playerHeight = 85;
 	int playerWidth = 64;
 	bool isJumping = false;

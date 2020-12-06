@@ -76,6 +76,10 @@ bool Enemy::Start()
 
 bool Enemy::Update(float dt)
 {
+	idlAnim.speed *= dt;
+	rightAnim.speed *= dt;
+	leftAnim.speed *= dt;
+	deathAnim.speed *= dt;
 	if (!dead && !app->player->spiked)
 	{
 		currentAnimation = &idlAnim;
@@ -92,12 +96,12 @@ bool Enemy::Update(float dt)
 			{
 				if (path->At(1)->x < posOrigin.x && ThereIsGroundLeft())
 				{
-					position.x -= speed;
+					position.x -= speed * dt;
 					currentAnimation = &leftAnim;
 				}
 				else if (path->At(1)->x > posOrigin.x && ThereIsGroundRight())
 				{
-					position.x += speed;
+					position.x += speed * dt;
 					currentAnimation = &rightAnim;
 				}
 				if (!ThereIsGroundLeft() && (position.x + 10) % 64 != 0)
@@ -115,12 +119,12 @@ bool Enemy::Update(float dt)
 			{
 				if (position.x > app->player->position.x)
 				{
-					position.x -= speed;
+					position.x -= speed * dt;
 					currentAnimation = &leftAnim;
 				}
 				else if (position.x < app->player->position.x)
 				{
-					position.x += speed;
+					position.x += speed * dt;
 					currentAnimation = &rightAnim;
 				}
 			}
