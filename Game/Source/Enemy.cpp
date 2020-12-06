@@ -76,7 +76,7 @@ bool Enemy::Start()
 
 bool Enemy::Update(float dt)
 {
-	if (!dead && !app->player->spiked)
+	if (!dead && !app->player->spiked && !app->player->godModeEnabled)
 	{
 		currentAnimation = &idlAnim;
 

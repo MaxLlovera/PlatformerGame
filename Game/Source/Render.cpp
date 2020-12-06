@@ -124,7 +124,7 @@ void Render::RestartValues()
 	app->player->deathAnim.Reset();
 	counter = 0;
 	app->player->spiked = false;
-
+	app->player->godModeEnabled = false;
 }
 
 void Render::DeadRestart()

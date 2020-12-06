@@ -4,7 +4,7 @@
 	<input />
 	<textures />
 	<audio>
-		<volume value="0" />
+		<volume value="24" />
 	</audio>
 	<pathfinding />
 	<sceneIntro />
@@ -14,16 +14,16 @@
 	<map />
 	<:anonymous />
 	<enemy>
-		<positionEnemy x="1000" y="875" />
+		<positionEnemy x="1024" y="875" />
 	</enemy>
 	<flyingenemy>
 		<positionFlyingEnemy x="4200" y="650" />
 	</flyingenemy>
 	<player>
-		<positionPlayer x="350" y="875" />
+		<positionPlayer x="908" y="171" />
 	</player>
 	<fadetoblack />
 	<renderer>
-		<camera x="0" y="-555" />
+		<camera x="-558" y="-99" />
 	</renderer>
 </save_state>

@@ -47,12 +47,10 @@ Player::Player() : Module()
 
 	//jumpAnimRight
 	jumpAnimRight.PushBack({ 0, 425, 64, 85 });
-	//leftAnim.PushBack({ 0, 340, 64, 85 });
 	jumpAnimRight.speed = 0.1f;
 	
 	//jumpAnimRight
 	jumpAnimLeft.PushBack({ 0, 510, 64, 85 });
-	//leftAnim.PushBack({ 0, 340, 64, 85 });
 	jumpAnimLeft.speed = 0.1f;
 
 	//deathAnim
@@ -293,7 +291,7 @@ bool Player::ThereIsLeftWall()
 	{
 		iPoint tilePosition;
 		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int groundId;
+		int leftWallId;
 		while (layer != NULL)
 		{
 			if (layer->data->properties.GetProperty("Navigation") == 0)
@@ -301,8 +299,8 @@ bool Player::ThereIsLeftWall()
 				for (int i = 0; i < 4; ++i)
 				{
 					tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
-					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (groundId == COLLIDER_RED) valid = true;
+					leftWallId = layer->data->Get(tilePosition.x, tilePosition.y);
+					if (leftWallId == COLLIDER_RED) valid = true;
 				}
 			}
 			layer = layer->next;
@@ -318,29 +316,28 @@ bool Player::ThereIsRightWall()
 	{
 		iPoint tilePosition;
 		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int groundId;
+		int rightWallId;
 		while (layer != NULL)
 		{
-			/*if (layer->data->properties.GetProperty("Navigation") == 1)
-			{*/
+			if (layer->data->properties.GetProperty("Navigation") == 0)
+			{
 				for (int i = 0; i < 4; ++i)
 				{
 					tilePosition = app->map->WorldToMap(position.x + playerWidth, position.y + 21 + i * 16);
-					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (groundId == COLLIDER_RED) valid = true;
+					rightWallId = layer->data->Get(tilePosition.x, tilePosition.y);
+					if (rightWallId == COLLIDER_RED) valid = true;
 				}
-			//}
+			}
 			layer = layer->next;
 		}
 	}
 	return valid;
 }
 
-
 bool Player::ThereIsChestBelow()
 {
 	bool valid = false;
-	if (!godModeEnabled && !app->map->chestTaken)
+	if (!app->map->chestTaken)
 	{
 		iPoint tilePosition;
 		ListItem<MapLayer*>* layer = app->map->data.layers.start;
@@ -358,21 +355,22 @@ bool Player::ThereIsChestBelow()
 	}
 	return valid;
 }
+
 bool Player::ThereIsChestLeft()
 {
 	bool valid = false;
-	if (!godModeEnabled && !app->map->chestTaken)
+	if (!app->map->chestTaken)
 	{
 		iPoint tilePosition;
 		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int groundId;
+		int leftWallId;
 		while (layer != NULL)
 		{
 			for (int i = 0; i < 4; ++i)
 			{
 				tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
-				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-				if (groundId == COLLIDER_GREY) valid = true;
+				leftWallId = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (leftWallId == COLLIDER_GREY) valid = true;
 			}
 			layer = layer->next;
 		}
@@ -384,18 +382,18 @@ bool Player::ThereIsChestLeft()
 bool Player::ThereIsChestRight()
 {
 	bool valid = false;
-	if (!godModeEnabled && !app->map->chestTaken)
+	if (!app->map->chestTaken)
 	{
 		iPoint tilePosition;
 		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int groundId;
+		int rightWallId;
 		while (layer != NULL)
 		{
 			for (int i = 0; i < 4; ++i)
 			{
 				tilePosition = app->map->WorldToMap(position.x + playerWidth, position.y + 21 + i * 16);
-				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-				if (groundId == COLLIDER_GREY) valid = true;
+				rightWallId = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (rightWallId == COLLIDER_GREY) valid = true;
 			}
 			layer = layer->next;
 		}
@@ -410,7 +408,7 @@ bool Player::ThereAreSpikes()
 	{
 		iPoint tilePosition;
 		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int groundId;
+		int spikesId;
 		while (layer != NULL)
 		{
 			if (layer->data->properties.GetProperty("Navigation") == 0)
@@ -418,8 +416,8 @@ bool Player::ThereAreSpikes()
 				for (int i = 0; i < 3; ++i)
 				{
 					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
-					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (groundId == COLLIDER_YELLOW) valid = true;
+					spikesId = layer->data->Get(tilePosition.x, tilePosition.y);
+					if (spikesId == COLLIDER_YELLOW) valid = true;
 				}
 			}
 			layer = layer->next;
@@ -490,25 +488,22 @@ bool Player::ThereIsFlyingEnemy()
 bool Player::TakeKey()
 {
 	bool valid = false;
-	if (!godModeEnabled)
+	iPoint tilePosition;
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int key;
+	while (layer != NULL)
 	{
-		iPoint tilePosition;
-		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int key;
-		while (layer != NULL)
+		if (layer->data->properties.GetProperty("Navigation") == 0)
 		{
-			if (layer->data->properties.GetProperty("Navigation") == 0)
+			for (int i = 0; i < 3; ++i)
 			{
-				for (int i = 0; i < 3; ++i)
-				{
-					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
-					key = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (key == COLLIDER_BLUE) valid = true;
-				}
-
+				tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
+				key = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (key == COLLIDER_BLUE) valid = true;
 			}
-			layer = layer->next;
+
 		}
+		layer = layer->next;
 	}
 	return valid;
 
@@ -517,21 +512,18 @@ bool Player::TakeKey()
 bool Player::TakePuzzle()
 {
 	bool valid = false;
-	if (!godModeEnabled)
+	iPoint tilePosition;
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int puzzle;
+	while (layer != NULL)
 	{
-		iPoint tilePosition;
-		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int key;
-		while (layer != NULL)
+		for (int i = 0; i < 3; ++i)
 		{
-			for (int i = 0; i < 3; ++i)
-			{
-				tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
-				key = layer->data->Get(tilePosition.x, tilePosition.y);
-				if (key == COLLIDER_ORANGE) valid = true;
-			}
-			layer = layer->next;
+			tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
+			puzzle = layer->data->Get(tilePosition.x, tilePosition.y);
+			if (puzzle == COLLIDER_ORANGE) valid = true;
 		}
+		layer = layer->next;
 	}
 	return valid;
 
@@ -540,30 +532,27 @@ bool Player::TakePuzzle()
 bool Player::TakeCheckpoint()
 {
 	bool valid = false;
-	if (!godModeEnabled)
+	iPoint tilePosition;
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int checkpoint;
+	while (layer != NULL)
 	{
-		iPoint tilePosition;
-		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int checkpoint;
-		while (layer != NULL)
+		if (layer->data->properties.GetProperty("Navigation") == 0)
 		{
-			if (layer->data->properties.GetProperty("Navigation") == 0)
+			for (int i = 0; i < 3; ++i)
 			{
-				for (int i = 0; i < 3; ++i)
+				tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
+				checkpoint = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (checkpoint == COLLIDER_PINK)
 				{
-					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
-					checkpoint = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (checkpoint == COLLIDER_PINK)
-					{
-						app->SaveGameRequest();
-						app->map->checkpointTaken = true;
-						valid = true;
-					}
+					app->SaveGameRequest();
+					app->map->checkpointTaken = true;
+					valid = true;
 				}
-
 			}
-			layer = layer->next;
+
 		}
+		layer = layer->next;
 	}
 	return valid;
 
@@ -572,25 +561,22 @@ bool Player::TakeCheckpoint()
 bool Player::TakeHeart()
 {
 	bool valid = false;
-	if (!godModeEnabled)
+	iPoint tilePosition;
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int heart;
+	while (layer != NULL)
 	{
-		iPoint tilePosition;
-		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int heart;
-		while (layer != NULL)
+		if (layer->data->properties.GetProperty("Navigation") == 0)
 		{
-			if (layer->data->properties.GetProperty("Navigation") == 0)
+			for (int i = 0; i < 3; ++i)
 			{
-				for (int i = 0; i < 3; ++i)
-				{
-					tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
-					heart = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (heart == COLLIDER_GREY) valid = true;
-				}
-
+				tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y + 21);
+				heart = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (heart == COLLIDER_GREY) valid = true;
 			}
-			layer = layer->next;
+
 		}
+		layer = layer->next;
 	}
 	return valid;
 
@@ -599,24 +585,21 @@ bool Player::TakeHeart()
 bool Player::ThereIsDoor()
 {
 	bool valid = false;
-	if (!godModeEnabled)
+	iPoint tilePosition;
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int groundId;
+	while (layer != NULL)
 	{
-		iPoint tilePosition;
-		ListItem<MapLayer*>* layer = app->map->data.layers.start;
-		int groundId;
-		while (layer != NULL)
+		if (layer->data->properties.GetProperty("Navigation") == 0)
 		{
-			if (layer->data->properties.GetProperty("Navigation") == 0)
+			for (int i = 0; i < 4; ++i)
 			{
-				for (int i = 0; i < 4; ++i)
-				{
-					tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
-					groundId = layer->data->Get(tilePosition.x, tilePosition.y);
-					if (groundId == COLLIDER_GREEN) valid = true;
-				}
+				tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
+				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (groundId == COLLIDER_GREEN) valid = true;
 			}
-			layer = layer->next;
 		}
+		layer = layer->next;
 	}
 	return valid;
 

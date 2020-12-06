@@ -65,7 +65,7 @@ bool FlyingEnemy::Start()
 bool FlyingEnemy::Update(float dt)
 {
 
-	if (!dead && !app->player->spiked)
+	if (!dead && !app->player->spiked && !app->player->godModeEnabled)
 	{
 		currentAnimation = &idlAnim;
 		if ((position.DistanceTo(app->player->position) < 500))
@@ -80,13 +80,13 @@ bool FlyingEnemy::Update(float dt)
 
 			if (path->At(1) != NULL)
 			{
-				if (path->At(1)->x < posOrigin.x) position.x -= speed;
+				if (path->At(1)->x < posOrigin.x && !ThereIsLeftWall()) position.x -= speed;
 
-				else if (path->At(1)->x > posOrigin.x) position.x += speed;
+				else if (path->At(1)->x > posOrigin.x && !ThereIsRightWall()) position.x += speed;
 
-				if (path->At(1)->y < posOrigin.y) position.y -= speed;
+				if (path->At(1)->y < posOrigin.y && !ThereIsTopWall()) position.y -= speed;
 
-				else if (path->At(1)->y > posOrigin.y) position.y += speed;
+				else if (path->At(1)->y > posOrigin.y && !ThereIsGround()) position.y += speed;
 			}
 
 			if (posOrigin == posDestination)
@@ -134,8 +134,6 @@ bool FlyingEnemy::PostUpdate()
 bool FlyingEnemy::ThereIsGround()
 {
 	bool valid = false;
-	//if (!godModeEnabled)
-	//{
 	iPoint tilePosition;
 	ListItem<MapLayer*>* layer = app->map->data.layers.start;
 	int groundId;
@@ -143,9 +141,9 @@ bool FlyingEnemy::ThereIsGround()
 	{
 		if (layer->data->properties.GetProperty("Navigation") == 0)
 		{
-			for (int i = 0; i < 3; ++i)
+			for (int i = 0; i < 31; ++i)
 			{
-				tilePosition = app->map->WorldToMap(position.x + 19 + i * 13, position.y /*+ playerHeight*/);
+				tilePosition = app->map->WorldToMap(position.x + i + 16, position.y + 50);
 				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
 				if (groundId == COLLIDER_RED) valid = true;
 			}
@@ -153,7 +151,6 @@ bool FlyingEnemy::ThereIsGround()
 		}
 		layer = layer->next;
 	}
-	//}
 	return valid;
 
 }
@@ -161,8 +158,6 @@ bool FlyingEnemy::ThereIsGround()
 bool FlyingEnemy::ThereIsLeftWall()
 {
 	bool valid = false;
-	//if (!godModeEnabled)
-	//{
 	iPoint tilePosition;
 	ListItem<MapLayer*>* layer = app->map->data.layers.start;
 	int groundId;
@@ -170,25 +165,21 @@ bool FlyingEnemy::ThereIsLeftWall()
 	{
 		if (layer->data->properties.GetProperty("Navigation") == 0)
 		{
-			for (int i = 0; i < 4; ++i)
+			for (int i = 0; i < 31; ++i)
 			{
-				tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
+				tilePosition = app->map->WorldToMap(position.x, position.y + i + 7);
 				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
 				if (groundId == COLLIDER_RED) valid = true;
 			}
 		}
 		layer = layer->next;
 	}
-	//}
 	return valid;
-
 }
 
 bool FlyingEnemy::ThereIsRightWall()
 {
 	bool valid = false;
-	//if (!godModeEnabled)
-	//{
 	iPoint tilePosition;
 	ListItem<MapLayer*>* layer = app->map->data.layers.start;
 	int groundId;
@@ -196,19 +187,39 @@ bool FlyingEnemy::ThereIsRightWall()
 	{
 		if (layer->data->properties.GetProperty("Navigation") == 0)
 		{
-			for (int i = 0; i < 4; ++i)
+			for (int i = 0; i < 31; ++i)
 			{
-				tilePosition = app->map->WorldToMap(position.x, position.y + 21 + i * 16);
+				tilePosition = app->map->WorldToMap(position.x + 62, position.y + i + 7);
 				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
 				if (groundId == COLLIDER_RED) valid = true;
 			}
 		}
 		layer = layer->next;
 	}
-	//}
 	return valid;
 }
 
+bool FlyingEnemy::ThereIsTopWall()
+{
+	bool valid = false;
+	iPoint tilePosition;
+	ListItem<MapLayer*>* layer = app->map->data.layers.start;
+	int groundId;
+	while (layer != NULL)
+	{
+		if (layer->data->properties.GetProperty("Navigation") == 0)
+		{
+			for (int i = 0; i < 31; ++i)
+			{
+				tilePosition = app->map->WorldToMap(position.x + i + 16, position.y);
+				groundId = layer->data->Get(tilePosition.x, tilePosition.y);
+				if (groundId == COLLIDER_RED) valid = true;
+			}
+		}
+		layer = layer->next;
+	}
+	return valid;
+}
 
 bool FlyingEnemy::IsDead()
 {
