@@ -15,11 +15,16 @@ He needs to find the keys to open the exit doors.
 - Map navigation: player movement and jumping
 - Player walk/jump/die animations
 - DEBUG keys
-- Logo screen with fade-in fade-out
 - Title screen (press ENTER to start)
-- Ending screen (on dying)
-
-
+- Ending screen (on dying or winning)
+- Walking enemy type with pathfinding
+- Flying enemy type with pathfinding
+- Game capped 60 FPS
+- Destroy enemies shooting them
+- Game items to recover lifes
+- Game collectable items
+- Checkpoint autosave with feedback on passing
+- Map checkpoints teleportation
 
 
 ## Controls
@@ -28,6 +33,8 @@ He needs to find the keys to open the exit doors.
 - A -> Left Movement
 - D -> Right Movement
 - Space -> Jump
+- E -> Open chest (using puzzle piece)
+- P -> Shoot
 
  God Mode Player Movement:
 - A -> Left Movement
@@ -42,8 +49,9 @@ He needs to find the keys to open the exit doors.
 - F6  -> Load
 - F7  -> Instant Win
 - F8  -> Instant Lose
-- F9  -> Show Colliders
+- F9  -> Show Colliders / Paths
 - F10 -> God Mode
+- F11 -> Enable / Disable FPS cap to 30
 
 
 ## Developers

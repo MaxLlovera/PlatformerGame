@@ -78,13 +78,9 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	// L02: DONE 3: Request Load / Save when pressing L/S
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-	{
-		app->LoadGameRequest();
-	}
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadGameRequest();
+
 	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveGameRequest();
-
-
 
 	
 	//restart from first level
@@ -93,7 +89,6 @@ bool Scene::Update(float dt)
 		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
 		app->render->RestartValues();
 	}
-
 	
 	//restart the current level
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -104,7 +99,6 @@ bool Scene::Update(float dt)
 
 	//view colliders
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) app->map->colliders = !app->map->colliders;
-
 
 	//god mode
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) app->player->godModeEnabled = !app->player->godModeEnabled;
@@ -127,7 +121,6 @@ bool Scene::Update(float dt)
 		app->render->RestartValues();
 	}
 
-
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
 
@@ -145,9 +138,6 @@ bool Scene::Update(float dt)
 	if (app->player->position.y < 570 && app->render->camera.y < -100) app->render->camera.y += 4.0f;
 
 	if (app->player->position.y >= 570 && app->render->camera.y > -550) app->render->camera.y -= 4.0f;
-
-
-
 
 	return true;
 }

@@ -31,6 +31,7 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
 private:
 	SDL_Texture* background;
 	int volume;
