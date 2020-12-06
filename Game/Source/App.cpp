@@ -29,7 +29,7 @@
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
-	//PERF_START(ptimer);
+	PERF_START(ptimer);
 
 	win = new Window();
 	input = new Input();
@@ -71,7 +71,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Render last to swap buffer
 	AddModule(render, true);
 
-	//PERF_PEEK(ptimer);
+	PERF_PEEK(ptimer);
 }
 
 

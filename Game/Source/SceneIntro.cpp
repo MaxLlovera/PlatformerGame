@@ -43,10 +43,12 @@ bool SceneIntro::Start()
 	app->render->camera.y = -555;
 	app->player->position.x = 350;
 	app->player->position.y = 875;
-	app->enemy->position.x = 900;
-	app->enemy->position.y = 875;
-	app->flyingEnemy->position.x = 400;
-	app->flyingEnemy->position.y = 500;
+	//app->enemy->position.x = 900;
+	//app->enemy->position.y = 875;
+	//app->flyingEnemy->position.x = 400;
+	//app->flyingEnemy->position.y = 500;
+	if (app->player->win) app->SaveGameRequest();
+
 	app->player->win = false;
 	return ret;
 }

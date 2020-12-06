@@ -46,6 +46,8 @@ bool Scene::Start()
 		key = app->tex->Load("Assets/Textures/key.png");
 		puzzle = app->tex->Load("Assets/Textures/puzzle.png");
 		app->player->spiked = false;
+		app->map->checkpointTaken = false;
+
 		// L03: DONE: Load map
 		if (app->map->Load("world_meta.tmx") == true)
 		{
@@ -113,6 +115,7 @@ bool Scene::Update(float dt)
 	//SceneWin
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->player->win)
 	{
+		app->player->win = true;
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 1 / dt);
 		app->render->RestartValues();
 	}
@@ -133,8 +136,8 @@ bool Scene::Update(float dt)
 	//camera x
 	if ((app->render->counter == 0 || app->player->godModeEnabled) && !app->player->spiked)
 	{
-		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->player->position.x > 350 && app->player->position.x <= 4400 && !app->player->ThereIsLeftWall() && !app->player->ThereIsChestLeft()) app->render->camera.x += 3.0f * dt;
-		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 4400 && !app->player->ThereIsRightWall() && !app->player->ThereIsChestRight() && !app->player->ThereIsLeftWall()) app->render->camera.x -= 3.0f * dt;
+		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->player->position.x > 350 && app->player->position.x <= 4400 && !app->player->ThereIsLeftWall() && !app->player->ThereIsChestLeft()) app->render->camera.x += 3.0f;
+		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 4400 && !app->player->ThereIsRightWall() && !app->player->ThereIsChestRight() && !app->player->ThereIsLeftWall()) app->render->camera.x -= 3.0f;
 	}
 
 	//camera y
@@ -189,7 +192,7 @@ bool Scene::PostUpdate()
 	}
 	if(app->map->keyTaken) app->render->DrawTexture(key, -app->render->camera.x + 10, -app->render->camera.y + 75);
 
-	if(app->map->puzzleTaken) app->render->DrawTexture(puzzle, -app->render->camera.x + 70, -app->render->camera.y + 70);
+	if(app->map->puzzleTaken&&!app->map->chestTaken) app->render->DrawTexture(puzzle, -app->render->camera.x + 70, -app->render->camera.y + 70);
 
 
 	return ret;
