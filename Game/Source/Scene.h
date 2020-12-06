@@ -33,8 +33,6 @@ public:
 	bool CleanUp();
 
 	bool cameraUp = false;
-	
-	bool animWork = false;
 private:
 	SDL_Texture* background;
 	int volume;

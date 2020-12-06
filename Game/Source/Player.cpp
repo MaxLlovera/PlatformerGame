@@ -222,8 +222,10 @@ bool Player::Update(float dt)
 		if (deathAnim.HasFinished())
 		{
 			app->render->RestartValues();
-			//spiked = true;
+			app->enemy->Enable();
+			app->flyingEnemy->Enable();
 
+			//spiked = true;
 		}
 	}
 	
@@ -234,9 +236,7 @@ bool Player::Update(float dt)
 		{
 			app->fadetoblack->FadeToBlk(app->scene, app->sceneLose, 1 / dt);
 			app->render->RestartValues();
-
 		}
-
 	}
 
 

@@ -170,15 +170,11 @@ int PathNode::CalculateF(const iPoint& destination)
 int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	// L12b: TODO 1: if origin or destination are not walkable, return -1
-	if (!IsWalkable(origin) || !IsWalkable(destination)) return -1;
+
 
 	// L12b: TODO 2: Create two lists: open, close
 	// Add the origin tile to open
 	// Iterate while we have tile in the open list
-	lastPath.Clear();
-
-	PathList open;
-	PathList closed;
 
 	// L12b: TODO 3: Move the lowest score cell from open list to the closed list
 
@@ -193,6 +189,12 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	// If it is NOT found, calculate its F and add it to the open list
 	// If it is already in the open list, check if it is a better path (compare G)
 	// If it is a better path, Update the parent
+	if (!IsWalkable(origin) || !IsWalkable(destination)) return -1;
+
+	lastPath.Clear();
+
+	PathList open;
+	PathList close;
 
 	open.list.Add(PathNode(0, origin.DistanceTo(destination), origin, NULL));
 	PathNode* node;
@@ -200,16 +202,17 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	while (open.GetNodeLowestScore() != NULL)
 	{
 		node = new PathNode(open.GetNodeLowestScore()->data);
-		closed.list.Add(*node);
+		close.list.Add(*node);
 		open.list.Del(open.Find(node->pos));
 
 		if (node->pos == destination)
 		{
 			const PathNode* it = node;
 
-			for (it; it->pos != origin; it = it->parent)
+			while (it->pos != origin)
 			{
 				lastPath.PushBack(it->pos);
+				it = it->parent;
 			}
 			lastPath.PushBack(origin);
 
@@ -222,7 +225,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 		for (uint i = 0; i < limit; i++) 
 		{
-			if ((closed.Find(adjacentNodes.list[i].pos)) == NULL)
+			if ((close.Find(adjacentNodes.list[i].pos)) == NULL)
 			{
 				if ((open.Find(adjacentNodes.list[i].pos)) == NULL)
 				{

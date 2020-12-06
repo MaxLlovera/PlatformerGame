@@ -142,7 +142,7 @@ bool Scene::Update(float dt)
 		}
 	}	
 
-	if (app->player->position.y > 550 && cameraUp)
+	if (app->player->position.y >= 550 && cameraUp)
 	{
 		app->render->camera.y -= 6.0f;
 		if (app->render->camera.y < -550) cameraUp = false;

@@ -124,18 +124,18 @@ bool Particle::ThereIsFlyingEnemy()
 	bool positionX = false;
 	bool positionY = false;
 
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 60; i++)
 	{
 		for (int j = 0; j < 22; j++)
 		{
-			if (app->flyingEnemy->position.x + 16 + i == position.x + j) positionX = true;
+			if (app->flyingEnemy->position.x + i == position.x + j) positionX = true;
 		}
 	}
-	for (int i = 0; i < 62; i++)
+	for (int i = 0; i < 50; i++)
 	{
 		for (int j = 0; j < 14; j++)
 		{
-			if (app->flyingEnemy->position.y + 22 + i == position.y + j) positionY = true;
+			if (app->flyingEnemy->position.y + i == position.y + j) positionY = true;
 		}
 	}
 

@@ -120,6 +120,7 @@ void Render::RestartValues()
 	{
 		app->render->camera.y = -2000;
 	}
+
 	app->enemy->EnemyInitialPosition();
 	app->flyingEnemy->FlyingEnemyInitialPosition();
 	app->player->deathAnim.Reset();

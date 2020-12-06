@@ -142,7 +142,7 @@ bool Enemy::Update(float dt)
 			}
 		}
 	}
-	if (app->player->spiked) currentAnimation = &idlAnim;
+	if (app->player->spiked && !dead) currentAnimation = &idlAnim;
 
 	if (deathAnim.HasFinished())
 	{

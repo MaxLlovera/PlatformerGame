@@ -101,6 +101,7 @@ bool FlyingEnemy::Update(float dt)
 			}
 		}
 	}
+
 	if (deathAnim.HasFinished())
 	{
 		this->Disable();
