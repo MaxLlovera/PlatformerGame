@@ -1,4 +1,7 @@
+#include "SceneGameplay.h"
 #include "App.h"
+#include "EntityManager.h"
+
 #include "Input.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -15,16 +18,17 @@
 #include "Defs.h"
 #include "Log.h"
 
-Scene::Scene() : Module()
+SceneGameplay::SceneGameplay()
 {
-	name.Create("scene");
+	//name.Create("scene");
 }
 
 // Destructor
-Scene::~Scene(){}
+SceneGameplay::~SceneGameplay()
+{}
 
 // Called before render is available
-bool Scene::Awake(pugi::xml_node& config)
+bool SceneGameplay::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -32,7 +36,7 @@ bool Scene::Awake(pugi::xml_node& config)
 }
 
 // Called before the first frame
-bool Scene::Start()
+bool SceneGameplay::Start()
 {
 	// L12b: Create walkability map on map loading
 	if (this->active == true)
@@ -69,13 +73,13 @@ bool Scene::Start()
 }
 
 // Called each loop iteration
-bool Scene::PreUpdate()
+bool SceneGameplay::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool Scene::Update(float dt)
+bool SceneGameplay::Update(float dt)
 {
 	// L02: DONE 3: Request Load / Save when pressing L/S
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadGameRequest();
@@ -143,7 +147,7 @@ bool Scene::Update(float dt)
 }
 
 // Called each loop iteration
-bool Scene::PostUpdate()
+bool SceneGameplay::PostUpdate()
 {
 	bool ret = true;
 
@@ -189,7 +193,7 @@ bool Scene::PostUpdate()
 }
 
 // Called before quitting
-bool Scene::CleanUp()
+bool SceneGameplay::CleanUp()
 {
 	LOG("Freeing scene");
 	app->tex->UnLoad(background);

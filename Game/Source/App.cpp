@@ -1,20 +1,12 @@
 #include "App.h"
+
 #include "Window.h"
 #include "Input.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
-#include "Scene.h"
-#include "Map.h"
-#include "Player.h"
-#include "ModuleParticles.h"
-#include "Enemy.h"
-#include "FlyingEnemy.h"
-#include "FadeToBlack.h"
-#include "SceneIntro.h"
-#include "SceneWin.h"
-#include "SceneLose.h"
-#include "PathFinding.h"
+#include "EntityManager.h"
+#include "SceneManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -36,40 +28,21 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
-	pathfinding = new PathFinding();
-	scene = new Scene();
-	sceneIntro = new SceneIntro();
-	sceneWin = new SceneWin();
-	sceneLose = new SceneLose();
-	map = new Map();
-	player = new Player();
-	particles = new ModuleParticles();
-	enemy = new Enemy();
-	flyingEnemy = new FlyingEnemy();
-	fadetoblack = new FadeToBlack();
-	
+	entityManager = new EntityManager();
+	sceneManager = new SceneManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
-	AddModule(win, true);
-	AddModule(input, true);
-	AddModule(tex, true);
-	AddModule(audio, true);
-	AddModule(pathfinding, true);
-	AddModule(sceneIntro, true);
-	AddModule(sceneWin, false);
-	AddModule(sceneLose, false);
-	AddModule(scene, false);
-	AddModule(map, false);
-	AddModule(particles, true);
-	AddModule(enemy, false);
-	AddModule(flyingEnemy, false);
-	AddModule(player, false);
-	AddModule(fadetoblack, true);
+	AddModule(win);
+	AddModule(input);
+	AddModule(tex);
+	AddModule(audio);
+	AddModule(entityManager);
+	AddModule(sceneManager);
 	
 
 	// Render last to swap buffer
-	AddModule(render, true);
+	AddModule(render);
 
 	PERF_PEEK(ptimer);
 }
@@ -90,9 +63,9 @@ App::~App()
 	modules.Clear();
 }
 
-void App::AddModule(Module* module, bool active)
+void App::AddModule(Module* module)
 {
-	module->Init(active);
+	module->Init();
 	modules.Add(module);
 }
 

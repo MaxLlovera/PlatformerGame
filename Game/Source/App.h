@@ -17,17 +17,8 @@ class Input;
 class Render;
 class Textures;
 class Audio;
-class Scene;
-class Map;
-class PathFinding;
-class Player;
-class ModuleParticles;
-class Enemy;
-class FlyingEnemy;
-class FadeToBlack;
-class SceneIntro;
-class SceneWin;
-class SceneLose;
+class EntityManager;
+class SceneManager;
 
 class App
 {
@@ -52,7 +43,7 @@ public:
 	bool CleanUp();
 
 	// Add a new module to handle
-	void AddModule(Module* module, bool active);
+	void AddModule(Module* module);
 
 	// Exposing some properties for reading
 	int GetArgc() const;
@@ -99,17 +90,9 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
-	PathFinding* pathfinding;
-	Scene* scene;
-	Map* map;
-	Player* player;
-	ModuleParticles* particles;
-	Enemy* enemy;
-	FlyingEnemy* flyingEnemy;
-	FadeToBlack* fadetoblack;
-	SceneIntro* sceneIntro;
-	SceneWin* sceneWin;
-	SceneLose* sceneLose;
+	EntityManager* entityManager;
+	SceneManager* sceneManager;
+
 	bool capped = false;
 	bool loadGameRequested;
 
