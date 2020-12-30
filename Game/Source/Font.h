@@ -1,31 +1,60 @@
-#ifndef __FONT_H__
-#define __FONT_H__
+#pragma once
 
-#include "Defs.h"
+#include "Module.h"
 
-#include "SDL/include/SDL.h"
+#include "SString.h"
+#include "SDL\include\SDL_pixels.h"
 
-class Font
+#define MAX_FONTS 10
+#define MAX_FONT_CHARS 256
+
+struct SDL_Texture;
+
+struct Fonts
+{
+	// Lookup table. All characters displayed in the same order as the texture
+	char table[MAX_FONT_CHARS];
+
+	// The font texture
+	SDL_Texture* texture = nullptr;
+
+	// Font setup data
+	uint totalLength;
+	uint rows, columns;
+	uint char_w, char_h;
+
+};
+
+class Font : public Module
 {
 public:
 
-    Font(SDL_Texture* atlas, int count, int rows, int cols, int padding);
+	// Constructor
+	Font();
 
-    ~Font();
+	// Destructor
+	~Font();
 
-    void SetFirstCharacter(int value);
+	// Loads a font file from a texture
+	// Returns a font index from the fonts array
+	// Param texturePath	- The path to the texture file
+	// Param characters		- The lookup table. All characters displayed in the same order as the texture
+	// Param rows			- The amount of character rows in the texture
+	int Load(const char* texturePath, const char* characters, uint rows = 1);
 
-    SDL_Rect GetCharRec(int value);
+	// Removes a font by its index
+	// Unloads the texture and removes it from the fonts array
+	void UnLoad(int fontIndex);
+
+	// Create a surface from text
+	void DrawText(int x, int y, int fontIndex, const char* text) const;
+
+	inline uint GetFontsCount() const { return fontsCount; };
 
 private:
-	
-	SDL_Texture* texture;
+	// An array to keep track and store all loaded fonts
+	Fonts fonts[MAX_FONTS];
 
-    int baseSize;
-    int charsCount;
-    SDL_Rect charsRecs[128];
-
-    int firstChar;
+	// The amount of fonts loaded into the array
+	uint fontsCount = 0;
 };
-
-#endif //__FONT_H__

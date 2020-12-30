@@ -36,32 +36,28 @@ bool SceneIntro::Start()
 	LOG("Loading background assets");
 	introText = app->tex->Load("Assets/Textures/scene_intro.png");
 	bool ret = true;
-	app->sceneLose->Disable();
-	app->sceneWin->Disable();
+	//app->sceneLose->Disable();
+	//app->sceneWin->Disable();
 	app->audio->PlayMusic("Assets/Audio/Music/intro_theme.ogg");
 	app->render->camera.x = 0;
 	app->render->camera.y = -555;
-	app->player->position.x = 350;
-	app->player->position.y = 875;
+	//app->player->position.x = 350;
+	//app->player->position.y = 875;
 
-	if (app->player->win) app->SaveGameRequest();
+	//if (app->player->win) app->SaveGameRequest();
 
-	app->player->win = false;
+	//app->player->win = false;
 	return ret;
 }
 
 bool SceneIntro::Update(float dt)
 {
 
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-	{
-		app->render->RestartValues();
-		app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
-	}
+	
 
 	//volume changes
-	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
-	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
+	//if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
+	//if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
 	return true;
 }
 

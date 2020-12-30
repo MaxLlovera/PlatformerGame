@@ -17,8 +17,11 @@ class Input;
 class Render;
 class Textures;
 class Audio;
+class Map;
 class EntityManager;
 class SceneManager;
+class PathFinding;
+class Font;
 
 class App
 {
@@ -43,7 +46,7 @@ public:
 	bool CleanUp();
 
 	// Add a new module to handle
-	void AddModule(Module* module);
+	void AddModule(Module* module, bool active);
 
 	// Exposing some properties for reading
 	int GetArgc() const;
@@ -90,8 +93,11 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
+	Map* map;
 	EntityManager* entityManager;
 	SceneManager* sceneManager;
+	PathFinding* pathfinding;
+	Font* font;
 
 	bool capped = false;
 	bool loadGameRequested;

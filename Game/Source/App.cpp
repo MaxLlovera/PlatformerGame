@@ -5,8 +5,11 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "Map.h"
 #include "EntityManager.h"
 #include "SceneManager.h"
+#include "Pathfinding.h"
+#include "Font.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -28,21 +31,26 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
+	map = new Map();
 	entityManager = new EntityManager();
 	sceneManager = new SceneManager();
+	pathfinding = new PathFinding();
+	font = new Font();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
-	AddModule(win);
-	AddModule(input);
-	AddModule(tex);
-	AddModule(audio);
-	AddModule(entityManager);
-	AddModule(sceneManager);
-	
+	AddModule(win, true);
+	AddModule(audio, true);
+	AddModule(input, true);
+	AddModule(tex, true);
+	AddModule(map, false);
+	AddModule(sceneManager, true);
+	AddModule(entityManager, false);
+	AddModule(font, true);
+	AddModule(pathfinding, false);
 
 	// Render last to swap buffer
-	AddModule(render);
+	AddModule(render, true);
 
 	PERF_PEEK(ptimer);
 }
@@ -63,9 +71,9 @@ App::~App()
 	modules.Clear();
 }
 
-void App::AddModule(Module* module)
+void App::AddModule(Module* module, bool active)
 {
-	module->Init();
+	module->Init(active);
 	modules.Add(module);
 }
 

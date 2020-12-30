@@ -41,15 +41,14 @@ bool SceneGameplay::Start()
 	// L12b: Create walkability map on map loading
 	if (this->active == true)
 	{
-		app->player->Enable();
-		app->enemy->Enable();
-		app->flyingEnemy->Enable();
+		app->entityManager->Enable();
+		//app->pathfinding->Enable();
 		app->map->Enable();
 		background = app->tex->Load("Assets/Textures/background.png");
 		heart = app->tex->Load("Assets/Textures/head_life.png");
 		key = app->tex->Load("Assets/Textures/key.png");
 		puzzle = app->tex->Load("Assets/Textures/puzzle.png");
-		app->player->spiked = false;
+		//app->player->spiked = false;
 		app->map->checkpointTaken = false;
 
 		// L03: DONE: Load map
@@ -90,14 +89,14 @@ bool SceneGameplay::Update(float dt)
 	//restart from first level
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
+		TransitionToScene(SceneType::GAMEPLAY);
 		app->render->RestartValues();
 	}
 	
 	//restart the current level
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
+		TransitionToScene(SceneType::GAMEPLAY);
 		app->render->RestartValues();
 	}
 
@@ -110,20 +109,20 @@ bool SceneGameplay::Update(float dt)
 	//cap fps
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) app->capped = !app->capped;
 
-	//SceneWin
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->player->win)
-	{
-		app->player->win = true;
-		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 1 / dt);
-		app->render->RestartValues();
-	}
-	
-	//SceneLose
-	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
-	{
-		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
-		app->render->RestartValues();
-	}
+	////SceneWin
+	//if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->player->win)
+	//{
+	//	app->player->win = true;
+	//	app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 1 / dt);
+	//	app->render->RestartValues();
+	//}
+	//
+	////SceneLose
+	//if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	//{
+	//	app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
+	//	app->render->RestartValues();
+	//}
 
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);

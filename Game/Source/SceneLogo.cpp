@@ -56,7 +56,7 @@ bool SceneLogo::Update(Input* input, float dt)
         if (logoAlpha < 0.0f)
         {
             logoAlpha = 0.0f;
-            TransitionToScene(SceneType::TITLE);
+            TransitionToScene(SceneType::INTRO);
         }
     }
 
