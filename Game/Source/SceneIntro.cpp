@@ -8,6 +8,8 @@
 #include "Scene.h"
 #include "SceneManager.h"
 
+#include "EntityManager.h"
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -21,7 +23,7 @@ SceneIntro::~SceneIntro()
 
 }
 
-bool SceneIntro::Awake(pugi::xml_node& node)
+bool SceneIntro::Awake()
 {
 	return true;
 }

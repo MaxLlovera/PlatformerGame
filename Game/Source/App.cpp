@@ -28,7 +28,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	win = new Window();
 	input = new Input();
-	render = new Render();
+	render = new Render(win);
 	tex = new Textures();
 	audio = new Audio();
 	map = new Map();

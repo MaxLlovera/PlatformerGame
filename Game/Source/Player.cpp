@@ -20,11 +20,13 @@
 #define COLLIDER_GREY 270
 #define COLLIDER_ORANGE 271
 
-Player::Player() : Entity(type)
+Player::Player() : Entity(EntityType::PLAYER)
 {
-	name.Create("player");
+	position = iPoint(350, 875);
+
+	/*name.Create("player");
 	position.x = 350;
-	position.y = 875;
+	position.y = 875;*/
 
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 85 });

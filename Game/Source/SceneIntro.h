@@ -13,20 +13,20 @@ public:
 	~SceneIntro();
 
 	// Called when the module is activated
-	bool Awake(pugi::xml_node& config) override;
+	bool Awake();
 	// Loads the necessary textures for the map background
 	bool Start();
 
 	// Called at the middle of the application loop
 	// Updates the scene's background animations
-	bool Update(float dt) override;
+	bool Update(float dt);
 
 	// Called at the end of the application loop.
 	// Performs the render call of all the parts of the scene's background
 	bool PostUpdate();
 
 
-	bool CleanUp() override;
+	bool CleanUp();
 
 private:
 	SDL_Texture* introText = nullptr;

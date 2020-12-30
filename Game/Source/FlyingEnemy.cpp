@@ -10,6 +10,7 @@
 #include "Pathfinding.h"
 #include "Defs.h"
 #include "Log.h"
+#include "EntityManager.h"
 
 
 #define COLLIDER_GREEN 265
@@ -17,11 +18,12 @@
 #define COLLIDER_BLUE 267
 #define COLLIDER_YELLOW 268
 
-FlyingEnemy::FlyingEnemy() : Entity(type)
+FlyingEnemy::FlyingEnemy() : Entity(EntityType::FLYING)
 {
-	name.Create("flyingenemy");
-	position.x = 4000;
-	position.y = 500;
+
+	//name.Create("flyingenemy");
+	//position.x = 4000;
+	//position.y = 500;
 
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 52 });
@@ -103,7 +105,7 @@ bool FlyingEnemy::Update(float dt)
 
 	if (deathAnim.HasFinished())
 	{
-		this->Disable();
+		//this->Disable();
 		deathAnim.Reset();
 	}
 	currentAnimation->Update();
@@ -122,7 +124,7 @@ bool FlyingEnemy::PostUpdate()
 		{
 			iPoint nextPos = app->map->MapToWorld(pathDraw->At(i)->x, pathDraw->At(i)->y);
 			SDL_Rect rectPath = { nextPos.x, nextPos.y, 64, 64 };
-			app->render->DrawRectangle(rectPath, 0, 0, 255, 100);
+			app->render->DrawRectangle(rectPath, { 0, 0, 255, 100 });
 		}
 		app->pathfinding->lastPath.Clear();
 	}

@@ -60,6 +60,17 @@ bool SceneGameplay::Start()
 
 			RELEASE_ARRAY(data);
 		}
+		Player* player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+		Enemy* enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);		FlyingEnemy* flyingenemy = (FlyingEnemy*)app->entityManager->CreateEntity(EntityType::FLYING);
+
+		player = new Player();
+		player->position = iPoint(350, 875);
+
+		enemy = new Enemy();
+		enemy->position = iPoint(1000,875);
+
+		flyingenemy = new FlyingEnemy();
+		flyingenemy->position = iPoint(4000, 500);
 
 		// Load music
 		app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
@@ -103,7 +114,7 @@ bool SceneGameplay::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) app->map->colliders = !app->map->colliders;
 
 	//god mode
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) app->player->godModeEnabled = !app->player->godModeEnabled;
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) player->godModeEnabled = !player->godModeEnabled;
 	
 	//cap fps
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) app->capped = !app->capped;
@@ -129,17 +140,17 @@ bool SceneGameplay::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
 
 	//camera x
-	if ((app->render->counter == 0 || app->player->godModeEnabled) && !app->player->spiked)
+	if ((app->render->counter == 0 || player->godModeEnabled) && !player->spiked)
 	{
-		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->player->position.x > 350 && app->player->position.x <= 4400 && !app->player->ThereIsLeftWall() && !app->player->ThereIsChestLeft()) app->render->camera.x += 3.0f;
-		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->player->position.x >= 350 && app->player->position.x < 4400 && !app->player->ThereIsRightWall() && !app->player->ThereIsChestRight() && !app->player->ThereIsLeftWall()) app->render->camera.x -= 3.0f;
+		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && player->position.x > 350 && player->position.x <= 4400 && !player->ThereIsLeftWall() && !player->ThereIsChestLeft()) app->render->camera.x += 3.0f;
+		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && player->position.x >= 350 && player->position.x < 4400 && !player->ThereIsRightWall() && !player->ThereIsChestRight() && !player->ThereIsLeftWall()) app->render->camera.x -= 3.0f;
 	}
 
 	//camera y
 
-	if (app->player->position.y < 570 && app->render->camera.y < -100) app->render->camera.y += 4.0f;
+	if (player->position.y < 570 && app->render->camera.y < -100) app->render->camera.y += 4.0f;
 
-	if (app->player->position.y >= 570 && app->render->camera.y > -550) app->render->camera.y -= 4.0f;
+	if (player->position.y >= 570 && app->render->camera.y > -550) app->render->camera.y -= 4.0f;
 
 	return true;
 }
@@ -160,25 +171,25 @@ bool SceneGameplay::PostUpdate()
 	app->map->DrawPuzzle();
 	if (!app->map->chestTaken) app->map->DrawChest();
 	if (app->map->chestTaken) app->map->DrawHeart();
-	if (app->player->lifes == 4)
+	if (player->lifes == 4)
 	{
 		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
 		app->render->DrawTexture(heart, -app->render->camera.x + 64, -app->render->camera.y);
 		app->render->DrawTexture(heart, -app->render->camera.x + 128, -app->render->camera.y);
 		app->render->DrawTexture(heart, -app->render->camera.x + 192, -app->render->camera.y);
 	}
-	if (app->player->lifes == 3)
+	if (player->lifes == 3)
 	{
 		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
 		app->render->DrawTexture(heart, -app->render->camera.x + 64, -app->render->camera.y);
 		app->render->DrawTexture(heart, -app->render->camera.x + 128, -app->render->camera.y);
 	}
-	if (app->player->lifes == 2)
+	if (player->lifes == 2)
 	{
 		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
 		app->render->DrawTexture(heart, -app->render->camera.x + 64, -app->render->camera.y);
 	}
-	if (app->player->lifes == 1)
+	if (player->lifes == 1)
 	{
 		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
 	}

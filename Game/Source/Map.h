@@ -7,6 +7,7 @@
 #include "Point.h"
 #include "DynArray.h"
 
+#include "SDL/include/SDL.h"
 #include "PugiXml\src\pugixml.hpp"
 
 #define COST_MAP_SIZE	100

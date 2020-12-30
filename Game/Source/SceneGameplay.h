@@ -5,6 +5,8 @@
 
 #include "Map.h"
 #include "Player.h"
+#include "Enemy.h"
+#include "FlyingEnemy.h"
 
 struct SDL_Texture;
 
@@ -35,6 +37,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+
+
 private:
 	SDL_Texture* background;
 	int volume;
@@ -42,6 +46,11 @@ private:
 	SDL_Texture* heart;
 	SDL_Texture* key;
 	SDL_Texture* puzzle;
+	
+	Player* player;
+	Enemy* enemy;
+	FlyingEnemy* flyingEnemy;
+
 };
 
 #endif // __SCENEGAMEPLAY_H__

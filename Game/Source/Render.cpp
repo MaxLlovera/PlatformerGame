@@ -8,16 +8,20 @@
 
 #include "Defs.h"
 #include "Log.h"
+#include "Font.h"
 
 #define VSYNC true
 
-Render::Render() : Module()
+Render::Render(Window* win) : Module()
 {
 	name.Create("renderer");
 	background.r = 0;
 	background.g = 0;
 	background.b = 0;
 	background.a = 0;
+
+	this->win = win;
+
 }
 
 // Destructor
@@ -173,11 +177,22 @@ void Render::ResetViewPort()
 	SDL_RenderSetViewport(renderer, &viewport);
 }
 
+iPoint Render::ScreenToWorld(int x, int y) const
+{
+	iPoint ret;
+
+	ret.x = (x - camera.x / scale);
+	ret.y = (y - camera.y / scale);
+
+	return ret;
+}
+
+
 // Blit to screen
 bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY) const
 {
 	bool ret = true;
-	uint scale = app->win->GetScale();
+	//uint scale = app->win->GetScale();
 
 	SDL_Rect rect;
 	rect.x = (int)(camera.x * speed) + x * scale;

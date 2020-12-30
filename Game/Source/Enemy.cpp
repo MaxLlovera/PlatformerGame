@@ -11,7 +11,8 @@
 #include "Pathfinding.h"
 #include "Defs.h"
 #include "Log.h"
-
+#include "EntityManager.h"
+#include "SceneGameplay.h"
 
 #define COLLIDER_GREEN 265
 #define COLLIDER_RED 266
@@ -19,8 +20,11 @@
 #define COLLIDER_YELLOW 268
 
 
-Enemy::Enemy() : Entity(type)
+Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
+	Enemy* enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+
+
 	name.Create("enemy");
 	position.x = 1000;
 	position.y = 875;
@@ -75,7 +79,7 @@ bool Enemy::Start()
 
 bool Enemy::Update(float dt)
 {
-	if (!dead && !app->player->spiked && !app->player->godModeEnabled)
+	if (!dead && app->player->spiked && !app->player->godModeEnabled)
 	{
 		currentAnimation = &idlAnim;
 
@@ -129,7 +133,7 @@ bool Enemy::Update(float dt)
 
 	if (deathAnim.HasFinished())
 	{
-		this->Disable();
+		//this->Disable();
 		deathAnim.Reset();
 	}
 	currentAnimation->Update();
@@ -148,7 +152,7 @@ bool Enemy::PostUpdate()
 		{
 			iPoint nextPos = app->map->MapToWorld(pathDraw->At(i)->x, pathDraw->At(i)->y + 1);
 			SDL_Rect rectPath = { nextPos.x, nextPos.y, 64, 64 };
-			app->render->DrawRectangle(rectPath, 0, 0, 255, 100);
+			app->render->DrawRectangle(rectPath, { 0, 0, 255, 100 });
 		}
 		app->pathfinding->lastPath.Clear();
 	}

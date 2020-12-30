@@ -4,6 +4,9 @@
 #include "Point.h"
 #include "SString.h"
 
+#include "SDL/include/SDL.h"
+#include "PugiXml/src/pugixml.hpp"
+
 enum class EntityType
 {
     PLAYER,
