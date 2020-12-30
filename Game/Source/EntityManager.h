@@ -29,7 +29,6 @@ public:
 
 	void AddEntity(Entity* entity);
 
-	bool UpdateAll(float dt, bool doLogic);
 
 public:
 

@@ -4,11 +4,12 @@
 #include "Module.h"
 #include "Point.h"
 #include "Animation.h"
+#include "Entity.h"
 
 struct SDL_Texture;
 
 
-class FlyingEnemy : public Module
+class FlyingEnemy : public Entity
 {
 public:
 

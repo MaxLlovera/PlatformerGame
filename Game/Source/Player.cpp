@@ -6,15 +6,11 @@
 #include "Window.h"
 #include "Map.h"
 #include "Player.h"
-#include "Scene.h"
-#include "SceneLose.h"
-#include "Enemy.h"
 #include "ModuleParticles.h"
-#include "FlyingEnemy.h"
-#include "FadeToBlack.h"
+#include "EntityManager.h"
 #include "Defs.h"
 #include "Log.h"
-
+#include "List.h"
 
 #define COLLIDER_GREEN 265
 #define COLLIDER_RED 266
@@ -24,7 +20,7 @@
 #define COLLIDER_GREY 270
 #define COLLIDER_ORANGE 271
 
-Player::Player() : Module()
+Player::Player() : Entity(type)
 {
 	name.Create("player");
 	position.x = 350;
@@ -156,7 +152,7 @@ bool Player::Update(float dt)
 				Jump();
 				isJumping = false;
 			}
-			if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+		/*	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 			{
 				if (currentAnimation == &leftAnim)
 				{
@@ -177,7 +173,7 @@ bool Player::Update(float dt)
 					}
 				}
 				
-			}
+			}*/
 
 			if (!godModeEnabled) GravityPlayer();
 		}
@@ -230,8 +226,8 @@ bool Player::Update(float dt)
 		if (deathAnim.HasFinished())
 		{
 			app->render->RestartValues();
-			app->enemy->Enable();
-			app->flyingEnemy->Enable();
+			//app->enemy->Enable();
+			//app->flyingEnemy->Enable();
 		}
 	}
 	
@@ -240,7 +236,7 @@ bool Player::Update(float dt)
 		currentAnimation = &deathAnim;
 		if (deathAnim.HasFinished())
 		{
-			app->fadetoblack->FadeToBlk(app->scene, app->sceneLose, 1 / dt);
+			//app->fadetoblack->FadeToBlk(app->scene, app->sceneLose, 1 / dt);
 			app->render->RestartValues();
 		}
 	}
@@ -428,62 +424,62 @@ bool Player::ThereAreSpikes()
 
 }
 
-bool Player::ThereIsEnemy()
-{
-	
-	bool valid = false;
-	bool positionX = false;
-	bool positionY = false;
-
-	if (!godModeEnabled && !app->enemy->dead)
-	{
-		for (int i = 0; i < 30; ++i)
-		{
-			for (int j = 0; j < 30; ++j)
-			{
-				if (app->enemy->position.x + 16 + i == position.x + 16 + j) positionX = true;
-			}
-		}
-		for (int i = 0; i < 62; ++i)
-		{
-			for (int j = 0; j < 62; ++j)
-			{
-				if (app->enemy->position.y + 22 + i == position.y + 22 + j) positionY = true;
-			}
-		}
-	}
-	if (positionX && positionY) valid = true;
-
-	return valid;
-}
-
-bool Player::ThereIsFlyingEnemy()
-{
-	bool valid = false;
-	bool positionX = false;
-	bool positionY = false;
-
-	if (!godModeEnabled && !app->flyingEnemy->dead)
-	{
-		for (int i = 0; i < 50; ++i)
-		{
-			for (int j = 0; j < 30; ++j)
-			{
-				if (app->flyingEnemy->position.x + 6 + i == position.x + 16 + j) positionX = true;
-			}
-		}
-		for (int i = 0; i < 42; ++i)
-		{
-			for (int j = 0; j < 62; ++j)
-			{
-				if (app->flyingEnemy->position.y + 4 + i == position.y + 22 + j) positionY = true;
-			}
-		}
-	}
-	if (positionX && positionY) valid = true;
-
-	return valid;
-}
+//bool Player::ThereIsEnemy()
+//{
+//	
+//	bool valid = false;
+//	bool positionX = false;
+//	bool positionY = false;
+//	
+//	if (!godModeEnabled && !app->enemy->dead)
+//	{
+//		for (int i = 0; i < 30; ++i)
+//		{
+//			for (int j = 0; j < 30; ++j)
+//			{
+//				if (app->enemy->position.x + 16 + i == position.x + 16 + j) positionX = true;
+//			}
+//		}
+//		for (int i = 0; i < 62; ++i)
+//		{
+//			for (int j = 0; j < 62; ++j)
+//			{
+//				if (app->enemy->position.y + 22 + i == position.y + 22 + j) positionY = true;
+//			}
+//		}
+//	}
+//	if (positionX && positionY) valid = true;
+//
+//	return valid;
+//}
+//
+//bool Player::ThereIsFlyingEnemy()
+//{
+//	bool valid = false;
+//	bool positionX = false;
+//	bool positionY = false;
+//
+//	if (!godModeEnabled && !app->flyingEnemy->dead)
+//	{
+//		for (int i = 0; i < 50; ++i)
+//		{
+//			for (int j = 0; j < 30; ++j)
+//			{
+//				if (app->flyingEnemy->position.x + 6 + i == position.x + 16 + j) positionX = true;
+//			}
+//		}
+//		for (int i = 0; i < 42; ++i)
+//		{
+//			for (int j = 0; j < 62; ++j)
+//			{
+//				if (app->flyingEnemy->position.y + 4 + i == position.y + 22 + j) positionY = true;
+//			}
+//		}
+//	}
+//	if (positionX && positionY) valid = true;
+//
+//	return valid;
+//}
 
 bool Player::TakeKey()
 {

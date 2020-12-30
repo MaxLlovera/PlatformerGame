@@ -9,7 +9,6 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
@@ -118,7 +117,6 @@
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\PQueue.h">
       <Filter>Utils</Filter>
     </ClInclude>

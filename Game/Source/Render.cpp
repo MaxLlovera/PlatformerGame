@@ -5,7 +5,6 @@
 #include "Enemy.h"
 #include "FlyingEnemy.h"
 #include "Map.h"
-#include "FadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"

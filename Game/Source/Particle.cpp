@@ -10,7 +10,6 @@
 #include "Enemy.h"
 #include "ModuleParticles.h"
 #include "FlyingEnemy.h"
-#include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
 

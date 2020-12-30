@@ -12,7 +12,6 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "FlyingEnemy.h"
-#include "FadeToBlack.h"
 #include "PathFinding.h"
 
 #include "Defs.h"

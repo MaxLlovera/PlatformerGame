@@ -9,7 +9,6 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "FlyingEnemy.h"
-#include "FadeToBlack.h"
 #include "SceneWin.h"
 #include "SceneIntro.h"
 
@@ -38,13 +37,13 @@ bool SceneWin::Start()
 	{
 		LOG("Loading background assets");
 		winText = app->tex->Load("Assets/Textures/scene_win.png");
-		app->player->Disable();
-		app->enemy->Disable();
-		app->flyingEnemy->Disable();
+		//app->player->Disable();
+		//app->enemy->Disable();
+		//app->flyingEnemy->Disable();
 		app->map->Disable();
 		app->audio->PlayMusic("Assets/Audio/Music/victory.ogg");
 		app->map->checkpointTaken = false;
-		app->player->dead = false;
+		//app->player->dead = false;
 		app->render->camera.x = 0;
 		app->render->camera.y = -556;
 
@@ -54,7 +53,7 @@ bool SceneWin::Start()
 
 bool SceneWin::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->sceneIntro, 1 / dt);
+	//if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->sceneIntro, 1 / dt);
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
 	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);

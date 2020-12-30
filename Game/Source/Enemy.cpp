@@ -9,7 +9,6 @@
 #include "Enemy.h"
 #include "ModuleParticles.h"
 #include "Pathfinding.h"
-#include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -20,7 +19,7 @@
 #define COLLIDER_YELLOW 268
 
 
-Enemy::Enemy() : Module()
+Enemy::Enemy() : Entity(type)
 {
 	name.Create("enemy");
 	position.x = 1000;

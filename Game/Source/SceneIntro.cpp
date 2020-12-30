@@ -6,17 +6,12 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "FlyingEnemy.h"
-#include "SceneWin.h"
-#include "SceneLose.h"
-#include "FadeToBlack.h"
+#include "SceneManager.h"
 
 #include "Defs.h"
 #include "Log.h"
 
-SceneIntro::SceneIntro() : Module()
+SceneIntro::SceneIntro()
 {
 	name.Create("sceneIntro");
 }

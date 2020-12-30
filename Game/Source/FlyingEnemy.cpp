@@ -8,7 +8,6 @@
 #include "Player.h"
 #include "FlyingEnemy.h"
 #include "Pathfinding.h"
-#include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -18,7 +17,7 @@
 #define COLLIDER_BLUE 267
 #define COLLIDER_YELLOW 268
 
-FlyingEnemy::FlyingEnemy() : Module()
+FlyingEnemy::FlyingEnemy() : Entity(type)
 {
 	name.Create("flyingenemy");
 	position.x = 4000;

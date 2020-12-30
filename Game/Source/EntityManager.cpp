@@ -52,28 +52,34 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	return ret;
 }
 
+void EntityManager::DestroyEntity(Entity* entity)
+{
+	ListItem <Entity*>* item = entities.start;
+
+	while (item != nullptr)
+	{
+		if (item->data == entity)
+		{
+			entities.Del(item);
+			break;
+		}
+		item = item->next;
+	}
+}
+
 bool EntityManager::Update(float dt)
 {
-	accumulatedTime += dt;
-	if (accumulatedTime >= updateMsCycle) doLogic = true;
+	//if (app->sceneManager->isPaused == false)
+	//{
+		ListItem<Entity*>* item = entities.start;
 
-	UpdateAll(dt, doLogic);
-
-	if (doLogic == true)
-	{
-		accumulatedTime = 0.0f;
-		doLogic = false;
-	}
-
-	return true;
-}
-
-bool EntityManager::UpdateAll(float dt, bool doLogic)
-{
-	if (doLogic)
-	{
-		// TODO: Update all entities 
-	}
+		while ((item != nullptr))
+		{
+			item->data->Update(dt);
+			item = item->next;
+		}
+	//}
 
 	return true;
 }
+
