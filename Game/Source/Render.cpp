@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Scene.h"
 #include "FlyingEnemy.h"
 #include "Map.h"
 
@@ -51,9 +52,12 @@ bool Render::Awake(pugi::xml_node& config)
 	}
 	else
 	{
-		camera.w = app->win->screenSurface->w;
-		camera.h = app->win->screenSurface->h;
-		camera.y = app->player->position.y-(camera.h*2)+10;
+		if (app->scene->player != nullptr)
+		{
+			camera.w = app->win->screenSurface->w;
+			camera.h = app->win->screenSurface->h;
+			camera.y = app->scene->player->position.y - (camera.h * 2) + 10;
+		}
 	}
 
 	return ret;
@@ -76,8 +80,10 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
-
-	if (app->player->dead) DeadRestart();
+	if (app->scene->player != nullptr)
+	{
+		if (app->scene->player->dead) DeadRestart();
+	}
 
 	return true;
 }
@@ -100,44 +106,46 @@ bool Render::CleanUp()
 //restart values
 void Render::RestartValues()
 {
-
-	if (app->map->checkpointTaken)
+	if (app->scene->player != nullptr)
 	{
-		app->player->position.x = 938;
-		app->player->position.y = 171;
+		if (app->map->checkpointTaken)
+		{
+			app->scene->player->position.x = 938;
+			app->scene->player->position.y = 171;
 
-		app->render->camera.x = app->player->position.x - (app->render->camera.w) - 250;
-		app->render->camera.y = app->player->position.y - (app->render->camera.h) + 450;
-	}
-	if (!app->map->checkpointTaken)
-	{
-		app->player->position.x = 350;
-		app->player->position.y = 875;
+			app->render->camera.x = app->scene->player->position.x - (app->render->camera.w) - 250;
+			app->render->camera.y = app->scene->player->position.y - (app->render->camera.h) + 450;
+		}
+		if (!app->map->checkpointTaken)
+		{
+			app->scene->player->position.x = 350;
+			app->scene->player->position.y = 875;
 
-		app->render->camera.x = app->player->position.x - app->player->position.x;
-		app->render->camera.y = app->player->position.y - (app->render->camera.h * 2) + 10;
-	}
-	if (app->player->dead || app->player->win)
-	{
-		app->render->camera.y = -2000;
-	}
+			app->render->camera.x = app->scene->player->position.x - app->scene->player->position.x;
+			app->render->camera.y = app->scene->player->position.y - (app->render->camera.h * 2) + 10;
+		}
+		if (app->scene->player->dead || app->scene->player->win)
+		{
+			app->render->camera.y = -2000;
+		}
 
-	app->enemy->EnemyInitialPosition();
-	app->flyingEnemy->FlyingEnemyInitialPosition();
-	app->player->deathAnim.Reset();
-	counter = 0;
-	app->player->spiked = false;
-	app->player->godModeEnabled = false;
+		app->scene->enemy->EnemyInitialPosition();
+		app->scene->flyingEnemy->FlyingEnemyInitialPosition();
+		app->scene->player->deathAnim.Reset();
+		counter = 0;
+		app->scene->player->spiked = false;
+		app->scene->player->godModeEnabled = false;
+	}
 }
 
 void Render::DeadRestart()
 {
-	if (app->player->currentAnimation == &app->player->deathAnim)
+	if (app->scene->player->currentAnimation == &app->scene->player->deathAnim)
 	{
 		if (counter > 100)
 		{
 			RestartValues();
-			app->player->dead = false;
+			app->scene->player->dead = false;
 		}
 		else counter++;
 	}

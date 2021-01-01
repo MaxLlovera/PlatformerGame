@@ -45,7 +45,7 @@ public:
 	bool IsDead();
 	void FlyingEnemyInitialPosition();
 
-	iPoint position;
+	//iPoint position;
 	iPoint posOrigin;
 	iPoint posDestination;
 

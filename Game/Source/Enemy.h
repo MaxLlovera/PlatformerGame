@@ -43,7 +43,7 @@ public:
 
 	void EnemyInitialPosition();
 
-	iPoint position;
+	//iPoint position;
 	iPoint posOrigin;
 	iPoint posDestination;
 

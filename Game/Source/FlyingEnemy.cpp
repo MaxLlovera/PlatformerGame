@@ -7,18 +7,26 @@
 #include "Map.h"
 #include "Player.h"
 #include "FlyingEnemy.h"
+#include "Scene.h"
 #include "Pathfinding.h"
 #include "Defs.h"
 #include "Log.h"
 #include "EntityManager.h"
+<<<<<<< HEAD
+=======
 
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 
 #define COLLIDER_GREEN 265
 #define COLLIDER_RED 266
 #define COLLIDER_BLUE 267
 #define COLLIDER_YELLOW 268
 
+<<<<<<< HEAD
+FlyingEnemy::FlyingEnemy() : Entity(EntityType::FLYING_ENEMY)
+=======
 FlyingEnemy::FlyingEnemy() : Entity(EntityType::FLYING)
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 {
 
 	//name.Create("flyingenemy");
@@ -52,7 +60,8 @@ bool FlyingEnemy::Awake()
 
 bool FlyingEnemy::Start()
 {
-	if (this->active == true)
+	//if (this->active == true)
+	if (app->scene->flyingEnemy != nullptr)
 	{
 		dead = false;
 		texFlyingEnemy = app->tex->Load("Assets/Textures/flyingenemy_texture.png");
@@ -66,15 +75,15 @@ bool FlyingEnemy::Start()
 bool FlyingEnemy::Update(float dt)
 {
 
-	if (!dead && !app->player->spiked && !app->player->godModeEnabled)
+	if (!dead && !app->scene->player->spiked && !app->scene->player->godModeEnabled)
 	{
 		currentAnimation = &idlAnim;
-		if ((position.DistanceTo(app->player->position) < 500))
+		if ((position.DistanceTo(app->scene->player->position) < 500))
 		{
 			currentAnimation = &idlAnim;
 
 			posOrigin = app->map->WorldToMap(position.x, position.y);
-			posDestination = app->map->WorldToMap(app->player->position.x, app->player->position.y);
+			posDestination = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
 
 			app->pathfinding->CreatePath(posOrigin, posDestination);
 			const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
@@ -92,13 +101,13 @@ bool FlyingEnemy::Update(float dt)
 
 			if (posOrigin == posDestination)
 			{
-				if (position.x > app->player->position.x) position.x -= speed;
+				if (position.x > app->scene->player->position.x) position.x -= speed;
 
-				else if (position.x < app->player->position.x) position.x += speed;
+				else if (position.x < app->scene->player->position.x) position.x += speed;
 
-				if (position.y > app->player->position.y) position.y -= speed;
+				if (position.y > app->scene->player->position.y) position.y -= speed;
 
-				else if (position.y < app->player->position.y) position.y += speed;
+				else if (position.y < app->scene->player->position.y) position.y += speed;
 			}
 		}
 	}

@@ -43,7 +43,11 @@ bool SceneWin::Start()
 		app->map->Disable();
 		app->audio->PlayMusic("Assets/Audio/Music/victory.ogg");
 		app->map->checkpointTaken = false;
+<<<<<<< HEAD
+		app->scene->player->dead = false;
+=======
 		//app->player->dead = false;
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 		app->render->camera.x = 0;
 		app->render->camera.y = -556;
 

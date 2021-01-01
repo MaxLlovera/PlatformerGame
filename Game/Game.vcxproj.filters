@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+<<<<<<< HEAD
+    <ClCompile Include="Source\Window.cpp" />
+    <ClCompile Include="Source\Textures.cpp" />
+    <ClCompile Include="Source\Render.cpp" />
+=======
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Log.cpp">
@@ -9,6 +15,31 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Source\FadeToBlack.cpp" />
+    <ClCompile Include="Source\PerfTimer.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\Pathfinding.cpp" />
+    <ClCompile Include="Source\EntityManager.cpp" />
+    <ClCompile Include="Source\Font.cpp" />
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FlyingEnemy.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleParticles.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Particle.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+=======
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
@@ -34,6 +65,7 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\Pathfinding.cpp">
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneIntro.cpp">
@@ -45,6 +77,16 @@
     <ClCompile Include="Source\SceneWin.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+<<<<<<< HEAD
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Window.h" />
+    <ClInclude Include="Source\Textures.h" />
+    <ClInclude Include="Source\Render.h" />
+    <ClInclude Include="Source\Module.h" />
+    <ClInclude Include="Source\Input.h" />
+    <ClInclude Include="Source\Audio.h" />
+=======
     <ClCompile Include="Source\PerfTimer.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -89,6 +131,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
     <ClInclude Include="Source\App.h" />
     <ClInclude Include="Source\Defs.h">
       <Filter>Utils</Filter>
@@ -114,15 +157,36 @@
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
       <Filter>External\PugiXml</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\FadeToBlack.h" />
+    <ClInclude Include="Source\PerfTimer.h" />
+    <ClInclude Include="Source\Timer.h" />
+=======
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
     <ClInclude Include="Source\PQueue.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Queue.h">
       <Filter>Utils</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Source\Pathfinding.h" />
+    <ClInclude Include="Source\EntityManager.h" />
+    <ClInclude Include="Source\Font.h" />
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+=======
     <ClInclude Include="Source\Enemy.h">
       <Filter>Entities</Filter>
     </ClInclude>
@@ -168,6 +232,7 @@
     <ClInclude Include="Source\Timer.h">
       <Filter>Utils</Filter>
     </ClInclude>
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
     <ClInclude Include="Source\FlyingEnemy.h">
       <Filter>Entities</Filter>
     </ClInclude>
@@ -177,6 +242,21 @@
     <ClInclude Include="Source\Particle.h">
       <Filter>Entities</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Source\Player.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneIntro.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneLose.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneWin.h">
+=======
     <ClInclude Include="Source\GuiButton.h">
       <Filter>GuiControls</Filter>
     </ClInclude>
@@ -211,6 +291,7 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneLogo.h">
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
       <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -225,6 +306,12 @@
       <UniqueIdentifier>{2855ff7f-53a1-413d-a75b-18b4ade921dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Entities">
+<<<<<<< HEAD
+      <UniqueIdentifier>{cce56a37-1022-4a9b-a31f-4321524e3638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{a65d9d5e-21cd-4eaf-a4f1-67e6573b1f40}</UniqueIdentifier>
+=======
       <UniqueIdentifier>{775c25e5-0f04-4013-bac3-453295c90a77}</UniqueIdentifier>
     </Filter>
     <Filter Include="GuiControls">
@@ -235,6 +322,7 @@
     </Filter>
     <Filter Include="Scenes">
       <UniqueIdentifier>{2a5470eb-bb3b-4eaf-839b-c36ed32e1c34}</UniqueIdentifier>
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
     </Filter>
   </ItemGroup>
 </Project>

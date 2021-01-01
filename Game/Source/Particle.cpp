@@ -5,6 +5,7 @@
 #include "Audio.h"
 #include "Render.h"
 #include "Window.h"
+#include "Scene.h"
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -58,18 +59,18 @@ bool Particle::Update()
 	}
 	if (ThereIsEnemy())
 	{
-		if (!app->enemy->dead)
+		if (!app->scene->enemy->dead)
 		{
-			app->enemy->IsDead();
+			app->scene->enemy->IsDead();
 			SetToDelete();
 		}
 
 	}
 	if (ThereIsFlyingEnemy())
 	{
-		if (!app->flyingEnemy->dead)
+		if (!app->scene->flyingEnemy->dead)
 		{
-			app->flyingEnemy->IsDead();
+			app->scene->flyingEnemy->IsDead();
 			SetToDelete();
 		}
 	}
@@ -101,14 +102,14 @@ bool Particle::ThereIsEnemy()
 	{
 		for (int j = 0; j < 22; ++j)
 		{
-			if (app->enemy->position.x + 16 + i == position.x + j) positionX = true;
+			if (app->scene->enemy->position.x + 16 + i == position.x + j) positionX = true;
 		}
 	}
 	for (int i = 0; i < 62; ++i)
 	{
 		for (int j = 0; j < 14; ++j)
 		{
-			if (app->enemy->position.y + 22 + i == position.y + j) positionY = true;
+			if (app->scene->enemy->position.y + 22 + i == position.y + j) positionY = true;
 		}
 	}
 
@@ -127,14 +128,14 @@ bool Particle::ThereIsFlyingEnemy()
 	{
 		for (int j = 0; j < 22; ++j)
 		{
-			if (app->flyingEnemy->position.x + i == position.x + j) positionX = true;
+			if (app->scene->flyingEnemy->position.x + i == position.x + j) positionX = true;
 		}
 	}
 	for (int i = 0; i < 50; ++i)
 	{
 		for (int j = 0; j < 14; ++j)
 		{
-			if (app->flyingEnemy->position.y + i == position.y + j) positionY = true;
+			if (app->scene->flyingEnemy->position.y + i == position.y + j) positionY = true;
 		}
 	}
 

@@ -19,6 +19,10 @@ public:
 	bool Awake(pugi::xml_node&);
 
 	bool Update(float dt);
+<<<<<<< HEAD
+	bool PostUpdate();
+=======
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 
 	// Called before quitting
 	bool CleanUp();

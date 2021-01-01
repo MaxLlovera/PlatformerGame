@@ -7,6 +7,13 @@ class Input;
 class Render;
 class Textures;
 
+<<<<<<< HEAD
+class Player;
+class Enemy;
+class FlyingEnemy;
+
+class Scene : public Module
+=======
 class GuiControl;
 
 enum class SceneType
@@ -18,6 +25,7 @@ enum class SceneType
 };
 
 class Scene
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 {
 public:
 
@@ -64,8 +72,23 @@ public:
     bool loaded = false;
     // TODO: Transition animation properties
 
+<<<<<<< HEAD
+
+	Player* player;
+	Enemy* enemy;
+	FlyingEnemy* flyingEnemy;
+
+private:
+	SDL_Texture* background;
+	int volume;
+	SDL_Texture* debugTex;
+	SDL_Texture* heart;
+	SDL_Texture* key;
+	SDL_Texture* puzzle;
+=======
     bool transitionRequired;
     SceneType nextScene;
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 };
 
 #endif // __SCENE_H__

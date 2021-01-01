@@ -6,10 +6,21 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Map.h"
+<<<<<<< HEAD
+#include "ModuleParticles.h"
+#include "Font.h"
+#include "EntityManager.h"
+#include "FadeToBlack.h"
+#include "SceneIntro.h"
+#include "SceneWin.h"
+#include "SceneLose.h"
+#include "PathFinding.h"
+=======
 #include "EntityManager.h"
 #include "SceneManager.h"
 #include "Pathfinding.h"
 #include "Font.h"
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 
 #include "Defs.h"
 #include "Log.h"
@@ -33,9 +44,15 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	map = new Map();
 	entityManager = new EntityManager();
+<<<<<<< HEAD
+	fadetoblack = new FadeToBlack();
+	font = new Font();
+	
+=======
 	sceneManager = new SceneManager();
 	pathfinding = new PathFinding();
 	font = new Font();
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -43,11 +60,24 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio, true);
 	AddModule(input, true);
 	AddModule(tex, true);
+<<<<<<< HEAD
+	AddModule(audio, true);
+	AddModule(sceneIntro, true);
+	AddModule(sceneWin, false);
+	AddModule(sceneLose, false);
+	AddModule(scene, false);
+	AddModule(map, false);
+	AddModule(entityManager, true);
+	AddModule(font, true);
+	AddModule(pathfinding, true);
+	AddModule(fadetoblack, true);
+=======
 	AddModule(map, false);
 	AddModule(sceneManager, true);
 	AddModule(entityManager, false);
 	AddModule(font, true);
 	AddModule(pathfinding, false);
+>>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 
 	// Render last to swap buffer
 	AddModule(render, true);

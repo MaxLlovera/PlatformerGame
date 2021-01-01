@@ -57,7 +57,7 @@ public:
 
 	bool LoseLifes();
 	
-	iPoint position;
+	//iPoint position;
 
 	Animation* currentAnimation = nullptr;
 
