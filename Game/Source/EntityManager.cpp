@@ -48,10 +48,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 
 	// Created entities are added to the list
 	if (ret != nullptr) entities.Add(ret);
-<<<<<<< HEAD
-=======
 
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 	return ret;
 }
 
@@ -72,28 +69,15 @@ void EntityManager::DestroyEntity(Entity* entity)
 
 bool EntityManager::Update(float dt)
 {
-<<<<<<< HEAD
+
 	for (unsigned int i = 0; i < entities.Count(); i++)
 	{
 		entities.At(i)->data->Update(dt);
 	}
-=======
-	//if (app->sceneManager->isPaused == false)
-	//{
-		ListItem<Entity*>* item = entities.start;
-
-		while ((item != nullptr))
-		{
-			item->data->Update(dt);
-			item = item->next;
-		}
-	//}
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 
 	return true;
 }
 
-<<<<<<< HEAD
 bool EntityManager::PostUpdate()
 {
 	ListItem<Entity*>* item = entities.start;
@@ -106,5 +90,3 @@ bool EntityManager::PostUpdate()
 
 	return true;
 }
-=======
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153

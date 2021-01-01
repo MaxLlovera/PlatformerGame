@@ -3,26 +3,23 @@
 #include "Render.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "Scene.h"
 #include "FlyingEnemy.h"
 #include "Map.h"
+#include "Scene.h"
+#include "FadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
-#include "Font.h"
 
 #define VSYNC true
 
-Render::Render(Window* win) : Module()
+Render::Render() : Module()
 {
 	name.Create("renderer");
 	background.r = 0;
 	background.g = 0;
 	background.b = 0;
 	background.a = 0;
-
-	this->win = win;
-
 }
 
 // Destructor
@@ -185,22 +182,11 @@ void Render::ResetViewPort()
 	SDL_RenderSetViewport(renderer, &viewport);
 }
 
-iPoint Render::ScreenToWorld(int x, int y) const
-{
-	iPoint ret;
-
-	ret.x = (x - camera.x / scale);
-	ret.y = (y - camera.y / scale);
-
-	return ret;
-}
-
-
 // Blit to screen
 bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY) const
 {
 	bool ret = true;
-	//uint scale = app->win->GetScale();
+	uint scale = app->win->GetScale();
 
 	SDL_Rect rect;
 	rect.x = (int)(camera.x * speed) + x * scale;
@@ -235,18 +221,26 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	return ret;
 }
 
-bool Render::DrawRectangle(const SDL_Rect& rect, SDL_Color color, bool filled) const
+bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
 	bool ret = true;
+	uint scale = app->win->GetScale();
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 
 	SDL_Rect rec(rect);
+	if(use_camera)
+	{
+		rec.x = (int)(camera.x + rect.x * scale);
+		rec.y = (int)(camera.y + rect.y * scale);
+		rec.w *= scale;
+		rec.h *= scale;
+	}
 
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
 
-	if (result != 0)
+	if(result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;

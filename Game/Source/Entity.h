@@ -11,11 +11,7 @@ enum class EntityType
 {
     PLAYER,
     ENEMY,
-<<<<<<< HEAD
     FLYING_ENEMY,
-=======
-    FLYING,
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
     PARTICLE,
     UNKNOWN
 };
@@ -30,13 +26,10 @@ public:
     {
         return true;
     }
-<<<<<<< HEAD
     virtual bool PostUpdate()
     {
         return true;
     }
-=======
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 
 public:
 

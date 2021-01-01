@@ -5,33 +5,26 @@
 #include "Render.h"
 #include "Window.h"
 #include "Map.h"
+#include "Scene.h"
 #include "Player.h"
 #include "FlyingEnemy.h"
-#include "Scene.h"
 #include "Pathfinding.h"
+#include "FadeToBlack.h"
+#include "EntityManager.h"
 #include "Defs.h"
 #include "Log.h"
-#include "EntityManager.h"
-<<<<<<< HEAD
-=======
 
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 
 #define COLLIDER_GREEN 265
 #define COLLIDER_RED 266
 #define COLLIDER_BLUE 267
 #define COLLIDER_YELLOW 268
 
-<<<<<<< HEAD
 FlyingEnemy::FlyingEnemy() : Entity(EntityType::FLYING_ENEMY)
-=======
-FlyingEnemy::FlyingEnemy() : Entity(EntityType::FLYING)
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 {
-
-	//name.Create("flyingenemy");
-	//position.x = 4000;
-	//position.y = 500;
+	name.Create("flyingenemy");
+	position.x = 4000;
+	position.y = 500;
 
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 52 });
@@ -60,8 +53,7 @@ bool FlyingEnemy::Awake()
 
 bool FlyingEnemy::Start()
 {
-	//if (this->active == true)
-	if (app->scene->flyingEnemy != nullptr)
+	if (this->active == true)
 	{
 		dead = false;
 		texFlyingEnemy = app->tex->Load("Assets/Textures/flyingenemy_texture.png");
@@ -133,7 +125,7 @@ bool FlyingEnemy::PostUpdate()
 		{
 			iPoint nextPos = app->map->MapToWorld(pathDraw->At(i)->x, pathDraw->At(i)->y);
 			SDL_Rect rectPath = { nextPos.x, nextPos.y, 64, 64 };
-			app->render->DrawRectangle(rectPath, { 0, 0, 255, 100 });
+			app->render->DrawRectangle(rectPath, 0, 0, 255, 100);
 		}
 		app->pathfinding->lastPath.Clear();
 	}

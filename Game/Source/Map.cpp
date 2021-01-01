@@ -1,3 +1,4 @@
+
 #include "App.h"
 #include "Render.h"
 #include "Textures.h"
@@ -653,19 +654,14 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
 	bool ret = true;
-	pugi::xml_node data = node.child("properties");
-	if (data != NULL)
+	Properties::Property* property = new Properties::Property;
+	pugi::xml_node pnode = node;
+	for (pnode = node.child("properties").child("property"); pnode; pnode = pnode.next_sibling("property"))
 	{
-		pugi::xml_node prop;
-		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))
-		{
-			Properties::Property* p = new Properties::Property();
-			p->name = prop.attribute("name").as_string();
-			p->value = prop.attribute("value").as_int();
-			properties.list.Add(p);
-		}
+		property->name = pnode.attribute("name").as_string();
+		property->value = pnode.attribute("value").as_int();
+		properties.list.Add(property);
 	}
-
 	return ret;
 }
 

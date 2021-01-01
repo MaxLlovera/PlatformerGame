@@ -18,17 +18,13 @@ class Render;
 class Textures;
 class Audio;
 class Map;
-class EntityManager;
-class SceneManager;
 class PathFinding;
-<<<<<<< HEAD
 class EntityManager;
 class FadeToBlack;
+class Scene;
 class SceneIntro;
 class SceneWin;
 class SceneLose;
-=======
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 class Font;
 
 class App
@@ -101,20 +97,15 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
+	PathFinding* pathfinding;
+	Scene* scene;
 	Map* map;
-<<<<<<< HEAD
-	Font* font;
-	EntityManager* entityManager;
 	FadeToBlack* fadetoblack;
 	SceneIntro* sceneIntro;
 	SceneWin* sceneWin;
 	SceneLose* sceneLose;
-=======
 	EntityManager* entityManager;
-	SceneManager* sceneManager;
-	PathFinding* pathfinding;
 	Font* font;
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 
 	bool capped = false;
 	bool loadGameRequested;

@@ -91,18 +91,9 @@
   <ItemGroup>
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\FlyingEnemy.cpp" />
     <ClCompile Include="Source\Font.cpp" />
-=======
-    <ClCompile Include="Source\FlyingEnemy.cpp" />
-    <ClCompile Include="Source\Font.cpp" />
-    <ClCompile Include="Source\GuiButton.cpp" />
-    <ClCompile Include="Source\GuiCheckBox.cpp" />
-    <ClCompile Include="Source\GuiManager.cpp" />
-    <ClCompile Include="Source\GuiSlider.cpp" />
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
@@ -113,12 +104,10 @@
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Player.cpp" />
-    <ClCompile Include="Source\SceneGameplay.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\SceneIntro.cpp" />
-    <ClCompile Include="Source\SceneLogo.cpp" />
     <ClCompile Include="Source\SceneLose.cpp" />
-    <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\SceneWin.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
@@ -127,19 +116,9 @@
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />
-<<<<<<< HEAD
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\FlyingEnemy.h" />
     <ClInclude Include="Source\Font.h" />
-=======
-    <ClInclude Include="Source\FlyingEnemy.h" />
-    <ClInclude Include="Source\Font.h" />
-    <ClInclude Include="Source\GuiButton.h" />
-    <ClInclude Include="Source\GuiCheckBox.h" />
-    <ClInclude Include="Source\GuiControl.h" />
-    <ClInclude Include="Source\GuiManager.h" />
-    <ClInclude Include="Source\GuiSlider.h" />
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\ModuleParticles.h" />
     <ClInclude Include="Source\Particle.h" />
@@ -149,16 +128,13 @@
     <ClInclude Include="Source\PQueue.h" />
     <ClInclude Include="Source\Queue.h" />
     <ClInclude Include="Source\Scene.h" />
-    <ClInclude Include="Source\SceneGameplay.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\App.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\Render.h" />
     <ClInclude Include="Source\SceneIntro.h" />
-    <ClInclude Include="Source\SceneLogo.h" />
     <ClInclude Include="Source\SceneLose.h" />
-    <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\SceneWin.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Timer.h" />

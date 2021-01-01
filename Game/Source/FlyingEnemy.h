@@ -3,8 +3,8 @@
 
 #include "Module.h"
 #include "Point.h"
-#include "Animation.h"
 #include "Entity.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 

@@ -1,83 +1,44 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
-#include "SString.h"
+#include "Module.h"
 
-class Input;
-class Render;
-class Textures;
+struct SDL_Texture;
 
-<<<<<<< HEAD
 class Player;
 class Enemy;
 class FlyingEnemy;
 
 class Scene : public Module
-=======
-class GuiControl;
-
-enum class SceneType
-{
-    LOGO,
-    INTRO,
-    GAMEPLAY,
-    ENDING
-};
-
-class Scene
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 {
 public:
 
-    Scene() : active(true), loaded(false), transitionRequired(false) {}
+	Scene();
 
-    virtual bool Load(Textures* tex)
-    {
-        return true;
-    }
+	// Destructor
+	virtual ~Scene();
 
-    virtual bool Update(Input* input, float dt)
-    {
-        return true;
-    }
+	// Called before render is available
+	bool Awake(pugi::xml_node& config);
 
-    virtual bool Draw(Render* render)
-    {
-        return true;
-    }
+	// Called before the first frame
+	bool Start();
 
-    virtual bool Unload()
-    {
-        return true;
-    }
+	// Called before all Updates
+	bool PreUpdate();
 
-    void TransitionToScene(SceneType scene)
-    {
-        transitionRequired = true;
-        nextScene = scene;
-    }
+	// Called each loop iteration
+	bool Update(float dt);
 
-    // Define multiple Gui Event methods
-    virtual bool OnGuiMouseClickEvent(GuiControl* control)
-    {
-        return true;
-    }
+	// Called before all Updates
+	bool PostUpdate();
 
-public:
-
-    bool active = true;
-    SString name;         // Scene name identifier?
-
-    // Possible properties
-    bool loaded = false;
-    // TODO: Transition animation properties
-
-<<<<<<< HEAD
+	// Called before quitting
+	bool CleanUp();
 
 	Player* player;
 	Enemy* enemy;
 	FlyingEnemy* flyingEnemy;
-
 private:
 	SDL_Texture* background;
 	int volume;
@@ -85,10 +46,6 @@ private:
 	SDL_Texture* heart;
 	SDL_Texture* key;
 	SDL_Texture* puzzle;
-=======
-    bool transitionRequired;
-    SceneType nextScene;
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 };
 
 #endif // __SCENE_H__

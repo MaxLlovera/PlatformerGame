@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "FlyingEnemy.h"
+#include "FadeToBlack.h"
 #include "SceneWin.h"
 #include "SceneIntro.h"
 
@@ -43,11 +44,7 @@ bool SceneWin::Start()
 		app->map->Disable();
 		app->audio->PlayMusic("Assets/Audio/Music/victory.ogg");
 		app->map->checkpointTaken = false;
-<<<<<<< HEAD
 		app->scene->player->dead = false;
-=======
-		//app->player->dead = false;
->>>>>>> 781c6d6d2cec4b864a1563164947fa2745f6f153
 		app->render->camera.x = 0;
 		app->render->camera.y = -556;
 
@@ -57,7 +54,7 @@ bool SceneWin::Start()
 
 bool SceneWin::Update(float dt)
 {
-	//if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->sceneIntro, 1 / dt);
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->sceneIntro, 1 / dt);
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
 	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);

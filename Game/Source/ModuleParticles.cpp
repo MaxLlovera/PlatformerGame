@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "FlyingEnemy.h"
+#include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
 
