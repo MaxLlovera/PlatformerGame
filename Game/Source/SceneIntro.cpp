@@ -56,7 +56,9 @@ bool SceneIntro::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		app->render->RestartValues();
+		//app->fadetoblack->FadeToBlk(this, (Scene*)app->sceneManager->scene1, 1 / dt);
 		app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
+		//app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
 	}
 
 	//volume changes

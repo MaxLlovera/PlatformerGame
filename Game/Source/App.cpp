@@ -40,7 +40,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneIntro = new SceneIntro();
 	sceneWin = new SceneWin();
 	sceneLose = new SceneLose();
-	map = new Map();
 	entityManager = new EntityManager();
 	fadetoblack = new FadeToBlack();
 	pathfinding = new PathFinding();
@@ -60,7 +59,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entityManager, true);
 	AddModule(font, true);
 	AddModule(pathfinding, true);
-	
+	AddModule(fadetoblack, true);
 
 	// Render last to swap buffer
 	AddModule(render, true);

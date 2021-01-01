@@ -53,7 +53,7 @@ bool FlyingEnemy::Awake()
 
 bool FlyingEnemy::Start()
 {
-	if (this->active == true)
+	if (app->scene->flyingEnemy!=nullptr)
 	{
 		dead = false;
 		texFlyingEnemy = app->tex->Load("Assets/Textures/flyingenemy_texture.png");

@@ -464,20 +464,23 @@ bool Player::ThereIsFlyingEnemy()
 	bool positionX = false;
 	bool positionY = false;
 
-	if (!godModeEnabled && !app->scene->flyingEnemy->dead)
+	if (app->scene->flyingEnemy != nullptr)
 	{
-		for (int i = 0; i < 50; ++i)
+		if (!godModeEnabled && !app->scene->flyingEnemy->dead)
 		{
-			for (int j = 0; j < 30; ++j)
+			for (int i = 0; i < 50; ++i)
 			{
-				if (app->scene->flyingEnemy->position.x + 6 + i == position.x + 16 + j) positionX = true;
+				for (int j = 0; j < 30; ++j)
+				{
+					if (app->scene->flyingEnemy->position.x + 6 + i == position.x + 16 + j) positionX = true;
+				}
 			}
-		}
-		for (int i = 0; i < 42; ++i)
-		{
-			for (int j = 0; j < 62; ++j)
+			for (int i = 0; i < 42; ++i)
 			{
-				if (app->scene->flyingEnemy->position.y + 4 + i == position.y + 22 + j) positionY = true;
+				for (int j = 0; j < 62; ++j)
+				{
+					if (app->scene->flyingEnemy->position.y + 4 + i == position.y + 22 + j) positionY = true;
+				}
 			}
 		}
 	}

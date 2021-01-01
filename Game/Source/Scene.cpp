@@ -12,6 +12,7 @@
 #include "EntityManager.h"
 #include "FadeToBlack.h"
 #include "PathFinding.h"
+#include "SceneIntro.h"
 
 #include "Defs.h"
 #include "Log.h"

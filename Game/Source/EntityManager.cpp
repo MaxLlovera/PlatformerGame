@@ -2,6 +2,7 @@
 
 #include "Player.h"
 #include "Enemy.h"
+#include "FlyingEnemy.h"
 //#include "Item.h"
 
 #include "Defs.h"
