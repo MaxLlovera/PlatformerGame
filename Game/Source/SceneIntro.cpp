@@ -70,7 +70,7 @@ bool SceneIntro::Update(float dt)
 	}
 
 	//btnStart->Update(input,dt);
-	//btnExit->Update(dt);
+	//btnExit->Update(input,dt);
 
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);

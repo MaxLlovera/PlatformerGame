@@ -126,11 +126,16 @@ void Render::RestartValues()
 			app->render->camera.y = -2000;
 		}
 
+		app->scene->enemy->active = true;
+		app->scene->enemy->dead = false;
+		app->scene->flyingEnemy->active = true;
+		app->scene->flyingEnemy->dead = false;
 		app->scene->enemy->EnemyInitialPosition();
 		app->scene->flyingEnemy->FlyingEnemyInitialPosition();
 		app->scene->player->deathAnim.Reset();
 		counter = 0;
 		app->scene->player->spiked = false;
+		app->scene->player->dead = false;
 		app->scene->player->godModeEnabled = false;
 	}
 }

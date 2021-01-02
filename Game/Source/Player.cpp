@@ -252,9 +252,11 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
-	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(texPlayer, position.x, position.y, &rect);
-	
+	if (this->active == true)
+	{
+		SDL_Rect rect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(texPlayer, position.x, position.y, &rect);
+	}
 	return true;
 }
 

@@ -46,6 +46,7 @@ bool Scene::Start()
 		particles = (ModuleParticles*)app->entityManager->CreateEntity(EntityType::PARTICLE);
 
 		player->Start();
+		//player->active = true;
 		enemy->Start();
 		flyingEnemy->Start();
 		particles->Start();
@@ -149,6 +150,7 @@ bool Scene::Update(float dt)
 
 	if (player->position.y >= 570 && app->render->camera.y > -550) app->render->camera.y -= 4.0f;
 
+
 	return true;
 }
 
@@ -206,6 +208,9 @@ bool Scene::CleanUp()
 	app->tex->UnLoad(heart);
 	app->tex->UnLoad(key);
 	app->tex->UnLoad(puzzle);
-
+	app->entityManager->DestroyEntity(player);
+	app->entityManager->DestroyEntity(enemy);
+	app->entityManager->DestroyEntity(flyingEnemy);
+	app->entityManager->DestroyEntity(particles);
 	return true;
 }

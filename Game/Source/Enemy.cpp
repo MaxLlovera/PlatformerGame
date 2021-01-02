@@ -46,8 +46,9 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 
 	//deathAnim
 	deathAnim.PushBack({ 0, 518, 64, 85 });
+	//deathAnim.PushBack({ 0, 700, 64, 85 });
 	deathAnim.loop = false;
-	deathAnim.speed = 0.02f;
+	deathAnim.speed = 0.01f;
 	
 }
 
@@ -132,7 +133,7 @@ bool Enemy::Update(float dt)
 
 	if (deathAnim.HasFinished())
 	{
-		//this->Disable();
+		active = false;
 		deathAnim.Reset();
 	}
 	currentAnimation->Update();
@@ -141,21 +142,23 @@ bool Enemy::Update(float dt)
 
 bool Enemy::PostUpdate()
 {
-	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(texEnemy, position.x, position.y, &rect);
-
-	const DynArray<iPoint>* pathDraw = app->pathfinding->GetLastPath();
-	if (app->map->colliders)
+	if (this->active == true)
 	{
-		for (uint i = 0; i < pathDraw->Count(); ++i)
-		{
-			iPoint nextPos = app->map->MapToWorld(pathDraw->At(i)->x, pathDraw->At(i)->y + 1);
-			SDL_Rect rectPath = { nextPos.x, nextPos.y, 64, 64 };
-			app->render->DrawRectangle(rectPath, 0, 0, 255, 100);
-		}
-		app->pathfinding->lastPath.Clear();
-	}
+		SDL_Rect rect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(texEnemy, position.x, position.y, &rect);
 
+		const DynArray<iPoint>* pathDraw = app->pathfinding->GetLastPath();
+		if (app->map->colliders)
+		{
+			for (uint i = 0; i < pathDraw->Count(); ++i)
+			{
+				iPoint nextPos = app->map->MapToWorld(pathDraw->At(i)->x, pathDraw->At(i)->y + 1);
+				SDL_Rect rectPath = { nextPos.x, nextPos.y, 64, 64 };
+				app->render->DrawRectangle(rectPath, 0, 0, 255, 100);
+			}
+			app->pathfinding->lastPath.Clear();
+		}
+	}
 	return true;
 }
 

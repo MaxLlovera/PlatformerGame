@@ -73,6 +73,7 @@ public:
 	bool dead = false;
 	bool win = false;
 	bool godModeEnabled = false;
+
 	
 	int lifes = 3; //player lifes
 	bool spiked; //if player lose a life
