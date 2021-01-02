@@ -6,6 +6,8 @@
 #include "PugiXml/src/pugixml.hpp"
 
 class App;
+class GuiControl;
+enum class GuiControlState;
 
 class Module
 {

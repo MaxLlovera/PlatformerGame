@@ -12,6 +12,7 @@
 #include "SceneWin.h"
 #include "SceneLose.h"
 #include "FadeToBlack.h"
+#include "GuiButton.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -19,6 +20,13 @@
 SceneIntro::SceneIntro() : Module()
 {
 	name.Create("sceneIntro");
+
+	//btnStart = new GuiButton(1, { 1280 / 2 - 300 / 2, 300, 300, 80 }, "START");
+	//btnStart->SetObserver(this);
+
+	//btnExit = new GuiButton(2, { 1280 / 2 - 300 / 2, 400, 300, 80 }, "EXIT");
+	//btnExit->SetObserver(this);
+
 }
 
 SceneIntro::~SceneIntro()
@@ -60,6 +68,9 @@ bool SceneIntro::Update(float dt)
 		app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
 		//app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
 	}
+
+	//btnStart->Update(input,dt);
+	//btnExit->Update(dt);
 
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
