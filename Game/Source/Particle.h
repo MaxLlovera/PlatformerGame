@@ -3,6 +3,7 @@
 
 #include "Animation.h"
 #include "Point.h"
+#include "Entity.h"
 
 struct Collider;
 

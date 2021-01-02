@@ -72,7 +72,7 @@ public:
 
     void NotifyObserver()
     {
-        observer->OnGuiMouseClickEvent(this);
+        //observer->OnGuiMouseClickEvent(this);
     }
 
 public:

@@ -6,24 +6,16 @@
 	<audio>
 		<volume value="0" />
 	</audio>
-	<pathfinding />
 	<sceneIntro />
 	<SceneWin />
 	<SceneWin />
 	<scene />
 	<map />
-	<:anonymous />
-	<enemy>
-		<positionEnemy x="1000" y="875" />
-	</enemy>
-	<flyingenemy>
-		<positionFlyingEnemy x="4200" y="650" />
-	</flyingenemy>
-	<player>
-		<positionPlayer x="350" y="875" />
-	</player>
+	<entitymanager />
+	<font />
+	<pathfinding />
 	<fadetoblack />
 	<renderer>
-		<camera x="0" y="-555" />
+		<camera x="-588" y="-99" />
 	</renderer>
 </save_state>

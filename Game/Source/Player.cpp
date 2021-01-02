@@ -163,7 +163,7 @@ bool Player::Update(float dt)
 				{
 					if (shotCountdown == 0)
 					{
-						//Particle* newParticle = app->particles->AddParticle(app->particles->fireBallLeft, position.x, position.y + 50);
+						Particle* newParticle = app->scene->particles->AddParticle(app->scene->particles->fireBallLeft, position.x, position.y + 50);
 						app->audio->PlayFx(fireFx, 0);
 						shotCountdown = shotMaxCountdown;
 					}
@@ -172,7 +172,7 @@ bool Player::Update(float dt)
 				{
 					if (shotCountdown == 0)
 					{
-						//Particle* newParticle = app->particles->AddParticle(app->particles->fireBallRight, position.x + 50, position.y + 50);
+						Particle* newParticle = app->scene->particles->AddParticle(app->scene->particles->fireBallRight, position.x + 50, position.y + 50);
 						app->audio->PlayFx(fireFx, 0);
 						shotCountdown = shotMaxCountdown;
 					}

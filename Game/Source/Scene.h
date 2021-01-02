@@ -8,6 +8,7 @@ struct SDL_Texture;
 class Player;
 class Enemy;
 class FlyingEnemy;
+class ModuleParticles;
 
 class Scene : public Module
 {
@@ -44,6 +45,7 @@ public:
 	Player* player;
 	Enemy* enemy;
 	FlyingEnemy* flyingEnemy;
+	ModuleParticles* particles;
 private:
 	SDL_Texture* background;
 	int volume;

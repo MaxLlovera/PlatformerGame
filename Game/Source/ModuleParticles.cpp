@@ -13,8 +13,9 @@
 #include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
+#include "EntityManager.h"
 
-ModuleParticles::ModuleParticles() : Module()
+ModuleParticles::ModuleParticles() : Entity(EntityType::PARTICLE)
 {
 	for(uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 		particles[i] = nullptr;

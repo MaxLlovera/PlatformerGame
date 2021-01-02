@@ -6,13 +6,14 @@
 #include "Particle.h"
 #include "Point.h"
 #include "Animation.h"
+#include "Entity.h"
 
 #define MAX_ACTIVE_PARTICLES 8
 
 struct SDL_Texture;
 struct Collider;
 
-class ModuleParticles : public Module
+class ModuleParticles : public Entity
 {
 public:
 	// Constructor
@@ -23,7 +24,7 @@ public:
 	~ModuleParticles();
 
 
-	bool Start() override;
+	bool Start();
 
 
 	bool PreUpdate() ;

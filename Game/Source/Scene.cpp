@@ -13,6 +13,7 @@
 #include "FadeToBlack.h"
 #include "PathFinding.h"
 #include "SceneIntro.h"
+#include "ModuleParticles.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -42,10 +43,12 @@ bool Scene::Start()
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
 		flyingEnemy = (FlyingEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
+		particles = (ModuleParticles*)app->entityManager->CreateEntity(EntityType::PARTICLE);
 
 		player->Start();
 		enemy->Start();
 		flyingEnemy->Start();
+		particles->Start();
 
 		app->map->Enable();
 		background = app->tex->Load("Assets/Textures/background.png");

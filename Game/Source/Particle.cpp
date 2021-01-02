@@ -14,16 +14,17 @@
 #include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
+#include "EntityManager.h"
 
 #define COLLIDER_RED 266
 
-Particle::Particle()
+Particle::Particle()/* : Entity(EntityType::PARTICLE)*/
 {
 	position.SetToZero();
 	speed.SetToZero();
 }
 
-Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), speed(p.speed), frameCount(p.frameCount), lifetime(p.lifetime)
+Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), speed(p.speed), frameCount(p.frameCount), lifetime(p.lifetime)/*, Entity(EntityType::PARTICLE)*/
 {
 
 }
