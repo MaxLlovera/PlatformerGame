@@ -71,6 +71,22 @@ void EntityManager::DestroyEntity(Entity* entity)
 	}
 }
 
+
+bool EntityManager::PreUpdate()
+{
+	bool ret = true;
+
+	ListItem<Entity*>* item = entities.start;
+
+	while ((item != nullptr))
+	{
+		ret = item->data->PreUpdate();
+		item = item->next;
+	}
+
+	return ret;
+}
+
 bool EntityManager::Update(float dt)
 {
 

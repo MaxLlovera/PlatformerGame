@@ -22,6 +22,11 @@ public:
 
     Entity(EntityType type) : type(type), active(true) {}
 
+	virtual bool PreUpdate()
+	{
+		return true;
+	}
+
     virtual bool Update(float dt)
     {
         return true;

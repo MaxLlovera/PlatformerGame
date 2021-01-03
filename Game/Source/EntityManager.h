@@ -18,6 +18,8 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
+	bool PreUpdate();
+
 	bool Update(float dt);
 
 	bool PostUpdate();
