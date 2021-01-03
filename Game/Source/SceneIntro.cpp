@@ -21,11 +21,11 @@ SceneIntro::SceneIntro() : Module()
 {
 	name.Create("sceneIntro");
 
-	//btnStart = new GuiButton(1, { 1280 / 2 - 300 / 2, 300, 300, 80 }, "START");
-	//btnStart->SetObserver(this);
+	btnStart = new GuiButton(1, { 0, -300, 300, 80 }, "START");
+	btnStart->SetObserver(this);
 
-	//btnExit = new GuiButton(2, { 1280 / 2 - 300 / 2, 400, 300, 80 }, "EXIT");
-	//btnExit->SetObserver(this);
+	btnExit = new GuiButton(2, { 0, 400, 300, 80 }, "EXIT");
+	btnExit->SetObserver(this);
 
 }
 
@@ -42,7 +42,7 @@ bool SceneIntro::Awake(pugi::xml_node& node)
 bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
-	introText = app->tex->Load("Assets/Textures/scene_intro.png");
+	//introText = app->tex->Load("Assets/Textures/scene_intro.png");
 	bool ret = true;
 	app->sceneLose->Disable();
 	app->sceneWin->Disable();
@@ -68,9 +68,9 @@ bool SceneIntro::Update(float dt)
 		app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
 		//app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
 	}
-
-	//btnStart->Update(input,dt);
-	//btnExit->Update(input,dt);
+	
+	btnStart->Update(dt);
+	btnExit->Update(dt);
 
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
@@ -83,8 +83,29 @@ bool SceneIntro::PostUpdate()
 {
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
-	app->render->DrawTexture(introText, 0, 555, NULL);
+	//app->render->DrawTexture(introText, 0, 555, NULL);
+
+	app->render->DrawRectangle({ 0, 555, 1280, 720 }, 100, 100, 80, 255);
+
+	btnStart->Draw();
+	btnExit->Draw();
+
 	return ret;
+}
+
+bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
+{
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		if (control->id == 1) app->fadetoblack->FadeToBlk(this, app->scene, 30);
+		else if (control->id == 2) return false; // TODO: Exit request
+	}
+	default: break;
+	}
+
+	return true;
 }
 
 bool SceneIntro::CleanUp()

@@ -1,4 +1,7 @@
 #include "GuiSlider.h"
+#include "App.h"
+#include "Audio.h"
+#include "Input.h"
 
 GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::SLIDER, id)
 {
@@ -10,12 +13,12 @@ GuiSlider::~GuiSlider()
 {
 }
 
-bool GuiSlider::Update(Input* input, float dt)
+bool GuiSlider::Update(float dt)
 {
     if (state != GuiControlState::DISABLED)
     {
         int mouseX, mouseY;
-        input->GetMousePosition(mouseX, mouseY);
+        app->input->GetMousePosition(mouseX, mouseY);
 
         // Check collision between mouse and button bounds
         if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
@@ -31,20 +34,20 @@ bool GuiSlider::Update(Input* input, float dt)
     return false;
 }
 
-bool GuiSlider::Draw(Render* render)
+bool GuiSlider::Draw()
 {
     // Draw the right button depending on state
     switch (state)
     {
-    case GuiControlState::DISABLED: render->DrawRectangle(bounds, 100, 100, 100, 255);
+    case GuiControlState::DISABLED: app->render->DrawRectangle(bounds, 100, 100, 100, 255);
         break;
-    case GuiControlState::NORMAL: render->DrawRectangle(bounds, 0, 255, 0, 255);
+    case GuiControlState::NORMAL: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
         break;
-    case GuiControlState::FOCUSED: render->DrawRectangle(bounds, 255, 255, 0, 255);
+    case GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 255, 255, 0, 255);
         break;
-    case GuiControlState::PRESSED: render->DrawRectangle(bounds, 0, 255, 255, 255);
+    case GuiControlState::PRESSED: app->render->DrawRectangle(bounds, 0, 255, 255, 255);
         break;
-    case GuiControlState::SELECTED: render->DrawRectangle(bounds, 0, 255, 0, 255);
+    case GuiControlState::SELECTED: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
         break;
     default:
         break;

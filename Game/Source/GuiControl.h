@@ -4,7 +4,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Scene.h"
-
+#include "SceneIntro.h"
 #include "Point.h"
 #include "SString.h"
 
@@ -49,7 +49,7 @@ public:
         texture = NULL;
     }
 
-    virtual bool Update(Input* input, float dt)
+    virtual bool Update(float dt)
     {
         return true;
     }
@@ -65,14 +65,15 @@ public:
         section = { 0, 0, 0, 0 };
     }
 
-    void SetObserver(Scene* module)
+	//observer for SceneIntro
+    void SetObserver(SceneIntro* module)
     {
         observer = module;
     }
 
     void NotifyObserver()
     {
-        //observer->OnGuiMouseClickEvent(this);
+        observer->OnGuiMouseClickEvent(this);
     }
 
 public:
@@ -90,7 +91,7 @@ public:
 
     //Font font;              // Text font
 
-    Scene* observer;        // Observer module (it should probably be an array/list)
+    SceneIntro* observer;        // Observer module (it should probably be an array/list)
 };
 
 #endif // __GUICONTROL_H__
