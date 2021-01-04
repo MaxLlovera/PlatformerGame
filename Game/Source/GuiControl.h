@@ -66,7 +66,7 @@ public:
     }
 
 	//observer for SceneIntro
-    void SetObserver(SceneIntro* module)
+    void SetObserverSceneIntro(SceneIntro* module)
     {
         observer = module;
     }

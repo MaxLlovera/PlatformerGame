@@ -13,6 +13,7 @@
 #include "SceneLose.h"
 #include "FadeToBlack.h"
 #include "GuiButton.h"
+#include "Font.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -49,21 +50,23 @@ bool SceneIntro::Start()
 	//app->scene->player->position.y = 875;
 	//if (app->scene->player->win) app->SaveGameRequest();
 	//app->scene->player->win = false;
+	char lookupTable[] = { "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ:/,!+-%  " };
+	whiteFont = app->font->Load("Assets/Textures/white_font.png", lookupTable, 9);
 
-	btnPlay = new GuiButton(1, { 20, 1020, 230, 60 }, "PLAY");
-	btnPlay->SetObserver(this);
+	btnPlay = new GuiButton(1, { 540, 950, 145, 50 }, "PLAY");
+	btnPlay->SetObserverSceneIntro(this);
 	
-	btnContinue = new GuiButton(2, { 270, 1020, 230, 60 }, "CONTINUE");
-	btnContinue->SetObserver(this);
+	btnContinue = new GuiButton(2, { 480, 1025, 270, 50 }, "CONTINUE");
+	btnContinue->SetObserverSceneIntro(this);
 	
-	btnSettings = new GuiButton(3, { 520, 1020, 230, 60 }, "SETTINGS");
-	btnSettings->SetObserver(this);
+	btnSettings = new GuiButton(3, { 1000, 1200, 270, 50 }, "SETTINGS");
+	btnSettings->SetObserverSceneIntro(this);
 	
-	btnCredits = new GuiButton(4, { 770, 1020, 230, 60 }, "CREDITS");
-	btnCredits->SetObserver(this);
+	btnCredits = new GuiButton(4, { 25, 1200, 240, 50 }, "CREDITS");
+	btnCredits->SetObserverSceneIntro(this);
 
-	btnExit = new GuiButton(5, { 1020, 1020, 230, 60 }, "EXIT");
-	btnExit->SetObserver(this);
+	btnExit = new GuiButton(5, { 1100, 570, 145, 50 }, "EXIT");
+	btnExit->SetObserverSceneIntro(this);
 	return ret;
 }
 

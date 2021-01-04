@@ -3,11 +3,12 @@
 #include "Audio.h"
 #include "Window.h"
 #include "Input.h"
+#include "Font.h"
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
-    bounds.x /= app->win->GetScale();
-    bounds.y /= app->win->GetScale();
+    //bounds.x /= app->win->GetScale();
+    //bounds.y /= app->win->GetScale();
     this->bounds = bounds;
     this->text = text;
 }
@@ -68,6 +69,8 @@ bool GuiButton::Draw()
     default:
         break;
     }
+
+	app->font->DrawText(bounds.x + (app->render->camera.x) + 8, bounds.y + (app->render->camera.y) + 8, 0, text.GetString());
 
     return false;
 }

@@ -44,6 +44,8 @@ private:
 
 	SDL_Texture* introText = nullptr;
 
+	int whiteFont = -1;
+
 	bool exit = false;
 };
 
