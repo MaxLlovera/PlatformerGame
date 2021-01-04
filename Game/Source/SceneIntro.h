@@ -36,11 +36,15 @@ public:
 private:
 	bool active = true;
 	SString name;
-	GuiButton* btnStart;
+	GuiButton* btnPlay;
+	GuiButton* btnContinue;
+	GuiButton* btnSettings;
+	GuiButton* btnCredits;
 	GuiButton* btnExit;
 
 	SDL_Texture* introText = nullptr;
 
+	bool exit = false;
 };
 
 

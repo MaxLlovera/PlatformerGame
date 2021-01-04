@@ -9,7 +9,9 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type)
 	switch (type)
 	{
 		// Create the corresponding GuiControl type
-		//case GuiControlType::BUTTON: control = new GuiButton(1234);  break;
+		case GuiControlType::BUTTON: 
+			//control = new GuiButton(1234);  
+			break;
 		default: break;
 	}
 

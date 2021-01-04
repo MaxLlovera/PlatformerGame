@@ -21,11 +21,7 @@ SceneIntro::SceneIntro() : Module()
 {
 	name.Create("sceneIntro");
 
-	btnStart = new GuiButton(1, { 0, -300, 300, 80 }, "START");
-	btnStart->SetObserver(this);
-
-	btnExit = new GuiButton(2, { 0, 400, 300, 80 }, "EXIT");
-	btnExit->SetObserver(this);
+	
 
 }
 
@@ -42,7 +38,7 @@ bool SceneIntro::Awake(pugi::xml_node& node)
 bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
-	//introText = app->tex->Load("Assets/Textures/scene_intro.png");
+	introText = app->tex->Load("Assets/Textures/scene_intro.png");
 	bool ret = true;
 	app->sceneLose->Disable();
 	app->sceneWin->Disable();
@@ -51,10 +47,23 @@ bool SceneIntro::Start()
 	app->render->camera.y = -555;
 	//app->scene->player->position.x = 350;
 	//app->scene->player->position.y = 875;
-
 	//if (app->scene->player->win) app->SaveGameRequest();
-
 	//app->scene->player->win = false;
+
+	btnPlay = new GuiButton(1, { 20, 1020, 230, 60 }, "PLAY");
+	btnPlay->SetObserver(this);
+	
+	btnContinue = new GuiButton(2, { 270, 1020, 230, 60 }, "CONTINUE");
+	btnContinue->SetObserver(this);
+	
+	btnSettings = new GuiButton(3, { 520, 1020, 230, 60 }, "SETTINGS");
+	btnSettings->SetObserver(this);
+	
+	btnCredits = new GuiButton(4, { 770, 1020, 230, 60 }, "CREDITS");
+	btnCredits->SetObserver(this);
+
+	btnExit = new GuiButton(5, { 1020, 1020, 230, 60 }, "EXIT");
+	btnExit->SetObserver(this);
 	return ret;
 }
 
@@ -69,12 +78,16 @@ bool SceneIntro::Update(float dt)
 		//app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
 	}
 	
-	btnStart->Update(dt);
+	btnPlay->Update(dt);
+	btnContinue->Update(dt);
+	btnSettings->Update(dt);
+	btnCredits->Update(dt);
 	btnExit->Update(dt);
 
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
 	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
+	if (exit == true) return false;
 	return true;
 }
 
@@ -83,11 +96,14 @@ bool SceneIntro::PostUpdate()
 {
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
-	//app->render->DrawTexture(introText, 0, 555, NULL);
+	app->render->DrawTexture(introText, 0, 555, NULL);
 
-	app->render->DrawRectangle({ 0, 555, 1280, 720 }, 100, 100, 80, 255);
-
-	btnStart->Draw();
+	//app->render->DrawRectangle({ 0, 555, 1280, 720 }, 100, 100, 80, 255);
+	
+	btnPlay->Draw();
+	btnContinue->Draw();
+	btnSettings->Draw();
+	btnCredits->Draw();
 	btnExit->Draw();
 
 	return ret;
@@ -100,7 +116,7 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 	case GuiControlType::BUTTON:
 	{
 		if (control->id == 1) app->fadetoblack->FadeToBlk(this, app->scene, 30);
-		else if (control->id == 2) return false; // TODO: Exit request
+		else if (control->id == 5) exit = true; // TODO: Exit request
 	}
 	default: break;
 	}

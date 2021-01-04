@@ -1,10 +1,13 @@
 #include "GuiButton.h"
 #include "App.h"
 #include "Audio.h"
+#include "Window.h"
 #include "Input.h"
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
+    bounds.x /= app->win->GetScale();
+    bounds.y /= app->win->GetScale();
     this->bounds = bounds;
     this->text = text;
 }
@@ -15,10 +18,14 @@ GuiButton::~GuiButton()
 
 bool GuiButton::Update(float dt)
 {
+    
     if (state != GuiControlState::DISABLED)
     {
         int mouseX, mouseY;
         app->input->GetMousePosition(mouseX, mouseY);
+
+        mouseX += -(app->render->camera.x) / (int)app->win->GetScale();
+        mouseY += -(app->render->camera.y) / (int)app->win->GetScale();
 
         // Check collision between mouse and button bounds
         if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
