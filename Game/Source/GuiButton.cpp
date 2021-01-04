@@ -57,11 +57,11 @@ bool GuiButton::Draw()
     {
     case GuiControlState::DISABLED: app->render->DrawRectangle(bounds, 100, 100, 100, 255);
         break;
-    case GuiControlState::NORMAL: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+    case GuiControlState::NORMAL: app->render->DrawRectangle(bounds, 140, 75, 185, 255);
         break;
-    case GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 255, 255, 0, 255);
+    case GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 200, 100, 220, 255);
         break;
-    case GuiControlState::PRESSED: app->render->DrawRectangle(bounds, 0, 255, 255, 255);
+    case GuiControlState::PRESSED: app->render->DrawRectangle(bounds, 250, 75, 150, 255);
         break;
     case GuiControlState::SELECTED: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
         break;
