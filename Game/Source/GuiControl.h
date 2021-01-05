@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Scene.h"
 #include "SceneIntro.h"
+#include "SceneLose.h"
 #include "Point.h"
 #include "SString.h"
 
@@ -66,15 +67,26 @@ public:
     }
 
 	//observer for SceneIntro
-    void SetObserverSceneIntro(SceneIntro* module)
+    void SetObserver(Module* module)
     {
         observer = module;
     }
+    
+    //observer for Scenelos
+    /*void SetObserverSceneLose(SceneLose* module)
+    {
+        observer2 = module;
+    }*/
 
     void NotifyObserver()
     {
         observer->OnGuiMouseClickEvent(this);
     }
+    
+   /* void NotifyObserverSceneLose()
+    {
+        observer2->OnGuiMouseClickEvent(this);
+    }*/
 
 public:
 
@@ -91,7 +103,8 @@ public:
 
     //Font font;              // Text font
 
-    SceneIntro* observer;        // Observer module (it should probably be an array/list)
+    Module* observer;        // Observer module (it should probably be an array/list)
+    //SceneLose* observer2;        // Observer module (it should probably be an array/list)
 };
 
 #endif // __GUICONTROL_H__

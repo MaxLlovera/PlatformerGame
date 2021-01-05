@@ -13,6 +13,7 @@
 #include "FadeToBlack.h"
 #include "PathFinding.h"
 #include "SceneIntro.h"
+#include "SceneLose.h"
 #include "ModuleParticles.h"
 
 #include "Defs.h"
@@ -122,6 +123,7 @@ bool Scene::Update(float dt)
 	{
 		player->win = true;
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 1 / dt);
+		
 		app->render->RestartValues();
 	}
 	

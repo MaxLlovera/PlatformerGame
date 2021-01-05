@@ -1,9 +1,9 @@
 #include "GuiButton.h"
 #include "App.h"
 #include "Audio.h"
+#include "Font.h"
 #include "Window.h"
 #include "Input.h"
-#include "Font.h"
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
@@ -69,8 +69,6 @@ bool GuiButton::Draw()
     default:
         break;
     }
-
-	app->font->DrawText(bounds.x + (app->render->camera.x) + 8, bounds.y + (app->render->camera.y) + 8, 0, text.GetString());
-
+    app->font->DrawText(bounds.x + (app->render->camera.x) + 8, bounds.y + (app->render->camera.y) + 8, 0, text.GetString());
     return false;
 }

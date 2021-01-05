@@ -54,19 +54,19 @@ bool SceneIntro::Start()
 	whiteFont = app->font->Load("Assets/Textures/white_font.png", lookupTable, 9);
 
 	btnPlay = new GuiButton(1, { 540, 950, 145, 50 }, "PLAY");
-	btnPlay->SetObserverSceneIntro(this);
+	btnPlay->SetObserver(this);
 	
 	btnContinue = new GuiButton(2, { 480, 1025, 270, 50 }, "CONTINUE");
-	btnContinue->SetObserverSceneIntro(this);
+	btnContinue->SetObserver(this);
 	
 	btnSettings = new GuiButton(3, { 1000, 1200, 270, 50 }, "SETTINGS");
-	btnSettings->SetObserverSceneIntro(this);
+	btnSettings->SetObserver(this);
 	
 	btnCredits = new GuiButton(4, { 25, 1200, 240, 50 }, "CREDITS");
-	btnCredits->SetObserverSceneIntro(this);
+	btnCredits->SetObserver(this);
 
 	btnExit = new GuiButton(5, { 1100, 570, 145, 50 }, "EXIT");
-	btnExit->SetObserverSceneIntro(this);
+	btnExit->SetObserver(this);
 	return ret;
 }
 
