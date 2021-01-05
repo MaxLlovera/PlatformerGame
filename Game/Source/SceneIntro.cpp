@@ -67,6 +67,12 @@ bool SceneIntro::Start()
 
 	btnExit = new GuiButton(5, { 1100, 570, 145, 50 }, "EXIT");
 	btnExit->SetObserver(this);
+	
+	btnBackSettings = new GuiButton(6, { 540, 1200, 145, 50 }, "BACK");
+	btnBackSettings->SetObserver(this);
+	
+	btnBackCredits = new GuiButton(7, { 540, 1200, 145, 50 }, "BACK");
+	btnBackCredits->SetObserver(this);
 	return ret;
 }
 
@@ -80,12 +86,29 @@ bool SceneIntro::Update(float dt)
 		app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
 		//app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
 	}
-	
-	btnPlay->Update(dt);
-	btnContinue->Update(dt);
-	btnSettings->Update(dt);
-	btnCredits->Update(dt);
-	btnExit->Update(dt);
+	if (settings == true)
+	{
+		btnExit->Update(dt);
+		btnBackSettings->Update(dt);
+		btnSettings->Update(dt);
+		btnCredits->Update(dt);
+	}
+	else if (credits == true)
+	{
+		btnExit->Update(dt);
+		btnBackCredits->Update(dt);
+		btnSettings->Update(dt);
+		btnCredits->Update(dt);
+	}
+	else
+	{
+		btnPlay->Update(dt);
+		btnContinue->Update(dt);
+		btnSettings->Update(dt);
+		btnCredits->Update(dt);
+		btnExit->Update(dt);
+	}
+
 
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
@@ -101,13 +124,30 @@ bool SceneIntro::PostUpdate()
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
 	app->render->DrawTexture(introText, 0, 555, NULL);
 
-	//app->render->DrawRectangle({ 0, 555, 1280, 720 }, 100, 100, 80, 255);
+	if (settings == true)
+	{
+		app->render->DrawRectangle({ 150, 900, 950, 280 }, 150, 50, 100, 150);
+		btnBackSettings->Draw();
+		btnExit->Draw();
+		btnCredits->Draw();
+		btnSettings->Draw();
+	}
+	else if (credits == true)
+	{
+		btnBackCredits->Draw();
+		btnExit->Draw();
+		btnCredits->Draw();
+		btnSettings->Draw();
+	}
+	else
+	{
+		btnPlay->Draw();
+		btnContinue->Draw();
+		btnSettings->Draw();
+		btnCredits->Draw();
+		btnExit->Draw();
+	}
 	
-	btnPlay->Draw();
-	btnContinue->Draw();
-	btnSettings->Draw();
-	btnCredits->Draw();
-	btnExit->Draw();
 
 	return ret;
 }
@@ -119,7 +159,31 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 	case GuiControlType::BUTTON:
 	{
 		if (control->id == 1) app->fadetoblack->FadeToBlk(this, app->scene, 30);
-		else if (control->id == 5) exit = true; // TODO: Exit request
+		else if (control->id == 3)
+		{
+			btnCredits->state = GuiControlState::DISABLED;
+			btnSettings->state = GuiControlState::DISABLED;
+			settings = true;
+		}
+		else if (control->id == 4)
+		{
+			btnCredits->state = GuiControlState::DISABLED;
+			btnSettings->state = GuiControlState::DISABLED;
+			credits = true;
+		}
+		else if (control->id == 5) exit = true;
+		else if (control->id == 6)
+		{
+			btnCredits->state = GuiControlState::NORMAL;
+			btnSettings->state = GuiControlState::NORMAL;
+			settings = false;
+		}
+		else if (control->id == 7)
+		{
+			btnCredits->state = GuiControlState::NORMAL;
+			btnSettings->state = GuiControlState::NORMAL;
+			credits = false;
+		}
 	}
 	default: break;
 	}

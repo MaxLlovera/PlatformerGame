@@ -41,10 +41,15 @@ private:
 	GuiButton* btnSettings;
 	GuiButton* btnCredits;
 	GuiButton* btnExit;
+	GuiButton* btnBackSettings;
+	GuiButton* btnBackCredits;
 
 	SDL_Texture* introText = nullptr;
 
 	int whiteFont = -1;
+
+	bool settings = false;
+	bool credits = false;
 
 	bool exit = false;
 };
