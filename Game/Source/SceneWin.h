@@ -4,6 +4,9 @@
 #include "Module.h"
 #include "Animation.h"
 
+class GuiControl;
+class GuiButton;
+
 struct SDL_Texture;
 
 class SceneWin : public Module
@@ -25,11 +28,11 @@ public:
 	// Performs the render call of all the parts of the scene's background
 	bool PostUpdate();
 
-
+	bool OnGuiMouseClickEvent(GuiControl* control);
 	bool CleanUp() override;
 
 private:
-
+	GuiButton* btnRestart;
 	SDL_Texture* winText = nullptr;
 
 };

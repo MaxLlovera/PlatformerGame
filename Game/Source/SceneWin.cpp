@@ -12,6 +12,7 @@
 #include "FadeToBlack.h"
 #include "SceneWin.h"
 #include "SceneIntro.h"
+#include "GuiButton.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -50,7 +51,8 @@ bool SceneWin::Start()
 		app->scene->player->dead = false;
 		app->render->camera.x = 0;
 		app->render->camera.y = -556;
-
+		btnRestart = new GuiButton(1, { 490, 1030, 290, 50 }, " RESTART");
+		btnRestart->SetObserver(this);
 	}
 	return ret;
 }
@@ -61,6 +63,7 @@ bool SceneWin::Update(float dt)
 	//volume changes
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
 	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
+	btnRestart->Update(dt);
 	return true;
 }
 
@@ -70,7 +73,22 @@ bool SceneWin::PostUpdate()
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
 	app->render->DrawTexture(winText, 0, 555, NULL);
+	btnRestart->Draw();
 	return ret;
+}
+
+bool SceneWin::OnGuiMouseClickEvent(GuiControl* control)
+{
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		if (control->id == 1) app->fadetoblack->FadeToBlk(this, app->sceneIntro, 30);
+	}
+	default: break;
+	}
+
+	return true;
 }
 
 bool SceneWin::CleanUp()

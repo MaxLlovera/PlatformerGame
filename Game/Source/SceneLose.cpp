@@ -50,8 +50,8 @@ bool SceneLose::Start()
 	app->map->checkpointTaken = false;
 	app->render->camera.x = 0;
 	app->render->camera.y = -556;
-	btnPlay = new GuiButton(1, { 490, 1030, 290, 50 }, " RESTART");
-	btnPlay->SetObserver(this);
+	btnRestart = new GuiButton(1, { 490, 1030, 290, 50 }, " RESTART");
+	btnRestart->SetObserver(this);
 		
 	
 	
@@ -66,7 +66,7 @@ bool SceneLose::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
 	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
 	
-	btnPlay->Update(dt);
+	btnRestart->Update(dt);
 
 	return true;
 }
@@ -78,7 +78,7 @@ bool SceneLose::PostUpdate()
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
 	app->render->DrawTexture(loseText, 0, 555, NULL);
 
-	btnPlay->Draw();
+	btnRestart->Draw();
 	return ret;
 }
 

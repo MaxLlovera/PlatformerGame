@@ -33,7 +33,7 @@ public:
 
 private:
 
-	GuiButton* btnPlay;
+	GuiButton* btnRestart;
 
 	SDL_Texture* loseText = nullptr;
 	
