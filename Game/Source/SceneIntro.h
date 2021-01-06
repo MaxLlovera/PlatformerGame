@@ -47,8 +47,9 @@ private:
 	GuiButton* btnBackCredits;
 
 	SDL_Texture* introText = nullptr;
-
+	SDL_Texture* creditText = nullptr;
 	int whiteFont = -1;
+	int yellowFont = -1;
 
 	bool settings = false;
 	bool credits = false;

@@ -38,6 +38,7 @@ bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
 	introText = app->tex->Load("Assets/Textures/scene_intro.png");
+	creditText = app->tex->Load("Assets/Textures/credits.png");
 	bool ret = true;
 	app->sceneLose->Disable();
 	app->sceneWin->Disable();
@@ -50,7 +51,7 @@ bool SceneIntro::Start()
 	//app->scene->player->win = false;
 	char lookupTable[] = { "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ:/,!+-%  " };
 	whiteFont = app->font->Load("Assets/Textures/white_font.png", lookupTable, 9);
-
+	yellowFont = app->font->Load("Assets/Textures/yellow_font.png", lookupTable, 9);
 	btnPlay = new GuiButton(1, { 540, 950, 145, 50 }, "PLAY");
 	btnPlay->SetObserver(this);
 	
@@ -132,6 +133,11 @@ bool SceneIntro::PostUpdate()
 	}
 	else if (credits == true)
 	{
+		app->render->DrawTexture(creditText, 220, 900, NULL);
+		app->font->DrawText(250,380, yellowFont, "FAKE XEICS:");
+		app->font->DrawText(410, 450, yellowFont, "ARNAU BONADA");
+		app->font->DrawText(410, 500, yellowFont, "MAX LLOVERA");
+		app->font->DrawText(410, 550, yellowFont, "ARNAU USTRELL");
 		btnBackCredits->Draw();
 		btnExit->Draw();
 		btnCredits->Draw();
