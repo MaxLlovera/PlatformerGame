@@ -360,6 +360,7 @@ void App::LoadGameRequest()
 void App::SaveGameRequest() const
 {
 	// NOTE: We should check if SAVE_STATE_FILENAME actually exist and... should we overwriten
+	app->sceneIntro->posContinue = true;
 	saveGameRequested = true;
 }
 

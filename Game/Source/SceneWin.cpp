@@ -51,7 +51,7 @@ bool SceneWin::Start()
 		app->scene->player->dead = false;
 		app->render->camera.x = 0;
 		app->render->camera.y = -556;
-		btnRestart = new GuiButton(1, { 490, 1030, 290, 50 }, " RESTART");
+		btnRestart = new GuiButton(1, { 490, 1030, 300, 50 }, " RESTART");
 		btnRestart->SetObserver(this);
 	}
 	return ret;

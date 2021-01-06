@@ -14,16 +14,14 @@
 #include "FadeToBlack.h"
 #include "GuiButton.h"
 #include "Font.h"
+#include "Map.h"
 
 #include "Defs.h"
 #include "Log.h"
 
 SceneIntro::SceneIntro() : Module()
 {
-	name.Create("sceneIntro");
-
-	
-
+	name.Create("SceneIntro");
 }
 
 SceneIntro::~SceneIntro()
@@ -59,13 +57,13 @@ bool SceneIntro::Start()
 	btnContinue = new GuiButton(2, { 480, 1025, 270, 50 }, "CONTINUE");
 	btnContinue->SetObserver(this);
 	
-	btnSettings = new GuiButton(3, { 1000, 1200, 270, 50 }, "SETTINGS");
+	btnSettings = new GuiButton(3, { 988, 1200, 270, 50 }, "SETTINGS");
 	btnSettings->SetObserver(this);
 	
-	btnCredits = new GuiButton(4, { 25, 1200, 240, 50 }, "CREDITS");
+	btnCredits = new GuiButton(4, { 19, 1200, 240, 50 }, "CREDITS");
 	btnCredits->SetObserver(this);
 
-	btnExit = new GuiButton(5, { 1100, 570, 145, 50 }, "EXIT");
+	btnExit = new GuiButton(5, { 1113, 582, 145, 50 }, "EXIT");
 	btnExit->SetObserver(this);
 	
 	btnBackSettings = new GuiButton(6, { 540, 1200, 145, 50 }, "BACK");
@@ -79,13 +77,13 @@ bool SceneIntro::Start()
 bool SceneIntro::Update(float dt)
 {
 
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	/*if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		app->render->RestartValues();
 		//app->fadetoblack->FadeToBlk(this, (Scene*)app->sceneManager->scene1, 1 / dt);
 		app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
 		//app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
-	}
+	}*/
 	if (settings == true)
 	{
 		btnExit->Update(dt);
@@ -143,6 +141,8 @@ bool SceneIntro::PostUpdate()
 	{
 		btnPlay->Draw();
 		btnContinue->Draw();
+		if (!posContinue) btnContinue->state = GuiControlState::DISABLED;
+		else if (posContinue) btnContinue->state = GuiControlState::NORMAL;
 		btnSettings->Draw();
 		btnCredits->Draw();
 		btnExit->Draw();
@@ -159,6 +159,10 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 	case GuiControlType::BUTTON:
 	{
 		if (control->id == 1) app->fadetoblack->FadeToBlk(this, app->scene, 30);
+		else if (control->id == 2)
+		{
+			app->fadetoblack->FadeToBlk(this, app->scene, 30);
+		}
 		else if (control->id == 3)
 		{
 			btnCredits->state = GuiControlState::DISABLED;
@@ -171,7 +175,18 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 			btnSettings->state = GuiControlState::DISABLED;
 			credits = true;
 		}
-		else if (control->id == 5) exit = true;
+		else if (control->id == 5)
+		{
+			if (app->scene->player != nullptr)
+			{
+				app->scene->player->position.x = 350;
+				app->scene->player->position.y = 875;
+				app->SaveGameRequest();
+
+			}
+			posContinue = true;
+			exit = true;
+		}
 		else if (control->id == 6)
 		{
 			btnCredits->state = GuiControlState::NORMAL;

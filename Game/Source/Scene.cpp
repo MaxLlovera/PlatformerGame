@@ -71,6 +71,9 @@ bool Scene::Start()
 			RELEASE_ARRAY(data);
 		}
 
+		if(app->sceneIntro->posContinue) app->LoadGameRequest();
+
+
 		// Load music
 		app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 	}
@@ -215,4 +218,23 @@ bool Scene::CleanUp()
 	app->entityManager->DestroyEntity(flyingEnemy);
 	app->entityManager->DestroyEntity(particles);
 	return true;
+}
+
+
+
+bool Scene::LoadState(pugi::xml_node& node)
+{
+	bool ret = true;
+	app->scene->player->position.x = node.child("positionPlayer").attribute("x").as_int();
+	app->scene->player->position.y = node.child("positionPlayer").attribute("y").as_int();
+	return ret;
+}
+
+bool Scene::SaveState(pugi::xml_node& node) const
+{
+	bool ret = true;
+	pugi::xml_node pnode = node.append_child("positionPlayer");
+	pnode.append_attribute("x") = app->scene->player->position.x;
+	pnode.append_attribute("y") = app->scene->player->position.y;
+	return ret;
 }

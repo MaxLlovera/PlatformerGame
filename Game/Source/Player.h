@@ -49,8 +49,8 @@ public:
 	bool TakeHeart();
 	bool ThereIsDoor();
 
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
+	//bool LoadState(pugi::xml_node&);
+	//bool SaveState(pugi::xml_node&) const;
 	void Jump();
 
 	void GravityPlayer();

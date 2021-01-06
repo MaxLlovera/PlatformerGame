@@ -46,6 +46,10 @@ public:
 	Enemy* enemy;
 	FlyingEnemy* flyingEnemy;
 	ModuleParticles* particles;
+
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 private:
 	SDL_Texture* background;
 	int volume;

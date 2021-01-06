@@ -15,6 +15,7 @@
 #include "EntityManager.h"
 #include "Defs.h"
 #include "Log.h"
+#include "SceneIntro.h"
 
 
 #define COLLIDER_GREEN 265
@@ -28,8 +29,16 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("player");
-	position.x = 350;
-	position.y = 875;
+	
+	if (!app->sceneIntro->posContinue)
+	{
+		position.x = 350;
+		position.y = 875;
+	}
+	else
+	{
+		app->LoadGameRequest();
+	}
 
 	//idlanim
 	idlAnim.PushBack({ 0, 0, 64, 85 });
@@ -649,21 +658,21 @@ bool Player::CleanUp()
 	app->tex->UnLoad(texFireBall);
 	return true;
 }
-
-
-bool Player::LoadState(pugi::xml_node& node)
-{
-	bool ret = true;
-	position.x = node.child("positionPlayer").attribute("x").as_int();
-	position.y = node.child("positionPlayer").attribute("y").as_int();
-	return ret;
-}
-
-bool Player::SaveState(pugi::xml_node& node) const
-{
-	bool ret = true;
-	pugi::xml_node pnode = node.append_child("positionPlayer");
-	pnode.append_attribute("x") = position.x;
-	pnode.append_attribute("y") = position.y;
-	return ret;
-}
+//
+//
+//bool Player::LoadState(pugi::xml_node& node)
+//{
+//	bool ret = true;
+//	position.x = node.child("positionPlayer").attribute("x").as_int();
+//	position.y = node.child("positionPlayer").attribute("y").as_int();
+//	return ret;
+//}
+//
+//bool Player::SaveState(pugi::xml_node& node) const
+//{
+//	bool ret = true;
+//	pugi::xml_node pnode = node.append_child("positionPlayer");
+//	pnode.append_attribute("x") = position.x;
+//	pnode.append_attribute("y") = position.y;
+//	return ret;
+//}

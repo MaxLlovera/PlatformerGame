@@ -33,6 +33,8 @@ public:
 
 	bool CleanUp() override;
 
+	bool posContinue = false;
+
 private:
 	bool active = true;
 	SString name;
