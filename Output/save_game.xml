@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<save_state>
+	<window />
+	<input />
+	<textures />
+	<audio>
+		<volume value="0" />
+	</audio>
+	<:anonymous />
+	<SceneWin />
+	<SceneLose />
+	<scene>
+		<positionPlayer x="851" y="171" />
+	</scene>
+	<map />
+	<entitymanager />
+	<font />
+	<pathfinding />
+	<fadetoblack />
+	<renderer>
+		<camera x="-501" y="-99" />
+	</renderer>
+</save_state>

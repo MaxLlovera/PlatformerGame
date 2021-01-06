@@ -110,8 +110,8 @@ void Render::RestartValues()
 			app->scene->player->position.x = 938;
 			app->scene->player->position.y = 171;
 
-			app->render->camera.x = app->scene->player->position.x - (app->render->camera.w) - 250;
-			app->render->camera.y = app->scene->player->position.y - (app->render->camera.h) + 450;
+			app->render->camera.x = app->scene->player->position.x - (app->render->camera.w)-1526/* - 250*/;
+			app->render->camera.y = app->scene->player->position.y - (app->render->camera.h)-282/*+ 450*/;
 		}
 		if (!app->map->checkpointTaken)
 		{
