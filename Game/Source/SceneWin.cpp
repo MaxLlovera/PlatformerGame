@@ -96,6 +96,8 @@ bool SceneWin::OnGuiMouseClickEvent(GuiControl* control)
 
 bool SceneWin::CleanUp()
 {
+	//delete btnExit;
+	//delete btnRestart;
 	app->tex->UnLoad(winText);
 	return true;
 }

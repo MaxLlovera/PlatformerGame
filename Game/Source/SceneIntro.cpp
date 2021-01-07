@@ -272,6 +272,16 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 
 bool SceneIntro::CleanUp()
 {
+	//delete btnPlay;
+	//delete btnContinue;
+	//delete btnSettings;
+	//delete btnCredits;
+	//delete btnExit;
+	//delete btnBackSettings;
+	//delete btnBackCredits;
+	//delete sliderMusicVolume;
+	//delete sliderFxVolume;
+
 	app->tex->UnLoad(introText);
 	return true;
 }

@@ -256,6 +256,12 @@ bool Scene::CleanUp()
 	app->entityManager->DestroyEntity(enemy);
 	app->entityManager->DestroyEntity(flyingEnemy);
 	app->entityManager->DestroyEntity(particles);
+	delete btnResume;
+	//delete btnSettings;
+	//delete btnBackIntro;
+	//delete btnExit;
+	//delete btnBackSettings;
+
 	return true;
 }
 

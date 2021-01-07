@@ -97,6 +97,8 @@ bool SceneLose::OnGuiMouseClickEvent(GuiControl* control)
 
 bool SceneLose::CleanUp()
 {
+	//delete btnExit;
+	//delete btnRestart;
 	app->tex->UnLoad(loseText);
 	return true;
 }
