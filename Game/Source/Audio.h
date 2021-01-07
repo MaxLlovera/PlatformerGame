@@ -32,7 +32,8 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
-	void ChangeVolume(int index);
+	void ChangeMusicVolume(int index);
+	void ChangeFxVolume(int index);
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;

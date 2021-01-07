@@ -53,6 +53,8 @@ bool SceneLose::Start()
 		app->render->camera.y = -556;
 		btnRestart = new GuiButton(1, { 490, 1030, 300, 50 }, " RESTART");
 		btnRestart->SetObserver(this);
+		btnExit = new GuiButton(2, { 1113, 582, 145, 50 }, "EXIT");
+		btnExit->SetObserver(this);
 		lost = true;
 	}
 	
@@ -61,13 +63,9 @@ bool SceneLose::Start()
 }
 
 bool SceneLose::Update(float dt)
-{
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) app->fadetoblack->FadeToBlk(this, app->sceneIntro, 1 / dt);
-	//volume changes
-	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
-	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
-	
+{	
 	btnRestart->Update(dt);
+	btnExit->Update(dt);
 
 	return true;
 }
@@ -76,10 +74,11 @@ bool SceneLose::Update(float dt)
 bool SceneLose::PostUpdate()
 {
 	bool ret = true;
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
+	if (exit == true) ret = false;
 	app->render->DrawTexture(loseText, 0, 555, NULL);
 
 	btnRestart->Draw();
+	btnExit->Draw();
 	return ret;
 }
 
@@ -90,6 +89,7 @@ bool SceneLose::OnGuiMouseClickEvent(GuiControl* control)
 	case GuiControlType::BUTTON:
 	{
 		if (control->id == 1) app->fadetoblack->FadeToBlk(this, app->sceneIntro, 30);
+		else if (control->id == 2) exit = true;
 	}
 	default: break;
 	}

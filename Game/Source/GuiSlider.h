@@ -10,23 +10,24 @@ class GuiSlider : public GuiControl
 {
 public:
 
-    GuiSlider(uint32 id, SDL_Rect bounds, const char *text);
-    virtual ~GuiSlider();
+	GuiSlider(uint32 id, SDL_Rect bounds, const char *text);
+	virtual ~GuiSlider();
 
-    bool Update(float dt);
-    bool Draw();
-    void Value();
-
-    int GetValue();
+	bool Update(float dt);
+	bool Draw();
+	void ChangeValue();
+	int ReturnValue() const;
 private:
 
-    // GuiSlider specific properties
-    // Maybe some animation properties for state change?
-    SDL_Rect slider;
-    int value;
+	// GuiSlider specific properties
+	// Maybe some animation properties for state change?
+	SDL_Rect slider;
+	int value;
 
-    int minValue;
-    int maxValue;
+	int minValue;
+	int maxValue;
+
+	int guiButtonFx = 0;
 };
 
 #endif // __GUISLIDER_H__

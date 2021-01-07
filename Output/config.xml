@@ -6,7 +6,12 @@
     <organization>UPC</organization>
     <fps capMax="60" capMin="30"/>
   </app>
-
+  
+  <audio>
+    <music_volume value="50"/>
+    <fx_volume value="50" />
+  </audio>
+  
   <renderer>
     <vsync value="false"/>
   </renderer>

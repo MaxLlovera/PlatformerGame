@@ -76,24 +76,16 @@ bool SceneIntro::Start()
 	btnBackCredits = new GuiButton(7, { 540, 1200, 145, 50 }, "BACK");
 	btnBackCredits->SetObserver(this);
 
-	sliderMusicVolume = new GuiSlider(1, { 650, 950, 8, 28 }, "MUSIC VOLUME");
+	sliderMusicVolume = new GuiSlider(1, { 725, 950, 10, 28 }, "MUSIC VOLUME");
 	sliderMusicVolume->SetObserver(this);
 	
-	sliderFxVolume = new GuiSlider(2, { 650, 1000, 8, 28 }, " FX VOLUME");
+	sliderFxVolume = new GuiSlider(2, { 725, 1000, 10, 28 }, " FX VOLUME");
 	sliderFxVolume->SetObserver(this);
 	return ret;
 }
 
 bool SceneIntro::Update(float dt)
 {
-
-	/*if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-	{
-		app->render->RestartValues();
-		//app->fadetoblack->FadeToBlk(this, (Scene*)app->sceneManager->scene1, 1 / dt);
-		app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
-		//app->fadetoblack->FadeToBlk(this, app->scene, 1 / dt);
-	}*/
 	if (settings == true)
 	{
 		sliderMusicVolume->Update(dt);
@@ -119,11 +111,6 @@ bool SceneIntro::Update(float dt)
 		btnExit->Update(dt);
 	}
 
-
-	//volume changes
-	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
-	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
-	if (exit == true) return false;
 	return true;
 }
 
@@ -131,7 +118,7 @@ bool SceneIntro::Update(float dt)
 bool SceneIntro::PostUpdate()
 {
 	bool ret = true;
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
+	if (exit == true) ret = false;
 	app->render->DrawTexture(introText, 0, 555, NULL);
 
 	if (settings == true)
@@ -203,7 +190,6 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 				app->SaveGameRequest();
 
 			}
-			posContinue = true;
 			exit = true;
 		}
 		else if (control->id == 6)
@@ -218,6 +204,12 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 			btnSettings->state = GuiControlState::NORMAL;
 			credits = false;
 		}
+	}
+	case GuiControlType::SLIDER:
+	{
+		if (control->id == 1) app->audio->ChangeMusicVolume(sliderMusicVolume->ReturnValue());
+		else if (control->id == 2) app->audio->ChangeFxVolume(sliderFxVolume->ReturnValue());
+		break; 
 	}
 	default: break;
 	}

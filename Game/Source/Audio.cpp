@@ -54,6 +54,11 @@ bool Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
+	else
+	{
+		volume = config.child("music_volume").attribute("value").as_int();
+		fxVolume = config.child("fx_volume").attribute("value").as_int();
+	}
 
 	return ret;
 }
@@ -114,6 +119,8 @@ bool Audio::PlayMusic(const char* path, float fade_time)
 	}
 	else
 	{
+		Mix_VolumeMusic(volume);
+
 		if(fade_time > 0.0f)
 		{
 			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
@@ -165,34 +172,24 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 
 	if(!active) return false;
 
-	if(id > 0 && id <= fx.Count()) Mix_PlayChannel(-1, fx[id - 1], repeat);
-	
+	if (id > 0 && id <= fx.Count())
+	{
+		Mix_VolumeChunk(fx[id - 1], fxVolume);
+		Mix_PlayChannel(-1, fx[id - 1], repeat);
+	}	
 
 	return ret;
 }
 
-void Audio::ChangeVolume(int index)
+void Audio::ChangeMusicVolume(int index)
 {
-	if (index < 0)
-	{
-		if (volume <= 0) volume = 0;
-		else
-		{
-			volume += index;
-			Mix_VolumeMusic(volume);
-		}
+	volume = index;
+	Mix_VolumeMusic(volume);
+}
 
-	}
-
-	if (index > 0)
-	{
-		if (volume >= 128) volume = 128;
-		else
-		{
-			volume += index;
-			Mix_VolumeMusic(volume);
-		}
-	}
+void Audio::ChangeFxVolume(int index)
+{
+	fxVolume = index;
 }
 
 bool Audio::LoadState(pugi::xml_node& audioNode)

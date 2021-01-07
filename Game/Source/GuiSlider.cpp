@@ -7,11 +7,14 @@
 
 GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::SLIDER, id)
 {
-    this->bounds = bounds;
-    this->text = text;
-    this->minValue = bounds.x;
-    this->maxValue = bounds.x+ bounds.w;
+	this->bounds = bounds;
+	this->boundsSlider = this->bounds;
+	this->text = text;
+	this->minValue = boundsSlider.x - 48;
+	this->maxValue = this->minValue + 290;
+	ChangeValue();
 
+	guiButtonFx = app->audio->LoadFx("Assets/Audio/Fx/gui_button_fx.wav");
 }
 
 GuiSlider::~GuiSlider()
@@ -20,69 +23,85 @@ GuiSlider::~GuiSlider()
 
 bool GuiSlider::Update(float dt)
 {
-    if (state != GuiControlState::DISABLED)
-    {
-        int mouseX, mouseY;
-        app->input->GetMousePosition(mouseX, mouseY);
+	this->minValue = bounds.x - (this->value);
+	this->maxValue = bounds.x + ((280 - this->value));
+	if (state != GuiControlState::DISABLED)
+	{
+		int mouseX, mouseY;
+		app->input->GetMousePosition(mouseX, mouseY);
 
-        // Camera offset applied to the mouse so we can use the options.
-        mouseX += -app->render->camera.x / app->win->GetScale();
-        mouseY += -app->render->camera.y / app->win->GetScale();
+		mouseX += -app->render->camera.x / app->win->GetScale();
+		mouseY += -app->render->camera.y / app->win->GetScale();
 
-        // Check collision between mouse and button bounds
-        if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
-            (mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
-        {
-            state = GuiControlState::FOCUSED;
+		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
+			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
+		{
+			state = GuiControlState::FOCUSED;
 
-            if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
-                state = GuiControlState::PRESSED;
-        }
-        else if (state == GuiControlState::PRESSED)
-        {
-            if ((app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT) && (mouseX > minValue + 3) && (mouseX < maxValue + 3))
-            {
-                bounds.x = ((mouseX)-((bounds.w / 2) / app->win->GetScale()));
-                NotifyObserver();
-            }
-            else if ((app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP) && (id == 2))
-            {
-                //app->audio->PlayFx(guiButtonFx, 0);
-            }
-            else
-            {
-                state = GuiControlState::NORMAL;
-            }
-        }
-        else state = GuiControlState::NORMAL;
-    }
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+				state = GuiControlState::PRESSED;
+		}
+		else if (state == GuiControlState::PRESSED)
+		{
+			if ((app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT) && (mouseX > minValue) && (mouseX < maxValue))
+			{
+				bounds.x = mouseX - (bounds.w / 2) / app->win->GetScale();
+				ChangeValue();
+				NotifyObserver();
+				if(id==2) app->audio->PlayFx(guiButtonFx, 0);
+			}
+			
+			else state = GuiControlState::NORMAL;
+		}
+		else state = GuiControlState::NORMAL;
+	}
 
-    return false;
+	return false;
 }
 
 bool GuiSlider::Draw()
 {
-    // Draw the right button depending on state
+	// Draw the right button depending on state
+	SDL_Rect rect = { boundsSlider.x - 50, boundsSlider.y - 1, 300, 30 };
+	app->render->DrawRectangle(rect, 0, 220, 120, 255);
 
-    SDL_Rect sect = { bounds.x - 1, bounds.y - 1, 300, 30 };
-    app->render->DrawRectangle(sect, 0, 255, 100, 255);
+
+	switch (state)
+	{
+	case GuiControlState::DISABLED: app->render->DrawRectangle(bounds, 100, 100, 100, 255);
+		break;
+	case GuiControlState::NORMAL: app->render->DrawRectangle(bounds, 140, 75, 185, 255);
+		break;
+	case GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 200, 100, 220, 255);
+		break;
+	case GuiControlState::PRESSED: app->render->DrawRectangle(bounds, 250, 75, 150, 255);
+		break;
+	case GuiControlState::SELECTED: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+		break;
+	default:
+		break;
+	}
+
+	app->font->DrawText(boundsSlider.x + (app->render->camera.x) - 450 / app->win->GetScale(), boundsSlider.y + (app->render->camera.y) - 2 / app->win->GetScale(), 0, text.GetString());
+	
+	return false;
+}
 
 
-    switch (state)
-    {
-    case GuiControlState::DISABLED: app->render->DrawRectangle(bounds, 100, 100, 100, 255);
-        break;
-    case GuiControlState::NORMAL: app->render->DrawRectangle(bounds, 140, 75, 185, 255);
-        break;
-    case GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 200, 100, 220, 255);
-        break;
-    case GuiControlState::PRESSED: app->render->DrawRectangle(bounds, 0, 255, 255, 255);
-        break;
-    case GuiControlState::SELECTED: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
-        break;
-    default:
-        break;
-    }
-    app->font->DrawText(bounds.x + (app->render->camera.x) - 400 / app->win->GetScale(), bounds.y + (app->render->camera.y) - 2 / app->win->GetScale(), 0, text.GetString());
-    return false;
+void GuiSlider::ChangeValue()
+{
+	this->value = bounds.x - minValue;
+
+	if (this->value > 280) this->value = 280;
+
+	else if (this->value <= 5) this->value = 0;
+
+	if (bounds.x >= 965) bounds.x = 965;
+	
+	if (bounds.x <= 680) bounds.x = 680;
+}
+
+int GuiSlider::ReturnValue() const
+{
+	return this->value;
 }

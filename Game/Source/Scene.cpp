@@ -141,11 +141,6 @@ bool Scene::Update(float dt)
 		app->render->RestartValues();
 	}
 
-	//volume changes
-	if (app->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) app->audio->ChangeVolume(8);
-
-	if (app->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) app->audio->ChangeVolume(-8);
-
 	//camera x
 	if ((app->render->counter == 0 || player->godModeEnabled) && !player->spiked)
 	{

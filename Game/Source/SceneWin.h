@@ -35,7 +35,8 @@ public:
 
 private:
 	GuiButton* btnRestart;
+	GuiButton* btnExit;
 	SDL_Texture* winText = nullptr;
-
+	bool exit = false;
 };
 #endif //__SCENE_WIN_H__

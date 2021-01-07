@@ -36,10 +36,11 @@ public:
 private:
 
 	GuiButton* btnRestart;
+	GuiButton* btnExit;
 
 	SDL_Texture* loseText = nullptr;
 	
-
+	bool exit = false;
 };
 
 
