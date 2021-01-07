@@ -31,7 +31,14 @@ Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("player");
 	
-	if (!app->sceneIntro->posContinue)
+	if (app->sceneIntro->playClicked)
+	{
+		position.x = 350;
+		position.y = 875;
+		app->sceneIntro->playClicked = false;
+		app->sceneIntro->posContinue = false;
+	}
+	else if (!app->sceneIntro->posContinue)
 	{
 		position.x = 350;
 		position.y = 875;

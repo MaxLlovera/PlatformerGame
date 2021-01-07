@@ -48,6 +48,8 @@ public:
 	//iPoint position;
 	iPoint posOrigin;
 	iPoint posDestination;
+	
+	SDL_Texture* texFlyingEnemy;
 
 	Animation* currentAnimation = nullptr;
 
@@ -58,7 +60,6 @@ public:
 
 private:
 	float speed = 2.0f;
-	SDL_Texture* texFlyingEnemy;
 	uint flyingEnemyDeathFx = 0;
 
 };

@@ -80,7 +80,7 @@ public:
 
 	int shotMaxCountdown = 20;
 	int shotCountdown = 0;
-
+	SDL_Texture* texPlayer;
 private:
 	float speedX = 3.0f;
 	float speedY = 0.0f;
@@ -93,7 +93,7 @@ private:
 	int counterPuzzle = 0;
 	int counterCheckpoint = 0;
 	int counterHeart = 0;
-	SDL_Texture* texPlayer;
+
 	SDL_Texture* texFireBall;
 	uint playerDeathFx = 0;
 	uint itemTakenFx = 0;

@@ -22,10 +22,7 @@ SceneLose::SceneLose() : Module()
 	name.Create("SceneLose");
 }
 
-SceneLose::~SceneLose()
-{
-
-}
+SceneLose::~SceneLose(){}
 
 bool SceneLose::Awake(pugi::xml_node& node)
 {
@@ -75,6 +72,7 @@ bool SceneLose::PostUpdate()
 {
 	bool ret = true;
 	if (exit == true) ret = false;
+
 	app->render->DrawTexture(loseText, 0, 555, NULL);
 
 	btnRestart->Draw();

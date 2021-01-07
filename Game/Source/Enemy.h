@@ -47,6 +47,8 @@ public:
 	iPoint posOrigin;
 	iPoint posDestination;
 
+	SDL_Texture* texEnemy;
+
 	Animation* currentAnimation = nullptr;
 
 	Animation idlAnim;
@@ -58,7 +60,6 @@ public:
 
 private:
 	float speed = 2.0f;
-	SDL_Texture* texEnemy;
 	uint enemyDeathFx = 0;
 
 };

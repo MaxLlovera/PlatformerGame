@@ -2,13 +2,19 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "Animation.h"
 
 struct SDL_Texture;
+
+class GuiControl;
+class GuiButton;
+class GuiSlider;
 
 class Player;
 class Enemy;
 class FlyingEnemy;
 class ModuleParticles;
+
 
 class Scene : public Module
 {
@@ -34,8 +40,13 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 	// Called before quitting
 	bool CleanUp();
+
+
+	void Pause();
 
 	//virtual bool OnGuiMouseClickEvent(GuiControl* control)
 	//{
@@ -47,8 +58,11 @@ public:
 	FlyingEnemy* flyingEnemy;
 	ModuleParticles* particles;
 
+
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
+	
+	bool paused = false;
 
 private:
 	SDL_Texture* background;
@@ -57,6 +71,26 @@ private:
 	SDL_Texture* heart;
 	SDL_Texture* key;
 	SDL_Texture* puzzle;
+	SDL_Texture* pause;
+
+	
+	GuiButton* btnResume;
+	GuiButton* btnSettings;
+	GuiButton* btnBackIntro;
+	GuiButton* btnExit;
+	GuiButton* btnBackSettings;
+
+	int cameraX;
+	int cameraY;
+
+
+	bool resumePause = false;
+	bool settingsPause = false;
+	bool backIntroPause = false;
+	bool exitPause = false;
+
+	bool pausedSettings = false;
+
 };
 
 #endif // __SCENE_H__

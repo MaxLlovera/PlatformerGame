@@ -90,6 +90,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	SDL_Texture* texture = nullptr;
 
 	// Creates a new particle and adds it to the array
 	// Param particle	- A template particle from which the new particle will be created
@@ -106,7 +107,6 @@ public:
 	Particle fireBallLeft;
 private:
 	// Particles spritesheet loaded into an SDL Texture
-	SDL_Texture* texture = nullptr;
 
 	// An array to store and handle all the particles
 	Particle* particles[MAX_ACTIVE_PARTICLES] = { nullptr };

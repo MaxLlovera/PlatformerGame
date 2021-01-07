@@ -4,6 +4,8 @@
 #include "Enemy.h"
 #include "FlyingEnemy.h"
 #include "ModuleParticles.h"
+#include "App.h"
+#include "Scene.h"
 //#include "Item.h"
 
 #include "Defs.h"
@@ -89,12 +91,13 @@ bool EntityManager::PreUpdate()
 
 bool EntityManager::Update(float dt)
 {
-
-	for (unsigned int i = 0; i < entities.Count(); i++)
+	if (!app->scene->paused)
 	{
-		entities.At(i)->data->Update(dt);
+		for (unsigned int i = 0; i < entities.Count(); i++)
+		{
+			entities.At(i)->data->Update(dt);
+		}
 	}
-
 	return true;
 }
 

@@ -119,6 +119,7 @@ bool SceneIntro::PostUpdate()
 {
 	bool ret = true;
 	if (exit == true) ret = false;
+
 	app->render->DrawTexture(introText, 0, 555, NULL);
 
 	if (settings == true)
@@ -164,7 +165,11 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case GuiControlType::BUTTON:
 	{
-		if (control->id == 1) app->fadetoblack->FadeToBlk(this, app->scene, 30);
+		if (control->id == 1)
+		{
+			app->fadetoblack->FadeToBlk(this, app->scene, 30);
+			playClicked = true;
+		}
 		else if (control->id == 2)
 		{
 			app->fadetoblack->FadeToBlk(this, app->scene, 30);

@@ -79,11 +79,13 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
-	if (app->scene->player != nullptr)
+	if (!app->scene->paused)
 	{
-		if (app->scene->player->dead) DeadRestart();
+		if (app->scene->player != nullptr)
+		{
+			if (app->scene->player->dead) DeadRestart();
+		}
 	}
-
 	return true;
 }
 

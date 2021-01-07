@@ -72,6 +72,7 @@ bool SceneWin::PostUpdate()
 {
 	bool ret = true;
 	if (exit==true) ret = false;
+
 	app->render->DrawTexture(winText, 0, 555, NULL);
 	btnRestart->Draw();
 	btnExit->Draw();

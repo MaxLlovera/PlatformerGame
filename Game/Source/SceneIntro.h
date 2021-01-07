@@ -35,6 +35,8 @@ public:
 	bool CleanUp() override;
 
 	bool posContinue = false;
+	bool exit = false;
+	bool playClicked = false;
 
 private:
 	bool active = true;
@@ -58,7 +60,7 @@ private:
 	bool settings = false;
 	bool credits = false;
 
-	bool exit = false;
+
 };
 
 
