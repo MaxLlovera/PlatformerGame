@@ -53,7 +53,7 @@ bool SceneLose::Start()
 		app->render->camera.y = -556;
 		btnRestart = new GuiButton(1, { 490, 1030, 300, 50 }, " RESTART");
 		btnRestart->SetObserver(this);
-		losed = true;
+		lost = true;
 	}
 	
 

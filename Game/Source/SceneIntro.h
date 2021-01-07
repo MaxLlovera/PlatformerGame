@@ -8,6 +8,7 @@ struct SDL_Texture;
 
 class GuiControl;
 class GuiButton;
+class GuiSlider;
 
 class SceneIntro : public Module
 {
@@ -45,6 +46,9 @@ private:
 	GuiButton* btnExit;
 	GuiButton* btnBackSettings;
 	GuiButton* btnBackCredits;
+
+	GuiSlider* sliderMusicVolume;
+	GuiSlider* sliderFxVolume;
 
 	SDL_Texture* introText = nullptr;
 	SDL_Texture* creditText = nullptr;

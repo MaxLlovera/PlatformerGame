@@ -15,7 +15,9 @@ public:
 
     bool Update(float dt);
     bool Draw();
+    void Value();
 
+    int GetValue();
 private:
 
     // GuiSlider specific properties

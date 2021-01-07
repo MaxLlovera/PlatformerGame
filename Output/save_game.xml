@@ -10,7 +10,7 @@
 	<SceneWin />
 	<SceneLose />
 	<scene>
-		<positionPlayer x="938" y="171" />
+		<positionPlayer x="1103" y="235" />
 	</scene>
 	<map />
 	<entitymanager />
@@ -18,6 +18,6 @@
 	<pathfinding />
 	<fadetoblack />
 	<renderer>
-		<camera x="0" y="-556" />
+		<camera x="-753" y="-99" />
 	</renderer>
 </save_state>

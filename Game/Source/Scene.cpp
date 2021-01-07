@@ -126,7 +126,7 @@ bool Scene::Update(float dt)
 	//SceneWin
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || player->win)
 	{
-		app->sceneWin->wined = true;
+		app->sceneWin->won = true;
 		player->win = true;
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 1 / dt);
 		
@@ -136,7 +136,7 @@ bool Scene::Update(float dt)
 	//SceneLose
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
-		app->sceneLose->losed = true;
+		app->sceneLose->lost = true;
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
 		app->render->RestartValues();
 	}

@@ -31,7 +31,7 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 	bool CleanUp() override;
 
-	bool wined = false;
+	bool won = false;
 
 private:
 	GuiButton* btnRestart;

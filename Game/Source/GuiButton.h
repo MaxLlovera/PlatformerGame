@@ -22,6 +22,9 @@ private:
     // Maybe some animation properties for state change?
 
 	int guiButtonFx = 0;
+	int guiButtonErrorFx = 0;
+	int guiButtonMoveFx = 0;
+    bool soundDone = false;
 
 };
 

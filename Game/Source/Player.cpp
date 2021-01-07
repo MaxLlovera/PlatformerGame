@@ -36,12 +36,12 @@ Player::Player() : Entity(EntityType::PLAYER)
 		position.x = 350;
 		position.y = 875;
 	}
-	else if (app->sceneWin->wined||app->sceneLose->losed)
+	else if (app->sceneWin->won||app->sceneLose->lost)
 	{
 		position.x = 350;
 		position.y = 875;
-		app->sceneWin->wined = false;
-		app->sceneLose->losed = false;
+		app->sceneWin->won = false;
+		app->sceneLose->lost = false;
 	}
 	else
 	{

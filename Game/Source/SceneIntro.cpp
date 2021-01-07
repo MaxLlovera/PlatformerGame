@@ -13,6 +13,7 @@
 #include "SceneLose.h"
 #include "FadeToBlack.h"
 #include "GuiButton.h"
+#include "GuiSlider.h"
 #include "Font.h"
 #include "Map.h"
 
@@ -74,6 +75,12 @@ bool SceneIntro::Start()
 	
 	btnBackCredits = new GuiButton(7, { 540, 1200, 145, 50 }, "BACK");
 	btnBackCredits->SetObserver(this);
+
+	sliderMusicVolume = new GuiSlider(1, { 650, 950, 8, 28 }, "MUSIC VOLUME");
+	sliderMusicVolume->SetObserver(this);
+	
+	sliderFxVolume = new GuiSlider(2, { 650, 1000, 8, 28 }, " FX VOLUME");
+	sliderFxVolume->SetObserver(this);
 	return ret;
 }
 
@@ -89,6 +96,8 @@ bool SceneIntro::Update(float dt)
 	}*/
 	if (settings == true)
 	{
+		sliderMusicVolume->Update(dt);
+		sliderFxVolume->Update(dt);
 		btnExit->Update(dt);
 		btnBackSettings->Update(dt);
 		btnSettings->Update(dt);
@@ -127,7 +136,9 @@ bool SceneIntro::PostUpdate()
 
 	if (settings == true)
 	{
-		app->render->DrawRectangle({ 150, 900, 950, 280 }, 150, 50, 100, 150);
+		app->render->DrawTexture(creditText, 220, 900, NULL);
+		sliderMusicVolume->Draw();
+		sliderFxVolume->Draw();
 		btnBackSettings->Draw();
 		btnExit->Draw();
 		btnCredits->Draw();
@@ -136,10 +147,10 @@ bool SceneIntro::PostUpdate()
 	else if (credits == true)
 	{
 		app->render->DrawTexture(creditText, 220, 900, NULL);
-		app->font->DrawText(250,380, yellowFont, "FAKE XEICS:");
-		app->font->DrawText(410, 450, yellowFont, "ARNAU BONADA");
-		app->font->DrawText(410, 500, yellowFont, "MAX LLOVERA");
-		app->font->DrawText(410, 550, yellowFont, "ARNAU USTRELL");
+		app->font->DrawText(450, 380, yellowFont, "FAKE XEICS");
+		app->font->DrawText(420, 450, whiteFont, "ARNAU BONADA");
+		app->font->DrawText(430, 500, whiteFont, "MAX LLOVERA");
+		app->font->DrawText(405, 550, whiteFont, "ARNAU USTRELL");
 		btnBackCredits->Draw();
 		btnExit->Draw();
 		btnCredits->Draw();
@@ -149,7 +160,7 @@ bool SceneIntro::PostUpdate()
 	{
 		btnPlay->Draw();
 		btnContinue->Draw();
-		if (!posContinue) btnContinue->state = GuiControlState::DISABLED;
+		if (!posContinue || app->sceneWin->won || app->sceneLose->lost) btnContinue->state = GuiControlState::DISABLED;
 		else if (posContinue) btnContinue->state = GuiControlState::NORMAL;
 		btnSettings->Draw();
 		btnCredits->Draw();

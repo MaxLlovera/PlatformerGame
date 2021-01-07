@@ -31,7 +31,7 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 	bool CleanUp() override;
 
-	bool losed = false;
+	bool lost = false;
 
 private:
 

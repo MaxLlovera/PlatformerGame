@@ -107,7 +107,7 @@ void Render::RestartValues()
 {
 	if (app->scene->player != nullptr)
 	{
-		if (app->map->checkpointTaken&&!app->sceneWin->wined&&!app->sceneLose->losed)
+		if (app->map->checkpointTaken&&!app->sceneWin->won&&!app->sceneLose->lost)
 		{
 			app->scene->player->position.x = 938;
 			app->scene->player->position.y = 171;
