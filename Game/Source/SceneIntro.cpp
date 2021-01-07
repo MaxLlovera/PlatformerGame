@@ -45,6 +45,8 @@ bool SceneIntro::Start()
 	app->audio->PlayMusic("Assets/Audio/Music/intro_theme.ogg");
 	app->render->camera.x = 0;
 	app->render->camera.y = -555;
+	//app->sceneWin->wined = false;
+
 	//app->scene->player->position.x = 350;
 	//app->scene->player->position.y = 875;
 	//if (app->scene->player->win) app->SaveGameRequest();

@@ -16,6 +16,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "SceneIntro.h"
+#include "SceneWin.h"
 
 
 #define COLLIDER_GREEN 265
@@ -34,6 +35,13 @@ Player::Player() : Entity(EntityType::PLAYER)
 	{
 		position.x = 350;
 		position.y = 875;
+	}
+	else if (app->sceneWin->wined||app->sceneLose->losed)
+	{
+		position.x = 350;
+		position.y = 875;
+		app->sceneWin->wined = false;
+		app->sceneLose->losed = false;
 	}
 	else
 	{

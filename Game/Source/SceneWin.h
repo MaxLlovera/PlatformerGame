@@ -31,6 +31,8 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 	bool CleanUp() override;
 
+	bool wined = false;
+
 private:
 	GuiButton* btnRestart;
 	SDL_Texture* winText = nullptr;

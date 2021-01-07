@@ -14,6 +14,7 @@
 #include "PathFinding.h"
 #include "SceneIntro.h"
 #include "SceneLose.h"
+#include "SceneWin.h"
 #include "ModuleParticles.h"
 
 #include "Defs.h"
@@ -71,8 +72,9 @@ bool Scene::Start()
 			RELEASE_ARRAY(data);
 		}
 
-		if(app->sceneIntro->posContinue) app->LoadGameRequest();
-
+		/*if (app->sceneIntro->posContinue && !app->sceneWin->wined && !app->sceneLose->losed) {
+			app->LoadGameRequest();
+		}*/
 
 		// Load music
 		app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
@@ -124,6 +126,7 @@ bool Scene::Update(float dt)
 	//SceneWin
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || player->win)
 	{
+		app->sceneWin->wined = true;
 		player->win = true;
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 1 / dt);
 		
@@ -133,6 +136,7 @@ bool Scene::Update(float dt)
 	//SceneLose
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
+		app->sceneLose->losed = true;
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
 		app->render->RestartValues();
 	}

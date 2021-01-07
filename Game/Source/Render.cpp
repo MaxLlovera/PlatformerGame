@@ -7,6 +7,8 @@
 #include "Map.h"
 #include "Scene.h"
 #include "FadeToBlack.h"
+#include "SceneWin.h"
+#include "SceneLose.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -105,7 +107,7 @@ void Render::RestartValues()
 {
 	if (app->scene->player != nullptr)
 	{
-		if (app->map->checkpointTaken)
+		if (app->map->checkpointTaken&&!app->sceneWin->wined&&!app->sceneLose->losed)
 		{
 			app->scene->player->position.x = 938;
 			app->scene->player->position.y = 171;

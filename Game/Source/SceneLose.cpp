@@ -35,25 +35,26 @@ bool SceneLose::Awake(pugi::xml_node& node)
 bool SceneLose::Start()
 {
 	bool ret = true;
-	
-	LOG("Loading background assets");
-	loseText = app->tex->Load("Assets/Textures/scene_lose.png");
-	//app->player->Disable();
-	//app->enemy->Disable();
-	//app->scene->player->dead = false;
-	//app->scene->player->active = false;
-	//app->scene->enemy->active = false;
-	//app->scene->flyingEnemy->active = false;
-	//app->flyingEnemy->Disable();
-	app->map->Disable();
-	app->audio->PlayMusic("Assets/Audio/Music/game_over.ogg");
-	app->map->checkpointTaken = false;
-	app->render->camera.x = 0;
-	app->render->camera.y = -556;
-	btnRestart = new GuiButton(1, { 490, 1030, 300, 50 }, " RESTART");
-	btnRestart->SetObserver(this);
-		
-	
+	if (this->active == true)
+	{
+		LOG("Loading background assets");
+		loseText = app->tex->Load("Assets/Textures/scene_lose.png");
+		//app->player->Disable();
+		//app->enemy->Disable();
+		//app->scene->player->dead = false;
+		//app->scene->player->active = false;
+		//app->scene->enemy->active = false;
+		//app->scene->flyingEnemy->active = false;
+		//app->flyingEnemy->Disable();
+		app->map->Disable();
+		app->audio->PlayMusic("Assets/Audio/Music/game_over.ogg");
+		app->map->checkpointTaken = false;
+		app->render->camera.x = 0;
+		app->render->camera.y = -556;
+		btnRestart = new GuiButton(1, { 490, 1030, 300, 50 }, " RESTART");
+		btnRestart->SetObserver(this);
+		losed = true;
+	}
 	
 
 	return ret;
