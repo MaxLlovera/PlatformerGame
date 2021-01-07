@@ -66,7 +66,7 @@ bool SceneIntro::Start()
 	
 	btnCredits = new GuiButton(4, { 19, 1200, 240, 50 }, "CREDITS");
 	btnCredits->SetObserver(this);
-
+	
 	btnExit = new GuiButton(5, { 1113, 582, 145, 50 }, "EXIT");
 	btnExit->SetObserver(this);
 	
@@ -75,6 +75,12 @@ bool SceneIntro::Start()
 	
 	btnBackCredits = new GuiButton(7, { 540, 1200, 145, 50 }, "BACK");
 	btnBackCredits->SetObserver(this);
+
+	btnControls = new GuiButton(8, { 480, 1200, 270, 50 }, "CONTROLS");
+	btnControls->SetObserver(this);
+
+	btnBackControls = new GuiButton(9, { 540, 1200, 145, 50 }, "BACK");
+	btnBackControls->SetObserver(this);
 
 	sliderMusicVolume = new GuiSlider(1, { 725, 950, 10, 28 }, "MUSIC VOLUME");
 	sliderMusicVolume->SetObserver(this);
@@ -102,6 +108,14 @@ bool SceneIntro::Update(float dt)
 		btnSettings->Update(dt);
 		btnCredits->Update(dt);
 	}
+	
+	else if (controls == true)
+	{
+		btnExit->Update(dt);
+		btnBackControls->Update(dt);
+		btnSettings->Update(dt);
+		btnCredits->Update(dt);
+	}
 	else
 	{
 		btnPlay->Update(dt);
@@ -109,6 +123,7 @@ bool SceneIntro::Update(float dt)
 		btnSettings->Update(dt);
 		btnCredits->Update(dt);
 		btnExit->Update(dt);
+		btnControls->Update(dt);
 	}
 
 	return true;
@@ -144,6 +159,25 @@ bool SceneIntro::PostUpdate()
 		btnCredits->Draw();
 		btnSettings->Draw();
 	}
+	
+	else if (controls == true)
+	{
+		app->render->DrawTexture(creditText, 220, 900, NULL);
+		app->font->DrawText(250, 380, whiteFont, "MOVE LEFT");
+		app->font->DrawText(250, 420, whiteFont, "MOVE RIGHT");
+		app->font->DrawText(250, 460, whiteFont, "JUMP");
+		app->font->DrawText(250, 500, whiteFont, "SHOOT");
+		app->font->DrawText(250, 540, whiteFont, "USE OBJECT");
+		app->font->DrawText(700, 380, yellowFont, "A");
+		app->font->DrawText(700, 420, yellowFont, "D");
+		app->font->DrawText(700, 460, yellowFont, "SPACE");
+		app->font->DrawText(700, 500, yellowFont, "P");
+		app->font->DrawText(700, 540, yellowFont, "E");
+		btnBackControls->Draw();
+		btnExit->Draw();
+		btnCredits->Draw();
+		btnSettings->Draw();
+	}
 	else
 	{
 		btnPlay->Draw();
@@ -153,6 +187,7 @@ bool SceneIntro::PostUpdate()
 		btnSettings->Draw();
 		btnCredits->Draw();
 		btnExit->Draw();
+		btnControls->Draw();
 	}
 	
 
@@ -208,6 +243,19 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 			btnCredits->state = GuiControlState::NORMAL;
 			btnSettings->state = GuiControlState::NORMAL;
 			credits = false;
+		}
+		else if (control->id == 8)
+		{
+			btnCredits->state = GuiControlState::DISABLED;
+			btnSettings->state = GuiControlState::DISABLED;
+			controls = true;
+		}
+		
+		else if (control->id == 9)
+		{
+			btnCredits->state = GuiControlState::NORMAL;
+			btnSettings->state = GuiControlState::NORMAL;
+			controls = false;
 		}
 	}
 	case GuiControlType::SLIDER:

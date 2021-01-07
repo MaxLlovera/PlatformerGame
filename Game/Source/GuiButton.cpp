@@ -88,7 +88,7 @@ bool GuiButton::Update(float dt)
 
 bool GuiButton::Draw()
 {
-	// Draw the right button depending on state
+	
 	switch (state)
 	{
 	case GuiControlState::DISABLED: app->render->DrawRectangle(bounds, 100, 100, 100, 255);
@@ -104,6 +104,7 @@ bool GuiButton::Draw()
 	default:
 		break;
 	}
-	app->font->DrawText(bounds.x + (app->render->camera.x) + 8, bounds.y + (app->render->camera.y) + 8, 0, text.GetString());
+	app->font->DrawText((bounds.x + (app->render->camera.x) + 8) / app->win->GetScale(), (bounds.y + (app->render->camera.y) + 8) / app->win->GetScale(), 0, text.GetString());
+
 	return false;
 }

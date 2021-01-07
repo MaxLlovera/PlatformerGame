@@ -45,6 +45,8 @@ private:
 	GuiButton* btnContinue;
 	GuiButton* btnSettings;
 	GuiButton* btnCredits;
+	GuiButton* btnControls;
+	GuiButton* btnBackControls;
 	GuiButton* btnExit;
 	GuiButton* btnBackSettings;
 	GuiButton* btnBackCredits;
@@ -59,6 +61,7 @@ private:
 
 	bool settings = false;
 	bool credits = false;
+	bool controls = false;
 
 
 };

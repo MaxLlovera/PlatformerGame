@@ -64,7 +64,7 @@ bool GuiSlider::Draw()
 	// Draw the right button depending on state
 	SDL_Rect rect = { boundsSlider.x - 50, boundsSlider.y - 1, 300, 30 };
 	app->render->DrawRectangle(rect, 0, 220, 120, 255);
-
+	app->font->DrawText((boundsSlider.x + (app->render->camera.x) - 450) / app->win->GetScale(), (boundsSlider.y + (app->render->camera.y) - 2) / app->win->GetScale(), 0, text.GetString());
 
 	switch (state)
 	{
@@ -82,7 +82,7 @@ bool GuiSlider::Draw()
 		break;
 	}
 
-	app->font->DrawText(boundsSlider.x + (app->render->camera.x) - 450 / app->win->GetScale(), boundsSlider.y + (app->render->camera.y) - 2 / app->win->GetScale(), 0, text.GetString());
+	
 	
 	return false;
 }
