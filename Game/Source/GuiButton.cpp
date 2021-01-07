@@ -11,6 +11,8 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(
     //bounds.y /= app->win->GetScale();
     this->bounds = bounds;
     this->text = text;
+
+	guiButtonFx = app->audio->LoadFx("Assets/Audio/Fx/gui_button_fx.wav");
 }
 
 GuiButton::~GuiButton()
@@ -36,12 +38,14 @@ bool GuiButton::Update(float dt)
 
             if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
             {
+				
                 state = GuiControlState::PRESSED;
             }
 
             // If mouse button pressed -> Generate event!
             if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
             {
+				app->audio->PlayFx(guiButtonFx, 0);
                 NotifyObserver();
             }
         }

@@ -20,6 +20,9 @@ private:
 
     // Gui Button specific properties
     // Maybe some animation properties for state change?
+
+	int guiButtonFx = 0;
+
 };
 
 #endif // __GUIBUTTON_H__
