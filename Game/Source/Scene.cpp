@@ -29,6 +29,10 @@
 Scene::Scene() : Module()
 {
 	name.Create("scene");
+
+	clockAnim.PushBack({ 0,0,40,34 });
+	clockAnim.PushBack({ 0,34,40,34 });
+	clockAnim.speed = 0.0168f;
 }
 
 // Destructor
@@ -66,6 +70,7 @@ bool Scene::Start()
 		puzzle = app->tex->Load("Assets/Textures/puzzle.png");
 		pause = app->tex->Load("Assets/Textures/pause.png");
 		creditText = app->tex->Load("Assets/Textures/settings_paused.png");
+		clockText = app->tex->Load("Assets/Textures/timer.png");
 		player->spiked = false;
 		app->map->checkpointTaken = false;
 
@@ -172,8 +177,11 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		paused = true;
-		Pause();
+		if (!pausedSettings)
+		{
+			paused = true;
+			Pause();
+		}
 		
 	}
 
@@ -193,6 +201,7 @@ bool Scene::Update(float dt)
 		btnExit->Update(dt);
 	}
 
+	if(!paused) clockAnim.Update();
 
 	if (app->sceneIntro->exit == true) return false;
 	return true;
@@ -261,15 +270,24 @@ bool Scene::PostUpdate()
 		btnExit->Draw();
 	}
 
-	seconds++;
-	if (seconds == 60) {
-		timer++;
-		seconds = 0;
+
+	//app->render->DrawRectangle({ -app->render->camera.x + 1080, -app->render->camera.y ,200,50 }, 0, 0, 0, 100);
+
+	if (!paused)
+	{
+		seconds++;
+		if (seconds == 60) {
+			timer ++;
+			seconds = 0;
+		}
 	}
-
 	sprintf_s(timerText, 10, "%d", timer);
-	app->font->DrawText(1175, 10, whiteFont, timerText);
+	if (timer < 10) app->font->DrawText(1236, 10, whiteFont, timerText);
+	else if (timer < 100) app->font->DrawText(1206, 10, whiteFont, timerText);
+	else app->font->DrawText(1174, 10, whiteFont, timerText);
 
+	
+	app->render->DrawTexture(clockText, -app->render->camera.x+1100, -app->render->camera.y+10, &(clockAnim.GetCurrentFrame()));
 	return ret;
 }
 
@@ -341,10 +359,10 @@ void Scene::Pause()
 	btnBack = new GuiButton(5, { -app->render->camera.x + 865, -app->render->camera.y + 510,145 ,50 }, "BACK");
 	btnBack->SetObserver(this);
 
-	sliderMusicVolume = new GuiSlider(1, { -app->render->camera.x + 725, -app->render->camera.y + 220, 10, 28 }, "MUSIC VOLUME");
+	sliderMusicVolume = new GuiSlider(6, { -app->render->camera.x + 725, -app->render->camera.y + 220, 10, 28 }, "MUSIC VOLUME");
 	sliderMusicVolume->SetObserver(this);
 
-	sliderFxVolume = new GuiSlider(2, { -app->render->camera.x + 725, -app->render->camera.y + 300, 10, 28 }, " FX VOLUME");
+	sliderFxVolume = new GuiSlider(7, { -app->render->camera.x + 725, -app->render->camera.y + 300, 10, 28 }, " FX VOLUME");
 	sliderFxVolume->SetObserver(this);
 
 	checkBoxFullscreen = new GuiCheckBox(8, { -app->render->camera.x + 675, -app->render->camera.y + 380, 40, 40 }, "FULLSCREEN");
@@ -371,10 +389,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			app->scene->flyingEnemy->texFlyingEnemy = app->tex->Load("Assets/Textures/flyingenemy_texture.png");
 			app->scene->particles->texture = app->tex->Load("Assets/Textures/shot_fireball.png");
 		}
-		else if (control->id == 2)
-		{
-			pausedSettings = true;
-		}
+		else if (control->id == 2) pausedSettings = true;
 		else if (control->id == 3)
 		{
 			app->fadetoblack->FadeToBlk(this, app->sceneIntro, 30);
@@ -387,20 +402,29 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				app->scene->player->position.x = 350;
 				app->scene->player->position.y = 875;
 				app->SaveGameRequest();
-
 			}
 			app->sceneIntro->posContinue = true;
 			app->sceneIntro->exit = true;
 		}
-		else if (control->id == 5)
-		{
-			pausedSettings = false;
-		}
+		else if (control->id == 5) pausedSettings = false;
 	}
 	case GuiControlType::SLIDER:
 	{
-		if (control->id == 1) app->audio->ChangeMusicVolume(sliderMusicVolume->ReturnValue());
-		else if (control->id == 2) app->audio->ChangeFxVolume(sliderFxVolume->ReturnValue());
+		if (control->id == 6) app->audio->ChangeMusicVolume(sliderMusicVolume->ReturnValue());
+		else if (control->id == 7) app->audio->ChangeFxVolume(sliderFxVolume->ReturnValue());
+		break;
+	}
+	case GuiControlType::CHECKBOX:
+	{
+		if (control->id == 8)
+		{
+			app->win->fullScreen = !app->win->fullScreen;
+			app->win->ChangeScreenSize();
+		}
+		else if (control->id == 9)
+		{
+
+		}
 		break;
 	}
 	default: break;

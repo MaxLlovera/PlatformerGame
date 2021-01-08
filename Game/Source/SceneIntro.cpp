@@ -274,6 +274,19 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 		else if (control->id == 2) app->audio->ChangeFxVolume(sliderFxVolume->ReturnValue());
 		break; 
 	}
+		case GuiControlType::CHECKBOX:
+	{
+		if (control->id == 1)
+		{
+			app->win->fullScreen = !app->win->fullScreen;
+			app->win->ChangeScreenSize();
+		}
+		else if (control->id == 2)
+		{
+
+		}
+		break;
+	}
 	default: break;
 	}
 

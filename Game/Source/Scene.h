@@ -73,7 +73,10 @@ private:
 	SDL_Texture* puzzle;
 	SDL_Texture* pause;
 	SDL_Texture* creditText = nullptr;
-	
+	SDL_Texture* clockText;
+
+	Animation clockAnim;
+
 	GuiButton* btnResume;
 	GuiButton* btnSettings;
 	GuiButton* btnBackIntro;
