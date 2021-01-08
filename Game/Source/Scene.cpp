@@ -33,6 +33,10 @@ Scene::Scene() : Module()
 	clockAnim.PushBack({ 0,0,40,34 });
 	clockAnim.PushBack({ 0,34,40,34 });
 	clockAnim.speed = 0.0168f;
+	
+	lifesAnim.PushBack({ 0,0,54,56 });
+	lifesAnim.PushBack({ 0,56,54,56 });
+	lifesAnim.speed = 0.02f;
 }
 
 // Destructor
@@ -77,7 +81,7 @@ bool Scene::Start()
 		char lookupTable[] = { "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ:/,!+-%  " };
 		whiteFont = app->font->Load("Assets/Textures/white_font.png", lookupTable, 9);
 
-
+		timer = 0;
 
 		// L03: DONE: Load map
 		if (app->map->Load("world_meta.tmx") == true)
@@ -204,6 +208,7 @@ bool Scene::Update(float dt)
 	}
 
 	if(!paused) clockAnim.Update();
+	if(!paused) lifesAnim.Update();
 
 	if (app->sceneIntro->exit == true) return false;
 	return true;
@@ -226,26 +231,24 @@ bool Scene::PostUpdate()
 	if (app->map->chestTaken) app->map->DrawHeart();
 	if (player->lifes == 4)
 	{
-		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
-		app->render->DrawTexture(heart, -app->render->camera.x + 64, -app->render->camera.y);
-		app->render->DrawTexture(heart, -app->render->camera.x + 128, -app->render->camera.y);
-		app->render->DrawTexture(heart, -app->render->camera.x + 192, -app->render->camera.y);
+		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y, &(lifesAnim.GetCurrentFrame()));
+		app->render->DrawTexture(heart, -app->render->camera.x + 64, -app->render->camera.y, &(lifesAnim.GetCurrentFrame()));
+		app->render->DrawTexture(heart, -app->render->camera.x + 128, -app->render->camera.y, &(lifesAnim.GetCurrentFrame()));
+		app->render->DrawTexture(heart, -app->render->camera.x + 192, -app->render->camera.y, &(lifesAnim.GetCurrentFrame()));
 	}
 	if (player->lifes == 3)
 	{
-		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
-		app->render->DrawTexture(heart, -app->render->camera.x + 64, -app->render->camera.y);
-		app->render->DrawTexture(heart, -app->render->camera.x + 128, -app->render->camera.y);
+		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y, &(lifesAnim.GetCurrentFrame()));
+		app->render->DrawTexture(heart, -app->render->camera.x + 64, -app->render->camera.y, &(lifesAnim.GetCurrentFrame()));
+		app->render->DrawTexture(heart, -app->render->camera.x + 128, -app->render->camera.y, &(lifesAnim.GetCurrentFrame()));
 	}
 	if (player->lifes == 2)
 	{
-		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
-		app->render->DrawTexture(heart, -app->render->camera.x + 64, -app->render->camera.y);
+		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y, &(lifesAnim.GetCurrentFrame()));
+		app->render->DrawTexture(heart, -app->render->camera.x + 64, -app->render->camera.y, &(lifesAnim.GetCurrentFrame()));
 	}
-	if (player->lifes == 1)
-	{
-		app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y);
-	}
+	if (player->lifes == 1) app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y, &(lifesAnim.GetCurrentFrame()));
+
 	if(app->map->keyTaken) app->render->DrawTexture(key, -app->render->camera.x + 10, -app->render->camera.y + 75);
 
 	if(app->map->puzzleTaken&&!app->map->chestTaken) app->render->DrawTexture(puzzle, -app->render->camera.x + 70, -app->render->camera.y + 70);
@@ -302,6 +305,9 @@ bool Scene::CleanUp()
 	app->tex->UnLoad(key);
 	app->tex->UnLoad(puzzle);
 	app->tex->UnLoad(pause);
+	app->tex->UnLoad(creditText);
+	app->tex->UnLoad(clockText);
+	app->font->UnLoad(whiteFont);
 	app->entityManager->DestroyEntity(player);
 	app->entityManager->DestroyEntity(enemy);
 	app->entityManager->DestroyEntity(flyingEnemy);
@@ -357,20 +363,19 @@ void Scene::Pause()
 	btnExit = new GuiButton(4, { -app->render->camera.x+569, -app->render->camera.y+471, 145, 50 }, "EXIT");
 	btnExit->SetObserver(this);
 
-
 	btnBack = new GuiButton(5, { -app->render->camera.x + 865, -app->render->camera.y + 510,145 ,50 }, "BACK");
 	btnBack->SetObserver(this);
 
-	sliderMusicVolume = new GuiSlider(6, { -app->render->camera.x + 725, -app->render->camera.y + 220, 10, 28 }, "MUSIC VOLUME");
+	sliderMusicVolume = new GuiSlider(1, { -app->render->camera.x + 725, -app->render->camera.y + 220, 10, 28 }, "MUSIC VOLUME");
 	sliderMusicVolume->SetObserver(this);
 
-	sliderFxVolume = new GuiSlider(7, { -app->render->camera.x + 725, -app->render->camera.y + 300, 10, 28 }, " FX VOLUME");
+	sliderFxVolume = new GuiSlider(2, { -app->render->camera.x + 725, -app->render->camera.y + 300, 10, 28 }, " FX VOLUME");
 	sliderFxVolume->SetObserver(this);
 
-	checkBoxFullscreen = new GuiCheckBox(8, { -app->render->camera.x + 675, -app->render->camera.y + 380, 40, 40 }, "FULLSCREEN");
+	checkBoxFullscreen = new GuiCheckBox(1, { -app->render->camera.x + 675, -app->render->camera.y + 380, 40, 40 }, "FULLSCREEN");
 	checkBoxFullscreen->SetObserver(this);
 
-	checkBoxVSync = new GuiCheckBox(9, { -app->render->camera.x + 675, -app->render->camera.y + 460,40,40 }, "   VSYNC");
+	checkBoxVSync = new GuiCheckBox(2, { -app->render->camera.x + 675, -app->render->camera.y + 460,40,40 }, "   VSYNC");
 	checkBoxVSync->SetObserver(this);
 
 
@@ -412,21 +417,18 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	case GuiControlType::SLIDER:
 	{
-		if (control->id == 6) app->audio->ChangeMusicVolume(sliderMusicVolume->ReturnValue());
-		else if (control->id == 7) app->audio->ChangeFxVolume(sliderFxVolume->ReturnValue());
+		if (control->id == 1) app->audio->ChangeMusicVolume(sliderMusicVolume->ReturnValue());
+		else if (control->id == 2) app->audio->ChangeFxVolume(sliderFxVolume->ReturnValue());
 		break;
 	}
 	case GuiControlType::CHECKBOX:
 	{
-		if (control->id == 8)
+		if (control->id == 1)
 		{
 			app->win->fullScreen = !app->win->fullScreen;
 			app->win->ChangeScreenSize();
 		}
-		else if (control->id == 9)
-		{
-
-		}
+		else if (control->id == 2) app->vSync = !app->vSync;
 		break;
 	}
 	default: break;

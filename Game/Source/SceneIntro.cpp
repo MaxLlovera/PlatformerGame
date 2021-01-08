@@ -284,17 +284,14 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 		else if (control->id == 2) app->audio->ChangeFxVolume(sliderFxVolume->ReturnValue());
 		break; 
 	}
-		case GuiControlType::CHECKBOX:
+	case GuiControlType::CHECKBOX:
 	{
 		if (control->id == 1)
 		{
 			app->win->fullScreen = !app->win->fullScreen;
 			app->win->ChangeScreenSize();
 		}
-		else if (control->id == 2)
-		{
-
-		}
+		else if (control->id == 2) app->vSync = !app->vSync;
 		break;
 	}
 	default: break;
@@ -316,5 +313,9 @@ bool SceneIntro::CleanUp()
 	//delete sliderFxVolume;
 
 	app->tex->UnLoad(introText);
+	app->tex->UnLoad(creditText);
+	app->tex->UnLoad(logoText);
+	app->font->UnLoad(whiteFont);
+	app->font->UnLoad(yellowFont);
 	return true;
 }

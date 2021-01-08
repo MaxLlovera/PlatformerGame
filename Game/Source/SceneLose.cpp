@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Map.h"
+#include "Font.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "FlyingEnemy.h"
@@ -36,13 +37,8 @@ bool SceneLose::Start()
 	{
 		LOG("Loading background assets");
 		loseText = app->tex->Load("Assets/Textures/scene_lose.png");
-		//app->player->Disable();
-		//app->enemy->Disable();
-		//app->scene->player->dead = false;
-		//app->scene->player->active = false;
-		//app->scene->enemy->active = false;
-		//app->scene->flyingEnemy->active = false;
-		//app->flyingEnemy->Disable();
+		char lookupTable[] = { "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ:/,!+-%  " };
+		whiteFont = app->font->Load("Assets/Textures/white_font.png", lookupTable, 9);
 		app->map->Disable();
 		app->audio->PlayMusic("Assets/Audio/Music/game_over.ogg");
 		app->map->checkpointTaken = false;
@@ -99,6 +95,7 @@ bool SceneLose::CleanUp()
 {
 	//delete btnExit;
 	//delete btnRestart;
+	app->font->UnLoad(whiteFont);
 	app->tex->UnLoad(loseText);
 	return true;
 }

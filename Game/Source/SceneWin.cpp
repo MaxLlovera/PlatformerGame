@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Font.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "FlyingEnemy.h"
@@ -39,9 +40,8 @@ bool SceneWin::Start()
 	{
 		LOG("Loading background assets");
 		winText = app->tex->Load("Assets/Textures/scene_win.png");
-		//app->player->Disable();
-		//app->enemy->Disable();
-		//app->flyingEnemy->Disable();
+		char lookupTable[] = { "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ:/,!+-%  " };
+		whiteFont = app->font->Load("Assets/Textures/white_font.png", lookupTable, 9);
 		app->scene->player->active = false;
 		app->scene->enemy->active = false;
 		app->scene->flyingEnemy->active = false;
@@ -98,6 +98,7 @@ bool SceneWin::CleanUp()
 {
 	//delete btnExit;
 	//delete btnRestart;
+	app->font->UnLoad(whiteFont);
 	app->tex->UnLoad(winText);
 	return true;
 }

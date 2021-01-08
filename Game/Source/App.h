@@ -62,7 +62,7 @@ public:
 	void LoadGameRequest();
 	void SaveGameRequest() const;
 
-
+	 
 
 private:
 
@@ -109,6 +109,7 @@ public:
 
 	bool capped = false;
 	bool loadGameRequested;
+	bool vSync = false;
 
 
 private:

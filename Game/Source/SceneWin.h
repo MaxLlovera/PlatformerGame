@@ -36,6 +36,7 @@ public:
 private:
 	GuiButton* btnRestart;
 	GuiButton* btnExit;
+	int whiteFont = -1;
 	SDL_Texture* winText = nullptr;
 	bool exit = false;
 };

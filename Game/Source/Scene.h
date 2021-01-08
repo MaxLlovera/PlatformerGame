@@ -76,6 +76,7 @@ private:
 	SDL_Texture* clockText;
 
 	Animation clockAnim;
+	Animation lifesAnim;
 
 	GuiButton* btnResume;
 	GuiButton* btnSettings;

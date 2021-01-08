@@ -63,8 +63,13 @@ bool GuiCheckBox::Draw()
 	} break;
 	case GuiControlState::NORMAL: 
 	{
-		if (checked) app->render->DrawRectangle(bounds, 0, 255, 0, 255);
-		else app->render->DrawRectangle(bounds, 255, 0, 0, 255);
+		if (app->win->fullScreen && id == 1) app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+		else if (!app->win->fullScreen && id == 1) app->render->DrawRectangle(bounds, 255, 0, 0, 255);
+
+		if (app->vSync && id == 2) app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+		else if (!app->vSync && id == 2) app->render->DrawRectangle(bounds, 255, 0, 0, 255);
+
+
 	} break;
 	case GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 200, 100, 220, 255);
 		break;

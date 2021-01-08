@@ -260,6 +260,6 @@ bool FlyingEnemy::SaveState(pugi::xml_node& node) const
 
 void FlyingEnemy::FlyingEnemyInitialPosition()
 {
-	position.x = 4200;
-	position.y = 650;
+	position.x = 4000;
+	position.y = 500;
 }
