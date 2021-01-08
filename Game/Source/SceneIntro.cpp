@@ -39,20 +39,17 @@ bool SceneIntro::Awake(pugi::xml_node& node)
 bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
+	bool ret = true;
+
 	introText = app->tex->Load("Assets/Textures/scene_intro.png");
 	creditText = app->tex->Load("Assets/Textures/credits.png");
-	bool ret = true;
+	logoText = app->tex->Load("Assets/Textures/logo.png");
 	app->sceneLose->Disable();
 	app->sceneWin->Disable();
 	app->audio->PlayMusic("Assets/Audio/Music/intro_theme.ogg");
 	app->render->camera.x = 0;
 	app->render->camera.y = -555;
-	//app->sceneWin->wined = false;
 
-	//app->scene->player->position.x = 350;
-	//app->scene->player->position.y = 875;
-	//if (app->scene->player->win) app->SaveGameRequest();
-	//app->scene->player->win = false;
 	char lookupTable[] = { "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ:/,!+-%  " };
 	whiteFont = app->font->Load("Assets/Textures/white_font.png", lookupTable, 9);
 	yellowFont = app->font->Load("Assets/Textures/yellow_font.png", lookupTable, 9);
@@ -99,42 +96,49 @@ bool SceneIntro::Start()
 
 bool SceneIntro::Update(float dt)
 {
-	if (settings == true)
+	if (count <= 240) 
 	{
-		sliderMusicVolume->Update(dt);
-		sliderFxVolume->Update(dt);
-		btnExit->Update(dt);
-		btnBackSettings->Update(dt);
-		btnSettings->Update(dt);
-		btnCredits->Update(dt);
-		checkBoxFullscreen->Update(dt);
-		checkBoxVSync->Update(dt);
+		count++;
 	}
-	else if (credits == true)
+	else if (count > 240)
 	{
-		btnExit->Update(dt);
-		btnBackCredits->Update(dt);
-		btnSettings->Update(dt);
-		btnCredits->Update(dt);
-	}
-	
-	else if (controls == true)
-	{
-		btnExit->Update(dt);
-		btnBackControls->Update(dt);
-		btnSettings->Update(dt);
-		btnCredits->Update(dt);
-	}
-	else
-	{
-		btnPlay->Update(dt);
-		btnContinue->Update(dt);
-		btnSettings->Update(dt);
-		btnCredits->Update(dt);
-		btnExit->Update(dt);
-		btnControls->Update(dt);
-	}
 
+		if (settings == true)
+		{
+			sliderMusicVolume->Update(dt);
+			sliderFxVolume->Update(dt);
+			btnExit->Update(dt);
+			btnBackSettings->Update(dt);
+			btnSettings->Update(dt);
+			btnCredits->Update(dt);
+			checkBoxFullscreen->Update(dt);
+			checkBoxVSync->Update(dt);
+		}
+		else if (credits == true)
+		{
+			btnExit->Update(dt);
+			btnBackCredits->Update(dt);
+			btnSettings->Update(dt);
+			btnCredits->Update(dt);
+		}
+
+		else if (controls == true)
+		{
+			btnExit->Update(dt);
+			btnBackControls->Update(dt);
+			btnSettings->Update(dt);
+			btnCredits->Update(dt);
+		}
+		else
+		{
+			btnPlay->Update(dt);
+			btnContinue->Update(dt);
+			btnSettings->Update(dt);
+			btnCredits->Update(dt);
+			btnExit->Update(dt);
+			btnControls->Update(dt);
+		}
+	}
 	return true;
 }
 
@@ -144,62 +148,68 @@ bool SceneIntro::PostUpdate()
 	bool ret = true;
 	if (exit == true) ret = false;
 
-	app->render->DrawTexture(introText, 0, 555, NULL);
+	if (count <= 240)
+	{
+		app->render->DrawTexture(logoText, 0, 555, NULL);
+	}
+	else if (count > 240)
+	{
+		app->render->DrawTexture(introText, 0, 555, NULL);
 
-	if (settings == true)
-	{
-		app->render->DrawTexture(creditText, 220, 900, NULL);
-		sliderMusicVolume->Draw();
-		sliderFxVolume->Draw();
-		btnBackSettings->Draw();
-		btnExit->Draw();
-		btnCredits->Draw();
-		btnSettings->Draw();
-		checkBoxFullscreen->Draw();
-		checkBoxVSync->Draw();
+		if (settings == true)
+		{
+			app->render->DrawTexture(creditText, 220, 900, NULL);
+			sliderMusicVolume->Draw();
+			sliderFxVolume->Draw();
+			btnBackSettings->Draw();
+			btnExit->Draw();
+			btnCredits->Draw();
+			btnSettings->Draw();
+			checkBoxFullscreen->Draw();
+			checkBoxVSync->Draw();
+		}
+		else if (credits == true)
+		{
+			app->render->DrawTexture(creditText, 220, 900, NULL);
+			app->font->DrawText(450, 380, yellowFont, "FAKE XEICS");
+			app->font->DrawText(420, 450, whiteFont, "ARNAU BONADA");
+			app->font->DrawText(430, 500, whiteFont, "MAX LLOVERA");
+			app->font->DrawText(405, 550, whiteFont, "ARNAU USTRELL");
+			btnBackCredits->Draw();
+			btnExit->Draw();
+			btnCredits->Draw();
+			btnSettings->Draw();
+		}
+		else if (controls == true)
+		{
+			app->render->DrawTexture(creditText, 220, 900, NULL);
+			app->font->DrawText(300, 380, whiteFont, "MOVE LEFT");
+			app->font->DrawText(300, 425, whiteFont, "MOVE RIGHT");
+			app->font->DrawText(300, 470, whiteFont, "JUMP");
+			app->font->DrawText(300, 515, whiteFont, "SHOOT");
+			app->font->DrawText(300, 560, whiteFont, "USE OBJECT");
+			app->font->DrawText(700, 380, yellowFont, "A");
+			app->font->DrawText(700, 425, yellowFont, "D");
+			app->font->DrawText(700, 470, yellowFont, "SPACE");
+			app->font->DrawText(700, 515, yellowFont, "P");
+			app->font->DrawText(700, 560, yellowFont, "E");
+			btnBackControls->Draw();
+			btnExit->Draw();
+			btnCredits->Draw();
+			btnSettings->Draw();
+		}
+		else
+		{
+			btnPlay->Draw();
+			btnContinue->Draw();
+			if (!posContinue || app->sceneWin->won || app->sceneLose->lost) btnContinue->state = GuiControlState::DISABLED;
+			else if (posContinue) btnContinue->state = GuiControlState::NORMAL;
+			btnSettings->Draw();
+			btnCredits->Draw();
+			btnExit->Draw();
+			btnControls->Draw();
+		}
 	}
-	else if (credits == true)
-	{
-		app->render->DrawTexture(creditText, 220, 900, NULL);
-		app->font->DrawText(450, 380, yellowFont, "FAKE XEICS");
-		app->font->DrawText(420, 450, whiteFont, "ARNAU BONADA");
-		app->font->DrawText(430, 500, whiteFont, "MAX LLOVERA");
-		app->font->DrawText(405, 550, whiteFont, "ARNAU USTRELL");
-		btnBackCredits->Draw();
-		btnExit->Draw();
-		btnCredits->Draw();
-		btnSettings->Draw();
-	}
-	else if (controls == true)
-	{
-		app->render->DrawTexture(creditText, 220, 900, NULL);
-		app->font->DrawText(300, 380, whiteFont, "MOVE LEFT");
-		app->font->DrawText(300, 425, whiteFont, "MOVE RIGHT");
-		app->font->DrawText(300, 470, whiteFont, "JUMP");
-		app->font->DrawText(300, 515, whiteFont, "SHOOT");
-		app->font->DrawText(300, 560, whiteFont, "USE OBJECT");
-		app->font->DrawText(700, 380, yellowFont, "A");
-		app->font->DrawText(700, 425, yellowFont, "D");
-		app->font->DrawText(700, 470, yellowFont, "SPACE");
-		app->font->DrawText(700, 515, yellowFont, "P");
-		app->font->DrawText(700, 560, yellowFont, "E");
-		btnBackControls->Draw();
-		btnExit->Draw();
-		btnCredits->Draw();
-		btnSettings->Draw();
-	}
-	else
-	{
-		btnPlay->Draw();
-		btnContinue->Draw();
-		if (!posContinue || app->sceneWin->won || app->sceneLose->lost) btnContinue->state = GuiControlState::DISABLED;
-		else if (posContinue) btnContinue->state = GuiControlState::NORMAL;
-		btnSettings->Draw();
-		btnCredits->Draw();
-		btnExit->Draw();
-		btnControls->Draw();
-	}
-	
 
 	return ret;
 }

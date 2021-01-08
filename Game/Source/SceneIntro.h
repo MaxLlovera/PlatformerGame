@@ -60,6 +60,8 @@ private:
 
 	SDL_Texture* introText = nullptr;
 	SDL_Texture* creditText = nullptr;
+	SDL_Texture* logoText = nullptr;
+
 	int whiteFont = -1;
 	int yellowFont = -1;
 
@@ -67,7 +69,7 @@ private:
 	bool credits = false;
 	bool controls = false;
 
-
+	int count = 0;
 };
 
 
