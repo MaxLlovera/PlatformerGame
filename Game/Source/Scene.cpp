@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Font.h"
 #include "FlyingEnemy.h"
 #include "EntityManager.h"
 #include "FadeToBlack.h"
@@ -22,6 +23,8 @@
 
 #include "Defs.h"
 #include "Log.h"
+
+
 
 Scene::Scene() : Module()
 {
@@ -66,7 +69,8 @@ bool Scene::Start()
 		player->spiked = false;
 		app->map->checkpointTaken = false;
 
-
+		char lookupTable[] = { "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ:/,!+-%  " };
+		whiteFont = app->font->Load("Assets/Textures/white_font.png", lookupTable, 9);
 
 
 
@@ -189,6 +193,8 @@ bool Scene::Update(float dt)
 		btnExit->Update(dt);
 	}
 
+	timer++;
+
 	if (app->sceneIntro->exit == true) return false;
 	return true;
 }
@@ -255,6 +261,9 @@ bool Scene::PostUpdate()
 		btnBackIntro->Draw();
 		btnExit->Draw();
 	}
+	
+	sprintf_s(timerText, 10, "%d", timer);
+	app->font->DrawText(-app->render->camera.x, -app->render->camera.y, whiteFont, timerText);
 
 	return ret;
 }
