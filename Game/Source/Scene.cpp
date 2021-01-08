@@ -298,7 +298,7 @@ void Scene::Pause()
 	btnResume = new GuiButton(1, { -app->render->camera.x+535, -app->render->camera.y+160, 210, 50 }, "RESUME");
 	btnResume->SetObserver(this);
 
-	btnSettings = new GuiButton(2, { -app->render->camera.x+505, -app->render->camera.y+264, 269, 51 }, "SETTINGS");
+	btnSettings = new GuiButton(2, { -app->render->camera.x+505, -app->render->camera.y+263, 269, 51 }, "SETTINGS");
 	btnSettings->SetObserver(this);
 
 	btnBackIntro = new GuiButton(3, { -app->render->camera.x+485, -app->render->camera.y+368, 310, 50 }, "BACK MENU");

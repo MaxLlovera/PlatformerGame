@@ -61,8 +61,6 @@ bool GuiSlider::Update(float dt)
 
 bool GuiSlider::Draw()
 {
-	
-
 	SDL_Rect rect = { boundsSlider.x - 50, boundsSlider.y - 1, 300, 30 };
 	app->render->DrawRectangle({ rect.x - 2, rect.y - 2,rect.w + 4,rect.h + 4 }, 20, 20, 20);
 	app->render->DrawRectangle(rect, 0, 220, 120, 255);

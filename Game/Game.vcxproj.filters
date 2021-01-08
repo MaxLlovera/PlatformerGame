@@ -10,7 +10,6 @@
       <Filter>External\PugiXml</Filter>
     </ClCompile>
     <ClCompile Include="Source\FadeToBlack.cpp" />
-    <ClCompile Include="Source\ModuleParticles.cpp" />
     <ClCompile Include="Source\GuiButton.cpp">
       <Filter>GuiControls</Filter>
     </ClCompile>
@@ -77,6 +76,9 @@
     <ClCompile Include="Source\PerfTimer.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ModuleParticles.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h" />
@@ -114,7 +116,6 @@
     <ClInclude Include="Source\Queue.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModuleParticles.h" />
     <ClInclude Include="Source\GuiButton.h">
       <Filter>GuiControls</Filter>
     </ClInclude>
@@ -188,6 +189,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleParticles.h">
       <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>

@@ -52,8 +52,8 @@ bool GuiCheckBox::Draw()
 {
 	app->render->DrawRectangle({ bounds.x - 2, bounds.y - 2,bounds.w + 4,bounds.h + 4}, 20, 20, 20);
 	
-	app->font->DrawText((bounds.x + (app->render->camera.x) - 460) / app->win->GetScale(), (bounds.y + (app->render->camera.y) - 2) / app->win->GetScale(), 0, text.GetString());
-	// Draw the right button depending on state
+	app->font->DrawText((bounds.x + (app->render->camera.x) - 385) / app->win->GetScale(), (bounds.y + (app->render->camera.y)) / app->win->GetScale(), 0, text.GetString());
+	
 	switch (state)
 	{
 	case GuiControlState::DISABLED:

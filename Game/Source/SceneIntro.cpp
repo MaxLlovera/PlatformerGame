@@ -89,10 +89,10 @@ bool SceneIntro::Start()
 	sliderFxVolume = new GuiSlider(2, { 725, 1000, 10, 28 }, " FX VOLUME");
 	sliderFxVolume->SetObserver(this);
 
-	checkBoxFullscreen = new GuiCheckBox(1, { 740, 1050, 40, 40 }, "FULLSCREEN");
+	checkBoxFullscreen = new GuiCheckBox(1, { 675, 1050, 40, 40 }, "FULLSCREEN");
 	checkBoxFullscreen->SetObserver(this);
 
-	checkBoxVSync = new GuiCheckBox(2, { 740,1105,40,40 }, "   VSYNC");
+	checkBoxVSync = new GuiCheckBox(2, { 675,1105,40,40 }, "   VSYNC");
 	checkBoxVSync->SetObserver(this);
 	return ret;
 }
@@ -174,16 +174,16 @@ bool SceneIntro::PostUpdate()
 	else if (controls == true)
 	{
 		app->render->DrawTexture(creditText, 220, 900, NULL);
-		app->font->DrawText(250, 380, whiteFont, "MOVE LEFT");
-		app->font->DrawText(250, 420, whiteFont, "MOVE RIGHT");
-		app->font->DrawText(250, 460, whiteFont, "JUMP");
-		app->font->DrawText(250, 500, whiteFont, "SHOOT");
-		app->font->DrawText(250, 540, whiteFont, "USE OBJECT");
+		app->font->DrawText(300, 380, whiteFont, "MOVE LEFT");
+		app->font->DrawText(300, 425, whiteFont, "MOVE RIGHT");
+		app->font->DrawText(300, 470, whiteFont, "JUMP");
+		app->font->DrawText(300, 515, whiteFont, "SHOOT");
+		app->font->DrawText(300, 560, whiteFont, "USE OBJECT");
 		app->font->DrawText(700, 380, yellowFont, "A");
-		app->font->DrawText(700, 420, yellowFont, "D");
-		app->font->DrawText(700, 460, yellowFont, "SPACE");
-		app->font->DrawText(700, 500, yellowFont, "P");
-		app->font->DrawText(700, 540, yellowFont, "E");
+		app->font->DrawText(700, 425, yellowFont, "D");
+		app->font->DrawText(700, 470, yellowFont, "SPACE");
+		app->font->DrawText(700, 515, yellowFont, "P");
+		app->font->DrawText(700, 560, yellowFont, "E");
 		btnBackControls->Draw();
 		btnExit->Draw();
 		btnCredits->Draw();
