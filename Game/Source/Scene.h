@@ -102,7 +102,8 @@ private:
 
 	int whiteFont = -1;
 	char timerText[10] = { "\0" };
-	uint timer = 000;
+	uint timer = 0;
+	int seconds = 0;
 };
 
 #endif // __SCENE_H__

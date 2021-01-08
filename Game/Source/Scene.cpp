@@ -193,7 +193,6 @@ bool Scene::Update(float dt)
 		btnExit->Update(dt);
 	}
 
-	timer++;
 
 	if (app->sceneIntro->exit == true) return false;
 	return true;
@@ -261,9 +260,15 @@ bool Scene::PostUpdate()
 		btnBackIntro->Draw();
 		btnExit->Draw();
 	}
-	
+
+	seconds++;
+	if (seconds == 60) {
+		timer++;
+		seconds = 0;
+	}
+
 	sprintf_s(timerText, 10, "%d", timer);
-	app->font->DrawText(-app->render->camera.x, -app->render->camera.y, whiteFont, timerText);
+	app->font->DrawText(1175, 10, whiteFont, timerText);
 
 	return ret;
 }
