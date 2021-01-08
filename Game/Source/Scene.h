@@ -77,6 +77,8 @@ private:
 
 	Animation clockAnim;
 	Animation lifesAnim;
+	Animation keyAnim;
+	Animation puzzleAnim;
 
 	GuiButton* btnResume;
 	GuiButton* btnSettings;

@@ -37,6 +37,14 @@ Scene::Scene() : Module()
 	lifesAnim.PushBack({ 0,0,54,56 });
 	lifesAnim.PushBack({ 0,56,54,56 });
 	lifesAnim.speed = 0.02f;
+
+	keyAnim.PushBack({ 0,0,32,34 });
+	keyAnim.PushBack({ 0,34,32,34 });
+	keyAnim.speed = 0.02f;
+
+	puzzleAnim.PushBack({ 0,0,40,37 });
+	puzzleAnim.PushBack({ 0,37,40,37 });
+	puzzleAnim.speed = 0.02f;
 }
 
 // Destructor
@@ -207,8 +215,10 @@ bool Scene::Update(float dt)
 		btnExit->Update(dt);
 	}
 
-	if(!paused) clockAnim.Update();
-	if(!paused) lifesAnim.Update();
+	if (!paused) clockAnim.Update();
+	if (!paused) lifesAnim.Update();
+	if (!paused) keyAnim.Update();
+	if (!paused) puzzleAnim.Update();
 
 	if (app->sceneIntro->exit == true) return false;
 	return true;
@@ -249,9 +259,9 @@ bool Scene::PostUpdate()
 	}
 	if (player->lifes == 1) app->render->DrawTexture(heart, -app->render->camera.x, -app->render->camera.y, &(lifesAnim.GetCurrentFrame()));
 
-	if(app->map->keyTaken) app->render->DrawTexture(key, -app->render->camera.x + 10, -app->render->camera.y + 75);
+	if(app->map->keyTaken) app->render->DrawTexture(key, -app->render->camera.x + 10, -app->render->camera.y + 75, &(keyAnim.GetCurrentFrame()));
 
-	if(app->map->puzzleTaken&&!app->map->chestTaken) app->render->DrawTexture(puzzle, -app->render->camera.x + 70, -app->render->camera.y + 70);
+	if(app->map->puzzleTaken&&!app->map->chestTaken) app->render->DrawTexture(puzzle, -app->render->camera.x + 70, -app->render->camera.y + 70, &(puzzleAnim.GetCurrentFrame()));
 
 
 	//menu pause
