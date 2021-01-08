@@ -18,7 +18,7 @@
 #include "ModuleParticles.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
-
+#include "GuiCheckBox.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -62,6 +62,7 @@ bool Scene::Start()
 		key = app->tex->Load("Assets/Textures/key.png");
 		puzzle = app->tex->Load("Assets/Textures/puzzle.png");
 		pause = app->tex->Load("Assets/Textures/pause.png");
+		creditText = app->tex->Load("Assets/Textures/settings_paused.png");
 		player->spiked = false;
 		app->map->checkpointTaken = false;
 
@@ -171,17 +172,23 @@ bool Scene::Update(float dt)
 		Pause();
 		
 	}
-	if (paused)
+
+	if (paused && pausedSettings)
+	{
+		sliderMusicVolume->Update(dt);
+		sliderFxVolume->Update(dt);
+		checkBoxFullscreen->Update(dt);
+		checkBoxVSync->Update(dt);
+		btnBack->Update(dt);
+	}
+	else if (!pausedSettings && paused)
 	{
 		btnResume->Update(dt);
 		btnSettings->Update(dt);
 		btnBackIntro->Update(dt);
 		btnExit->Update(dt);
 	}
-	else if (pausedSettings)
-	{
 
-	}
 	if (app->sceneIntro->exit == true) return false;
 	return true;
 }
@@ -229,7 +236,17 @@ bool Scene::PostUpdate()
 
 
 	//menu pause
-	if (paused) 
+
+	if (pausedSettings)
+	{
+		app->render->DrawTexture(creditText, -app->render->camera.x + 220, -app->render->camera.y + 150, NULL);
+		sliderMusicVolume->Draw();
+		sliderFxVolume->Draw();
+		checkBoxFullscreen->Draw();
+		checkBoxVSync->Draw();
+		btnBack->Draw();
+	}
+	else if (paused)
 	{
 		app->render->DrawTexture(pause, -app->render->camera.x + 391, -app->render->camera.y + 100);
 
@@ -237,7 +254,6 @@ bool Scene::PostUpdate()
 		btnSettings->Draw();
 		btnBackIntro->Draw();
 		btnExit->Draw();
-
 	}
 
 	return ret;
@@ -256,7 +272,7 @@ bool Scene::CleanUp()
 	app->entityManager->DestroyEntity(enemy);
 	app->entityManager->DestroyEntity(flyingEnemy);
 	app->entityManager->DestroyEntity(particles);
-	delete btnResume;
+	//delete btnResume;
 	//delete btnSettings;
 	//delete btnBackIntro;
 	//delete btnExit;
@@ -307,11 +323,23 @@ void Scene::Pause()
 	btnExit = new GuiButton(4, { -app->render->camera.x+569, -app->render->camera.y+471, 145, 50 }, "EXIT");
 	btnExit->SetObserver(this);
 
-	if (pausedSettings)
-	{
-		btnBackSettings = new GuiButton(6, { -app->render->camera.x-500, -app->render->camera.y, 145, 50 }, "BACK");
-		btnBackSettings->SetObserver(this);
-	}
+
+	btnBack = new GuiButton(5, { -app->render->camera.x + 865, -app->render->camera.y + 510,145 ,50 }, "BACK");
+	btnBack->SetObserver(this);
+
+	sliderMusicVolume = new GuiSlider(1, { -app->render->camera.x + 725, -app->render->camera.y + 220, 10, 28 }, "MUSIC VOLUME");
+	sliderMusicVolume->SetObserver(this);
+
+	sliderFxVolume = new GuiSlider(2, { -app->render->camera.x + 725, -app->render->camera.y + 300, 10, 28 }, " FX VOLUME");
+	sliderFxVolume->SetObserver(this);
+
+	checkBoxFullscreen = new GuiCheckBox(8, { -app->render->camera.x + 675, -app->render->camera.y + 380, 40, 40 }, "FULLSCREEN");
+	checkBoxFullscreen->SetObserver(this);
+
+	checkBoxVSync = new GuiCheckBox(9, { -app->render->camera.x + 675, -app->render->camera.y + 460,40,40 }, "   VSYNC");
+	checkBoxVSync->SetObserver(this);
+
+
 
 }
 
@@ -331,6 +359,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		}
 		else if (control->id == 2)
 		{
+			pausedSettings = true;
 		}
 		else if (control->id == 3)
 		{
@@ -351,16 +380,14 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		}
 		else if (control->id == 5)
 		{
-			
+			pausedSettings = false;
 		}
-		else if (control->id == 6)
-		{
-			
-		}
-		else if (control->id == 7)
-		{
-			
-		}
+	}
+	case GuiControlType::SLIDER:
+	{
+		if (control->id == 1) app->audio->ChangeMusicVolume(sliderMusicVolume->ReturnValue());
+		else if (control->id == 2) app->audio->ChangeFxVolume(sliderFxVolume->ReturnValue());
+		break;
 	}
 	default: break;
 	}

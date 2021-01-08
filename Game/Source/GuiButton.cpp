@@ -90,7 +90,7 @@ bool GuiButton::Draw()
 {
 	if(!app->scene->paused) app->render->DrawRectangle({ bounds.x - 2, bounds.y - 2,bounds.w + 4,bounds.h + 4 }, 20, 20, 20);
 	else if(app->scene->paused) app->render->DrawRectangle({ bounds.x - 4, bounds.y - 4,bounds.w +8,bounds.h +8 }, 20, 20, 20);
-
+	else if (app->scene->pausedSettings) app->render->DrawRectangle({ bounds.x - 4, bounds.y - 4,bounds.w + 8,bounds.h + 8 }, 20, 20, 20);
 	switch (state)
 	{
 	case GuiControlState::DISABLED: app->render->DrawRectangle(bounds, 100, 100, 100, 255);

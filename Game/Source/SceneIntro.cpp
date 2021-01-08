@@ -170,7 +170,6 @@ bool SceneIntro::PostUpdate()
 		btnCredits->Draw();
 		btnSettings->Draw();
 	}
-	
 	else if (controls == true)
 	{
 		app->render->DrawTexture(creditText, 220, 900, NULL);

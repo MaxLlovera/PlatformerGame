@@ -9,7 +9,7 @@ struct SDL_Texture;
 class GuiControl;
 class GuiButton;
 class GuiSlider;
-
+class GuiCheckBox;
 class Player;
 class Enemy;
 class FlyingEnemy;
@@ -63,7 +63,7 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 	
 	bool paused = false;
-
+	bool pausedSettings = false;
 private:
 	SDL_Texture* background;
 	int volume;
@@ -72,13 +72,22 @@ private:
 	SDL_Texture* key;
 	SDL_Texture* puzzle;
 	SDL_Texture* pause;
-
+	SDL_Texture* creditText = nullptr;
 	
 	GuiButton* btnResume;
 	GuiButton* btnSettings;
 	GuiButton* btnBackIntro;
 	GuiButton* btnExit;
 	GuiButton* btnBackSettings;
+
+	GuiButton* btnBack;
+
+	GuiSlider* sliderMusicVolume;
+	GuiSlider* sliderFxVolume;
+
+	GuiCheckBox* checkBoxFullscreen;
+	GuiCheckBox* checkBoxVSync;
+
 
 	int cameraX;
 	int cameraY;
@@ -89,7 +98,7 @@ private:
 	bool backIntroPause = false;
 	bool exitPause = false;
 
-	bool pausedSettings = false;
+
 
 };
 
