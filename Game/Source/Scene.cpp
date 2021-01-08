@@ -112,6 +112,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+
 	cameraX = app->render->camera.x;
 	cameraY = app->render->camera.y;
 
@@ -161,19 +162,20 @@ bool Scene::Update(float dt)
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
 		app->render->RestartValues();
 	}
-
-	//camera x
-	if ((app->render->counter == 0 || player->godModeEnabled) && !player->spiked&&!paused)
+	if (!app->scene->paused)
 	{
-		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && player->position.x > 350 && player->position.x <= 4400 && !player->ThereIsLeftWall() && !player->ThereIsChestLeft()) app->render->camera.x += 3.0f;
-		else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && player->position.x >= 350 && player->position.x < 4400 && !player->ThereIsRightWall() && !player->ThereIsChestRight() && !player->ThereIsLeftWall()) app->render->camera.x -= 3.0f;
+		//camera x
+		if ((app->render->counter == 0 || player->godModeEnabled) && !player->spiked && !paused)
+		{
+			if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && player->position.x > 350 && player->position.x <= 4400 && !player->ThereIsLeftWall() && !player->ThereIsChestLeft()) app->render->camera.x += 3.0f;
+			else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && player->position.x >= 350 && player->position.x < 4400 && !player->ThereIsRightWall() && !player->ThereIsChestRight() && !player->ThereIsLeftWall()) app->render->camera.x -= 3.0f;
+		}
+		//camera y
+
+		if (player->position.y < 570 && app->render->camera.y < -100) app->render->camera.y += 4.0f;
+
+		if (player->position.y >= 570 && app->render->camera.y > -550) app->render->camera.y -= 4.0f;
 	}
-	//camera y
-
-	if (player->position.y < 570 && app->render->camera.y < -100) app->render->camera.y += 4.0f;
-
-	if (player->position.y >= 570 && app->render->camera.y > -550) app->render->camera.y -= 4.0f;
-
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
