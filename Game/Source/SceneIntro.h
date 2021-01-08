@@ -9,6 +9,7 @@ struct SDL_Texture;
 class GuiControl;
 class GuiButton;
 class GuiSlider;
+class GuiCheckBox;
 
 class SceneIntro : public Module
 {
@@ -53,6 +54,9 @@ private:
 
 	GuiSlider* sliderMusicVolume;
 	GuiSlider* sliderFxVolume;
+
+	GuiCheckBox* checkBoxFullscreen;
+	GuiCheckBox* checkBoxVSync;
 
 	SDL_Texture* introText = nullptr;
 	SDL_Texture* creditText = nullptr;

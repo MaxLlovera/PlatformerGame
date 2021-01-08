@@ -14,6 +14,7 @@
 #include "FadeToBlack.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
+#include "GuiCheckBox.h"
 #include "Font.h"
 #include "Map.h"
 
@@ -87,6 +88,12 @@ bool SceneIntro::Start()
 	
 	sliderFxVolume = new GuiSlider(2, { 725, 1000, 10, 28 }, " FX VOLUME");
 	sliderFxVolume->SetObserver(this);
+
+	checkBoxFullscreen = new GuiCheckBox(1, { 740, 1050, 40, 40 }, "FULLSCREEN");
+	checkBoxFullscreen->SetObserver(this);
+
+	checkBoxVSync = new GuiCheckBox(2, { 740,1105,40,40 }, "   VSYNC");
+	checkBoxVSync->SetObserver(this);
 	return ret;
 }
 
@@ -100,6 +107,8 @@ bool SceneIntro::Update(float dt)
 		btnBackSettings->Update(dt);
 		btnSettings->Update(dt);
 		btnCredits->Update(dt);
+		checkBoxFullscreen->Update(dt);
+		checkBoxVSync->Update(dt);
 	}
 	else if (credits == true)
 	{
@@ -146,6 +155,8 @@ bool SceneIntro::PostUpdate()
 		btnExit->Draw();
 		btnCredits->Draw();
 		btnSettings->Draw();
+		checkBoxFullscreen->Draw();
+		checkBoxVSync->Draw();
 	}
 	else if (credits == true)
 	{

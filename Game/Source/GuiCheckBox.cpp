@@ -22,7 +22,9 @@ bool GuiCheckBox::Update(float dt)
 		int mouseX, mouseY;
 		app->input->GetMousePosition(mouseX, mouseY);
 
-		// Check collision between mouse and button bounds
+		mouseX += -app->render->camera.x / app->win->GetScale();
+		mouseY += -app->render->camera.y / app->win->GetScale();
+
 		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
 			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
 		{
@@ -48,6 +50,9 @@ bool GuiCheckBox::Update(float dt)
 
 bool GuiCheckBox::Draw()
 {
+	app->render->DrawRectangle({ bounds.x - 2, bounds.y - 2,bounds.w + 4,bounds.h + 4}, 20, 20, 20);
+	
+	app->font->DrawText((bounds.x + (app->render->camera.x) - 460) / app->win->GetScale(), (bounds.y + (app->render->camera.y) - 2) / app->win->GetScale(), 0, text.GetString());
 	// Draw the right button depending on state
 	switch (state)
 	{
@@ -59,11 +64,11 @@ bool GuiCheckBox::Draw()
 	case GuiControlState::NORMAL: 
 	{
 		if (checked) app->render->DrawRectangle(bounds, 0, 255, 0, 255);
-		else app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+		else app->render->DrawRectangle(bounds, 255, 0, 0, 255);
 	} break;
-	case GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 255, 255, 0, 255);
+	case GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 200, 100, 220, 255);
 		break;
-	case GuiControlState::PRESSED: app->render->DrawRectangle(bounds, 0, 255, 255, 255);
+	case GuiControlState::PRESSED: app->render->DrawRectangle(bounds, 250, 75, 150, 255);
 		break;
 	case GuiControlState::SELECTED: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
 		break;
