@@ -14,6 +14,7 @@
 #include "SceneWin.h"
 #include "SceneLose.h"
 #include "PathFinding.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"

@@ -56,6 +56,11 @@ Player::Player() : Entity(EntityType::PLAYER)
 	else
 	{
 		app->LoadGameRequest();
+		if (app->scene->player->position.x == 938 && app->scene->player->position.y == 171)
+		{
+			loaded = true;
+		}
+
 	}
 
 	//idlanim
@@ -140,11 +145,19 @@ bool Player::Start()
 		fireFx = app->audio->LoadFx("Assets/Audio/Fx/fire.wav");
 		currentAnimation = &idlAnim;
 	}
+
+
 	return true;
 }
 
 bool Player::Update(float dt)
 {
+	if (app->scene->player->loaded)
+	{
+		app->render->camera.x = -588;
+		app->render->camera.y = -99;
+		loaded = false;
+	}
 	if (!spiked && !dead)
 	{
 		currentAnimation = &idlAnim;

@@ -84,6 +84,7 @@ public:
 	int counterPuzzle;
 	int counterCheckpoint;
 	int counterHeart;
+	bool loaded = false;
 
 private:
 	float speedX = 3.0f;
