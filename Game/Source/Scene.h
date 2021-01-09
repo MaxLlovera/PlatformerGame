@@ -65,6 +65,14 @@ public:
 	bool paused = false;
 	bool pausedSettings = false;
 	bool guiColliders = false;
+
+	int lifesScene;
+	int sceneCounterKey;
+	int sceneCounterCheckpoint;
+	int sceneCounterHeart;
+	int sceneCounterPuzzle;
+
+
 private:
 	SDL_Texture* background;
 	int volume;

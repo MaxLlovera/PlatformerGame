@@ -109,13 +109,16 @@ void Render::RestartValues()
 {
 	if (app->scene->player != nullptr)
 	{
-		if (app->map->checkpointTaken&&!app->sceneWin->won&&!app->sceneLose->lost)
+		if (app->map->checkpointTaken && !app->sceneWin->won && !app->sceneLose->lost)
 		{
 			app->scene->player->position.x = 938;
 			app->scene->player->position.y = 171;
 
-			app->render->camera.x = app->scene->player->position.x - (app->render->camera.w)-1526/* - 250*/;
-			app->render->camera.y = app->scene->player->position.y - (app->render->camera.h)-282/*+ 450*/;
+			app->render->camera.x = -588;
+			app->render->camera.y = -99;
+
+			//app->render->camera.x = app->scene->player->position.x - (app->render->camera.w)-1526/* - 250*/;
+			//app->render->camera.y = app->scene->player->position.y - (app->render->camera.h)-282/*+ 450*/;
 		}
 		if (!app->map->checkpointTaken)
 		{
@@ -125,10 +128,7 @@ void Render::RestartValues()
 			app->render->camera.x = app->scene->player->position.x - app->scene->player->position.x;
 			app->render->camera.y = app->scene->player->position.y - (app->render->camera.h * 2) + 10-1440;
 		}
-		if (app->scene->player->dead || app->scene->player->win)
-		{
-			app->render->camera.y = -2000;
-		}
+		if (app->scene->player->dead || app->scene->player->win) app->render->camera.y = -2000;
 
 		app->scene->enemy->active = true;
 		app->scene->enemy->dead = false;

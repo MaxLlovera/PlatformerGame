@@ -75,12 +75,18 @@ public:
 	bool godModeEnabled = false;
 
 	
-	int lifes = 3; //player lifes
+	int lifes; //player lifes
 	bool spiked; //if player lose a life
 
 	int shotMaxCountdown = 20;
 	int shotCountdown = 0;
 	SDL_Texture* texPlayer;
+
+	int counterKey;
+	int counterPuzzle;
+	int counterCheckpoint;
+	int counterHeart;
+
 private:
 	float speedX = 3.0f;
 	float speedY = 0.0f;
@@ -89,10 +95,7 @@ private:
 	int playerHeight = 85;
 	int playerWidth = 64;
 	bool isJumping = false;
-	int counterKey = 0;
-	int counterPuzzle = 0;
-	int counterCheckpoint = 0;
-	int counterHeart = 0;
+	
 
 	SDL_Texture* texFireBall;
 	uint playerDeathFx = 0;

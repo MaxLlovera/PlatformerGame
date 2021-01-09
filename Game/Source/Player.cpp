@@ -44,6 +44,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	{
 		position.x = 350;
 		position.y = 875;
+
 	}
 	else if (app->sceneWin->won||app->sceneLose->lost)
 	{
@@ -106,16 +107,29 @@ bool Player::Start()
 		dead = false;
 		spiked = false;
 		win = false;
-		lifes = 3;
-		counterKey = 0;
-		counterCheckpoint = 0;
-		counterHeart = 0;
-		counterPuzzle = 0;
-		app->map->keyTaken = false;
-		app->map->checkpointTaken = false;
-		app->map->heartTaken = false;
-		app->map->chestTaken = false;
-		app->map->puzzleTaken = false;
+
+		if (!app->sceneIntro->posContinue)
+		{
+			app->map->keyTaken = false;
+			app->map->chestTaken = false;
+			app->map->heartTaken = false;
+			app->map->puzzleTaken = false;
+			app->map->checkpointTaken = false;
+			lifes = 3;
+			counterKey = 0;
+			counterCheckpoint = 0;
+			counterHeart = 0;
+			counterPuzzle = 0;
+		}
+		else
+		{
+			counterKey = app->scene->sceneCounterKey;
+			counterCheckpoint = app->scene->sceneCounterCheckpoint;
+			counterHeart = app->scene->sceneCounterHeart;
+			counterPuzzle = app->scene->sceneCounterPuzzle;
+			lifes = app->scene->lifesScene;
+
+		}
 		texPlayer = app->tex->Load("Assets/Textures/player_textures.png");
 		texFireBall = app->tex->Load("Assets/Textures/shot_fireball.png");
 		playerDeathFx = app->audio->LoadFx("Assets/Audio/Fx/death_sound.wav");
@@ -675,21 +689,3 @@ bool Player::CleanUp()
 	app->tex->UnLoad(texFireBall);
 	return true;
 }
-//
-//
-//bool Player::LoadState(pugi::xml_node& node)
-//{
-//	bool ret = true;
-//	position.x = node.child("positionPlayer").attribute("x").as_int();
-//	position.y = node.child("positionPlayer").attribute("y").as_int();
-//	return ret;
-//}
-//
-//bool Player::SaveState(pugi::xml_node& node) const
-//{
-//	bool ret = true;
-//	pugi::xml_node pnode = node.append_child("positionPlayer");
-//	pnode.append_attribute("x") = position.x;
-//	pnode.append_attribute("y") = position.y;
-//	return ret;
-//}

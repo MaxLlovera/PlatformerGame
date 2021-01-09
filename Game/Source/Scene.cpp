@@ -156,13 +156,21 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) app->capped = !app->capped;
 
 	//SceneWin
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || player->win)
+	if (player->win)
 	{
 		app->sceneWin->won = true;
 		player->win = true;
 		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 1 / dt);
 
 		app->render->RestartValues();
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN/*&&app->map->checkpointTaken*/)
+	{
+		app->scene->player->position.x = 938;
+		app->scene->player->position.y = 171;
+		app->render->camera.x = -588;
+		app->render->camera.y = -99;
 	}
 
 	////SceneLose
@@ -220,6 +228,12 @@ bool Scene::Update(float dt)
 	if (!paused) lifesAnim.Update();
 	if (!paused) keyAnim.Update();
 	if (!paused) puzzleAnim.Update();
+
+	lifesScene = player->lifes;
+	sceneCounterKey = player->counterKey;
+	sceneCounterCheckpoint = player->counterCheckpoint;
+	sceneCounterHeart = player->counterHeart;
+	sceneCounterPuzzle = player->counterPuzzle;
 
 	if (app->sceneIntro->exit == true) return false;
 	return true;
