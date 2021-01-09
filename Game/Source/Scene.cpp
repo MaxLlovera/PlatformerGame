@@ -447,8 +447,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			app->fadeToBlack->FadeToBlk(this, app->sceneIntro, 30);
 			paused = false;
-			if(app->scene->player->position.x != 350 || app->scene->player->position.y != 875) app->sceneIntro->posContinue = true;
-			else if(app->scene->player->position.x == 350 && app->scene->player->position.y == 875) app->sceneIntro->posContinue = false;
+			/*if(app->scene->player->position.x != 350 || app->scene->player->position.y != 875) app->sceneIntro->posContinue = true;
+			else if(app->scene->player->position.x == 350 && app->scene->player->position.y == 875) app->sceneIntro->posContinue = false;*/
 		}
 		else if (control->id == 4)
 		{

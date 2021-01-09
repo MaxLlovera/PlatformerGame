@@ -106,9 +106,9 @@ void GuiSlider::ChangeValue()
 
 	else if (this->value <= 5) this->value = 0;
 
-	if (bounds.x >= 965) bounds.x = 965;
-	
-	if (bounds.x <= 680) bounds.x = 680;
+	//if (bounds.x >= 965 && app->scene->pausedSettings) bounds.x = 965;
+
+	//if (bounds.x <= 680 && app->scene->pausedSettings) bounds.x = 680;
 }
 
 int GuiSlider::ReturnValue() const
