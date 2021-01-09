@@ -83,8 +83,17 @@ bool GuiSlider::Draw()
 		break;
 	}
 
+	if (app->scene->guiColliders && app->scene->pausedSettings)
+	{
+		app->render->DrawRectangle({ rect.x - 2, rect.y - 2,rect.w + 4,rect.h + 4 }, 225, 225, 0, 100);
+		app->render->DrawRectangle(bounds, 0, 200, 255, 150);
+	}
 	
-	
+	if (app->sceneIntro->guiColliders && !app->scene->paused)
+	{
+		app->render->DrawRectangle({ rect.x - 2, rect.y - 2,rect.w + 4,rect.h + 4 }, 225, 225, 0, 100);
+		app->render->DrawRectangle(bounds, 0, 200, 255, 150);
+	}
 	return false;
 }
 

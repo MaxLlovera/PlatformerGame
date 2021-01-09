@@ -39,6 +39,12 @@ public:
 	bool exit = false;
 	bool playClicked = false;
 
+	bool guiColliders = false;
+
+	bool settings = false;
+	bool credits = false;
+	bool controls = false;
+
 private:
 	bool active = true;
 	SString name;
@@ -65,9 +71,7 @@ private:
 	int whiteFont = -1;
 	int yellowFont = -1;
 
-	bool settings = false;
-	bool credits = false;
-	bool controls = false;
+	
 
 	int count = 0;
 };

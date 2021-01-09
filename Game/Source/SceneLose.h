@@ -32,7 +32,7 @@ public:
 	bool CleanUp() override;
 
 	bool lost = false;
-
+	bool guiColliders = false;
 private:
 
 	GuiButton* btnRestart;

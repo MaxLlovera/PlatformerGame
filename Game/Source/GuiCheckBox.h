@@ -21,6 +21,9 @@ private:
 	// GuiCheckBox specific properties
 	// Maybe some animation properties for state change?
 	bool checked;
+	int guiButtonFx = 0;
+	int guiButtonMoveFx = 0;
+	bool soundDone = false;
 };
 
 #endif // __GUICHECKBOX_H__

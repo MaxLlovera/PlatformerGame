@@ -102,6 +102,7 @@ bool SceneIntro::Update(float dt)
 	}
 	else if (count > 240)
 	{
+		if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) guiColliders = !guiColliders;
 
 		if (settings == true)
 		{

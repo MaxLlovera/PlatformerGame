@@ -40,11 +40,11 @@ Scene::Scene() : Module()
 
 	keyAnim.PushBack({ 0,0,32,34 });
 	keyAnim.PushBack({ 0,34,32,34 });
-	keyAnim.speed = 0.02f;
+	keyAnim.speed = 0.04f;
 
 	puzzleAnim.PushBack({ 0,0,40,37 });
 	puzzleAnim.PushBack({ 0,37,40,37 });
-	puzzleAnim.speed = 0.02f;
+	puzzleAnim.speed = 0.04f;
 }
 
 // Destructor
@@ -167,13 +167,16 @@ bool Scene::Update(float dt)
 		app->render->RestartValues();
 	}
 
-	//SceneLose
-	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
-	{
-		app->sceneLose->lost = true;
-		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
-		app->render->RestartValues();
-	}
+	////SceneLose
+	//if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	//{
+	//	app->sceneLose->lost = true;
+	//	app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
+	//	app->render->RestartValues();
+	//}
+
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) guiColliders = !guiColliders;
+
 	if (!app->scene->paused)
 	{
 		//camera x
@@ -261,7 +264,7 @@ bool Scene::PostUpdate()
 
 	if(app->map->keyTaken) app->render->DrawTexture(key, -app->render->camera.x + 10, -app->render->camera.y + 75, &(keyAnim.GetCurrentFrame()));
 
-	if(app->map->puzzleTaken&&!app->map->chestTaken) app->render->DrawTexture(puzzle, -app->render->camera.x + 70, -app->render->camera.y + 70, &(puzzleAnim.GetCurrentFrame()));
+	if(app->map->puzzleTaken&&!app->map->chestTaken) app->render->DrawTexture(puzzle, -app->render->camera.x + 70, -app->render->camera.y + 71, &(puzzleAnim.GetCurrentFrame()));
 
 
 	//menu pause
@@ -278,31 +281,47 @@ bool Scene::PostUpdate()
 	else if (paused)
 	{
 		app->render->DrawTexture(pause, -app->render->camera.x + 391, -app->render->camera.y + 100);
-
 		btnResume->Draw();
 		btnSettings->Draw();
 		btnBackIntro->Draw();
 		btnExit->Draw();
 	}
 
-
-	//app->render->DrawRectangle({ -app->render->camera.x + 1080, -app->render->camera.y ,200,50 }, 0, 0, 0, 100);
-
 	if (!paused)
 	{
 		seconds++;
 		if (seconds == 60) {
-			timer ++;
+			timer++;
 			seconds = 0;
 		}
 	}
 	sprintf_s(timerText, 10, "%d", timer);
 	if (timer < 10) app->font->DrawText(1236, 10, whiteFont, timerText);
 	else if (timer < 100) app->font->DrawText(1206, 10, whiteFont, timerText);
-	else app->font->DrawText(1174, 10, whiteFont, timerText);
+	else if (timer < 1000) app->font->DrawText(1174, 10, whiteFont, timerText);
+	else app->font->DrawText(1145, 10, whiteFont, timerText);
 
 	
 	app->render->DrawTexture(clockText, -app->render->camera.x+1100, -app->render->camera.y+10, &(clockAnim.GetCurrentFrame()));
+
+	if (guiColliders)
+	{
+		app->render->DrawRectangle({ -app->render->camera.x + 1100, -app->render->camera.y+10 ,40,35 }, 0, 0, 100, 100);
+
+		if (timer < 10) app->render->DrawRectangle({ -app->render->camera.x + 1235, -app->render->camera.y + 10 ,35,35 }, 200, 100, 0, 100);
+		else if (timer < 100) app->render->DrawRectangle({ -app->render->camera.x + 1204, -app->render->camera.y + 10 ,70,35 }, 200, 100, 0, 100);
+		else if (timer < 1000) app->render->DrawRectangle({ -app->render->camera.x + 1170, -app->render->camera.y + 10 ,105,35 }, 200, 100, 0, 100);
+		else app->render->DrawRectangle({ -app->render->camera.x + 1137, -app->render->camera.y + 10 ,130,35 }, 200, 100, 0, 100);
+
+		if (player->lifes == 4) app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y ,246,56 }, 0, 200, 0, 100);
+		if (player->lifes == 3) app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y ,182,56 }, 0, 200, 0, 100);
+		if (player->lifes == 2) app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y ,118,56 }, 0, 200, 0, 100);
+		if (player->lifes == 1) app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y ,54,56 }, 0, 200, 0, 100);
+
+		if (app->map->keyTaken) app->render->DrawRectangle({ -app->render->camera.x + 10, -app->render->camera.y + 75,32,34 }, 255, 0, 255, 100);
+
+		if (app->map->puzzleTaken && !app->map->chestTaken) app->render->DrawRectangle({ -app->render->camera.x + 70, -app->render->camera.y + 71,40,37 }, 200, 200, 0, 100);
+	}
 	return ret;
 }
 

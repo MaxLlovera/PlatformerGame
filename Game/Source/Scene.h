@@ -64,6 +64,7 @@ public:
 	
 	bool paused = false;
 	bool pausedSettings = false;
+	bool guiColliders = false;
 private:
 	SDL_Texture* background;
 	int volume;
@@ -98,6 +99,7 @@ private:
 	int cameraX;
 	int cameraY;
 
+	
 
 	bool resumePause = false;
 	bool settingsPause = false;

@@ -9,6 +9,9 @@ GuiCheckBox::GuiCheckBox(uint32 id, SDL_Rect bounds, const char* text) : GuiCont
 {
 	this->bounds = bounds;
 	this->text = text;
+
+	guiButtonFx = app->audio->LoadFx("Assets/Audio/Fx/gui_button_fx.wav");
+	guiButtonMoveFx = app->audio->LoadFx("Assets/Audio/Fx/gui_button_move.wav");
 }
 
 GuiCheckBox::~GuiCheckBox()
@@ -29,6 +32,11 @@ bool GuiCheckBox::Update(float dt)
 			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
 		{
 			state = GuiControlState::FOCUSED;
+			if (!soundDone)
+			{
+				app->audio->PlayFx(guiButtonMoveFx, 0);
+				soundDone = true;
+			}
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
@@ -39,10 +47,15 @@ bool GuiCheckBox::Update(float dt)
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
 			{
 				checked = !checked;
+				app->audio->PlayFx(guiButtonFx, 0);
 				NotifyObserver();
 			}
 		}
-		else state = GuiControlState::NORMAL;
+		else
+		{
+			state = GuiControlState::NORMAL;
+			soundDone = false;
+		}
 	}
 
 	return false;
@@ -79,6 +92,22 @@ bool GuiCheckBox::Draw()
 		break;
 	default:
 		break;
+	}
+	if (app->scene->guiColliders && app->scene->pausedSettings)
+	{
+		if (app->win->fullScreen && id == 1) app->render->DrawRectangle({ bounds.x - 2, bounds.y - 2,bounds.w + 4,bounds.h + 4 }, 0, 155, 155, 150);
+		else if (!app->win->fullScreen && id == 1) app->render->DrawRectangle({ bounds.x - 2, bounds.y - 2,bounds.w + 4,bounds.h + 4 }, 155, 155, 0, 150);
+
+		if (app->vSync && id == 2) app->render->DrawRectangle({ bounds.x - 2, bounds.y - 2,bounds.w + 4,bounds.h + 4 }, 0, 155, 155, 150);
+		else if (!app->vSync && id == 2) app->render->DrawRectangle({ bounds.x - 2, bounds.y - 2,bounds.w + 4,bounds.h + 4 }, 155, 155, 0, 150);
+	}
+	if (app->sceneIntro->guiColliders && !app->scene->paused)
+	{
+		if (app->win->fullScreen && id == 1) app->render->DrawRectangle({ bounds.x - 2, bounds.y - 2,bounds.w + 4,bounds.h + 4 }, 0, 155, 155, 150);
+		else if (!app->win->fullScreen && id == 1) app->render->DrawRectangle({ bounds.x - 2, bounds.y - 2,bounds.w + 4,bounds.h + 4 }, 155, 155, 0, 150);
+
+		if (app->vSync && id == 2) app->render->DrawRectangle({ bounds.x - 2, bounds.y - 2,bounds.w + 4,bounds.h + 4 }, 0, 155, 155, 150);
+		else if (!app->vSync && id == 2) app->render->DrawRectangle({ bounds.x - 2, bounds.y - 2,bounds.w + 4,bounds.h + 4 }, 155, 155, 0, 150);
 	}
 
 	return false;
