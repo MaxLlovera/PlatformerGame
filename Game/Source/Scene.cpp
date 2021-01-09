@@ -30,6 +30,8 @@ Scene::Scene() : Module()
 {
 	name.Create("scene");
 
+	puzzleRect = SDL_Rect{ 0,74,40,43 };
+
 	clockAnim.PushBack({ 0,0,40,34 });
 	clockAnim.PushBack({ 0,34,40,34 });
 	clockAnim.speed = 0.0168f;
@@ -101,10 +103,6 @@ bool Scene::Start()
 
 			RELEASE_ARRAY(data);
 		}
-
-		/*if (app->sceneIntro->posContinue && !app->sceneWin->wined && !app->sceneLose->losed) {
-			app->LoadGameRequest();
-		}*/
 
 		// Load music
 		app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
@@ -265,6 +263,8 @@ bool Scene::PostUpdate()
 	if(app->map->keyTaken) app->render->DrawTexture(key, -app->render->camera.x + 10, -app->render->camera.y + 75, &(keyAnim.GetCurrentFrame()));
 
 	if(app->map->puzzleTaken&&!app->map->chestTaken) app->render->DrawTexture(puzzle, -app->render->camera.x + 70, -app->render->camera.y + 71, &(puzzleAnim.GetCurrentFrame()));
+	
+	if (app->map->chestTaken) app->render->DrawTexture(puzzle, -app->render->camera.x + 70, -app->render->camera.y + 71, &puzzleRect);
 
 
 	//menu pause
@@ -430,6 +430,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			app->fadetoblack->FadeToBlk(this, app->sceneIntro, 30);
 			paused = false;
+			if(app->scene->player->position.x != 350 || app->scene->player->position.y != 875) app->sceneIntro->posContinue = true;
+			else if(app->scene->player->position.x == 350 && app->scene->player->position.y == 875) app->sceneIntro->posContinue = false;
 		}
 		else if (control->id == 4)
 		{
@@ -439,7 +441,6 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				app->scene->player->position.y = 875;
 				app->SaveGameRequest();
 			}
-			app->sceneIntro->posContinue = true;
 			app->sceneIntro->exit = true;
 		}
 		else if (control->id == 5) pausedSettings = false;

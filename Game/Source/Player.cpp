@@ -37,6 +37,8 @@ Player::Player() : Entity(EntityType::PLAYER)
 		position.y = 875;
 		app->sceneIntro->playClicked = false;
 		app->sceneIntro->posContinue = false;
+		app->sceneWin->won = false;
+		app->sceneLose->lost = false;
 	}
 	else if (!app->sceneIntro->posContinue)
 	{

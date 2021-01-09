@@ -99,7 +99,7 @@ private:
 	int cameraX;
 	int cameraY;
 
-	
+	SDL_Rect puzzleRect;
 
 	bool resumePause = false;
 	bool settingsPause = false;
