@@ -167,7 +167,7 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN/*&&app->map->checkpointTaken*/)
 	{
-		if (player->position.x <= 938 && app->scene->player->position.x >= 851 && app->scene->player->position.y == 171)
+		if (player->position.x <= 938 && app->scene->player->position.x >= 851 && app->scene->player->position.y <= 171 && app->scene->player->position.y >= 81)
 		{
 			app->scene->player->position.x = 350;
 			app->scene->player->position.y = 875;
