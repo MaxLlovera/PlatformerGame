@@ -167,10 +167,20 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN/*&&app->map->checkpointTaken*/)
 	{
-		app->scene->player->position.x = 938;
-		app->scene->player->position.y = 171;
-		app->render->camera.x = -588;
-		app->render->camera.y = -99;
+		if (player->position.x <= 938 && app->scene->player->position.x >= 851 && app->scene->player->position.y == 171)
+		{
+			app->scene->player->position.x = 350;
+			app->scene->player->position.y = 875;
+			app->render->camera.x = 0;
+			app->render->camera.y = -555;
+		}
+		else
+		{
+			player->position.x = 938;
+			player->position.y = 171;
+			app->render->camera.x = -588;
+			app->render->camera.y = -99;
+		}
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) guiColliders = !guiColliders;
