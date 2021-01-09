@@ -86,7 +86,7 @@ bool SceneWin::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case GuiControlType::BUTTON:
 	{
-		if (control->id == 1) app->fadetoblack->FadeToBlk(this, app->sceneIntro, 30);
+		if (control->id == 1) app->fadeToBlack->FadeToBlk(this, app->sceneIntro, 30);
 		else if (control->id == 2) exit = true;
 	}
 	default: break;

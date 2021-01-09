@@ -11,7 +11,7 @@
 FadeToBlack::FadeToBlack()
 {
 
-	name.Create("fadetoblack");
+	name.Create("fadeToBlack");
 
 }
 

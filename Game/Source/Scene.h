@@ -45,13 +45,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-
 	void Pause();
-
-	//virtual bool OnGuiMouseClickEvent(GuiControl* control)
-	//{
-	//	return true;
-	//}
 
 	Player* player;
 	Enemy* enemy;
@@ -75,7 +69,6 @@ public:
 
 private:
 	SDL_Texture* background;
-	int volume;
 	SDL_Texture* debugTex;
 	SDL_Texture* heart;
 	SDL_Texture* key;
@@ -103,6 +96,7 @@ private:
 	GuiCheckBox* checkBoxFullscreen;
 	GuiCheckBox* checkBoxVSync;
 
+	int volume;
 
 	int cameraX;
 	int cameraY;

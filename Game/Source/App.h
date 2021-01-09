@@ -100,7 +100,7 @@ public:
 	PathFinding* pathfinding;
 	Scene* scene;
 	Map* map;
-	FadeToBlack* fadetoblack;
+	FadeToBlack* fadeToBlack;
 	SceneIntro* sceneIntro;
 	SceneWin* sceneWin;
 	SceneLose* sceneLose;

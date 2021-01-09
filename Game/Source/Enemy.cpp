@@ -225,6 +225,7 @@ bool Enemy::CleanUp()
 {
 	LOG("Freeing scene");
 	app->tex->UnLoad(texEnemy);
+	//app->entityManager->DestroyEntity(this);
 	return true;
 }
 

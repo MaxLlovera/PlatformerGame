@@ -281,7 +281,7 @@ bool Player::Update(float dt)
 		currentAnimation = &deathAnim;
 		if (deathAnim.HasFinished())
 		{
-			app->fadetoblack->FadeToBlk(app->scene, app->sceneLose, 1 / dt);
+			app->fadeToBlack->FadeToBlk(app->scene, app->sceneLose, 1 / dt);
 			app->render->RestartValues();
 		}
 	}
@@ -687,5 +687,7 @@ bool Player::CleanUp()
 	LOG("Freeing scene");
 	app->tex->UnLoad(texPlayer);
 	app->tex->UnLoad(texFireBall);
+	//app->entityManager->DestroyEntity(this);
+
 	return true;
 }

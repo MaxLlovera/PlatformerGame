@@ -24,7 +24,7 @@ Particle::Particle()/* : Entity(EntityType::PARTICLE)*/
 	speed.SetToZero();
 }
 
-Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), speed(p.speed), frameCount(p.frameCount), lifetime(p.lifetime)/*, Entity(EntityType::PARTICLE)*/
+Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), speed(p.speed), frameCount(p.frameCount), lifeTime(p.lifeTime)/*, Entity(EntityType::PARTICLE)*/
 {
 
 }
@@ -47,9 +47,9 @@ bool Particle::Update()
 		anim.Update();
 
 		// If the particle has a specific lifetime, check when it has to be destroyed
-		if (lifetime > 0)
+		if (lifeTime > 0)
 		{
-			if (frameCount >= lifetime) ret = false;
+			if (frameCount >= lifeTime) ret = false;
 		}
 		// Otherwise the particle is destroyed when the animation is finished
 		else if (anim.HasFinished()) ret = false;
@@ -215,12 +215,12 @@ bool ModuleParticles::Start()
 
 	fireBallRight.anim.PushBack({ 0, 0, 22, 14 });
 	fireBallRight.speed.x = 5;
-	fireBallRight.lifetime = 70;
+	fireBallRight.lifeTime = 70;
 	fireBallRight.anim.speed = 0.2f;
 
 	fireBallLeft.anim.PushBack({ 0, 14, 22, 14 });
 	fireBallLeft.speed.x = -5;
-	fireBallLeft.lifetime = 70;
+	fireBallLeft.lifeTime = 70;
 	fireBallLeft.anim.speed = 0.2f;
 
 	return true;
@@ -254,6 +254,7 @@ bool ModuleParticles::CleanUp()
 			particles[i] = nullptr;
 		}
 	}
+	//app->entityManager->DestroyEntity(this);
 
 	return true;
 }

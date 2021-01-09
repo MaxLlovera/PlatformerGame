@@ -54,7 +54,7 @@ public:
 	int frameCount = 0;
 
 	// Defines the total amount of frames during which the particle will be active
-	uint lifetime = 0;
+	uint lifeTime = 0;
 
 	// The particle's collider
 	Collider* collider = nullptr;

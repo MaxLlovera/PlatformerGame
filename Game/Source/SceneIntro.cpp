@@ -223,12 +223,12 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		if (control->id == 1)
 		{
-			app->fadetoblack->FadeToBlk(this, app->scene, 30);
+			app->fadeToBlack->FadeToBlk(this, app->scene, 30);
 			playClicked = true;
 		}
 		else if (control->id == 2)
 		{
-			app->fadetoblack->FadeToBlk(this, app->scene, 30);
+			app->fadeToBlack->FadeToBlk(this, app->scene, 30);
 		}
 		else if (control->id == 3)
 		{
@@ -283,7 +283,7 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		if (control->id == 1) app->audio->ChangeMusicVolume(sliderMusicVolume->ReturnValue());
 		else if (control->id == 2) app->audio->ChangeFxVolume(sliderFxVolume->ReturnValue());
-		break; 
+		break;
 	}
 	case GuiControlType::CHECKBOX:
 	{

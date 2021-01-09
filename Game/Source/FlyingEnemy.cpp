@@ -56,7 +56,7 @@ bool FlyingEnemy::Start()
 	if (app->scene->flyingEnemy!=nullptr)
 	{
 		dead = false;
-		texFlyingEnemy = app->tex->Load("Assets/Textures/flyingenemy_texture.png");
+		texFlyingEnemy = app->tex->Load("Assets/Textures/flying_enemy_texture.png");
 		flyingEnemyDeathFx = app->audio->LoadFx("Assets/Audio/Fx/enemy_death.wav");
 
 		currentAnimation = &idlAnim;
@@ -237,6 +237,8 @@ bool FlyingEnemy::CleanUp()
 {
 	LOG("Freeing scene");
 	app->tex->UnLoad(texFlyingEnemy);
+	//app->entityManager->DestroyEntity(this);
+
 	return true;
 }
 

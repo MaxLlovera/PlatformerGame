@@ -135,14 +135,14 @@ bool Scene::Update(float dt)
 	//restart from first level
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
+		app->fadeToBlack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
 		app->render->RestartValues();
 	}
 
 	//restart the current level
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		app->fadetoblack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
+		app->fadeToBlack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
 		app->render->RestartValues();
 	}
 
@@ -160,7 +160,7 @@ bool Scene::Update(float dt)
 	{
 		app->sceneWin->won = true;
 		player->win = true;
-		app->fadetoblack->FadeToBlk(this, (Module*)app->sceneWin, 1 / dt);
+		app->fadeToBlack->FadeToBlk(this, (Module*)app->sceneWin, 1 / dt);
 
 		app->render->RestartValues();
 	}
@@ -172,14 +172,6 @@ bool Scene::Update(float dt)
 		app->render->camera.x = -588;
 		app->render->camera.y = -99;
 	}
-
-	////SceneLose
-	//if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
-	//{
-	//	app->sceneLose->lost = true;
-	//	app->fadetoblack->FadeToBlk(this, (Module*)app->sceneLose, 1 / dt);
-	//	app->render->RestartValues();
-	//}
 
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) guiColliders = !guiColliders;
 
@@ -304,7 +296,8 @@ bool Scene::PostUpdate()
 	if (!paused)
 	{
 		seconds++;
-		if (seconds == 60) {
+		if (seconds == 60) 
+		{
 			timer++;
 			seconds = 0;
 		}
@@ -436,13 +429,13 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			paused = false;
 			app->scene->player->texPlayer= app->tex->Load("Assets/Textures/player_textures.png");
 			app->scene->enemy->texEnemy = app->tex->Load("Assets/Textures/enemy_texture.png");
-			app->scene->flyingEnemy->texFlyingEnemy = app->tex->Load("Assets/Textures/flyingenemy_texture.png");
+			app->scene->flyingEnemy->texFlyingEnemy = app->tex->Load("Assets/Textures/flying_enemy_texture.png");
 			app->scene->particles->texture = app->tex->Load("Assets/Textures/shot_fireball.png");
 		}
 		else if (control->id == 2) pausedSettings = true;
 		else if (control->id == 3)
 		{
-			app->fadetoblack->FadeToBlk(this, app->sceneIntro, 30);
+			app->fadeToBlack->FadeToBlk(this, app->sceneIntro, 30);
 			paused = false;
 			if(app->scene->player->position.x != 350 || app->scene->player->position.y != 875) app->sceneIntro->posContinue = true;
 			else if(app->scene->player->position.x == 350 && app->scene->player->position.y == 875) app->sceneIntro->posContinue = false;

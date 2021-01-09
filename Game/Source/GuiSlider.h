@@ -10,7 +10,7 @@ class GuiSlider : public GuiControl
 {
 public:
 
-	GuiSlider(uint32 id, SDL_Rect bounds, const char *text);
+	GuiSlider(uint32 id, SDL_Rect bounds, const char* text);
 	virtual ~GuiSlider();
 
 	bool Update(float dt);
