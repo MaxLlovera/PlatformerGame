@@ -86,7 +86,7 @@ bool Scene::Start()
 		creditText = app->tex->Load("Assets/Textures/settings_paused.png");
 		clockText = app->tex->Load("Assets/Textures/timer.png");
 		player->spiked = false;
-		app->map->checkpointTaken = false;
+		//app->map->checkpointTaken = false;
 
 		char lookupTable[] = { "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ:/,!+-%  " };
 		whiteFont = app->font->Load("Assets/Textures/white_font.png", lookupTable, 9);
@@ -447,8 +447,6 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			app->fadeToBlack->FadeToBlk(this, app->sceneIntro, 30);
 			paused = false;
-			/*if(app->scene->player->position.x != 350 || app->scene->player->position.y != 875) app->sceneIntro->posContinue = true;
-			else if(app->scene->player->position.x == 350 && app->scene->player->position.y == 875) app->sceneIntro->posContinue = false;*/
 		}
 		else if (control->id == 4)
 		{

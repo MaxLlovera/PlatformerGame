@@ -592,7 +592,7 @@ bool Player::TakeCheckpoint()
 				if (checkpoint == COLLIDER_PINK)
 				{
 					app->SaveGameRequest();
-					app->map->checkpointTaken = true;
+					//app->map->checkpointTaken = true;
 					valid = true;
 				}
 			}

@@ -8,8 +8,6 @@
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
-	//bounds.x /= app->win->GetScale();
-	//bounds.y /= app->win->GetScale();
 	this->bounds = bounds;
 	this->text = text;
 
@@ -33,7 +31,6 @@ bool GuiButton::Update(float dt)
 		mouseX += -app->render->camera.x / app->win->GetScale();
 		mouseY += -app->render->camera.y / app->win->GetScale();
 
-		// Check collision between mouse and button bounds
 		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
 			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
 		{

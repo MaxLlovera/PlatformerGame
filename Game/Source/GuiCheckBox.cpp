@@ -43,7 +43,6 @@ bool GuiCheckBox::Update(float dt)
 				state = GuiControlState::PRESSED;
 			}
 
-			// If mouse button pressed -> Generate event!
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
 			{
 				checked = !checked;

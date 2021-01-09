@@ -18,6 +18,6 @@
 	<pathfinding />
 	<fadeToBlack />
 	<renderer>
-		<camera x="-159" y="-555" />
+		<camera x="-588" y="-99" />
 	</renderer>
 </save_state>
