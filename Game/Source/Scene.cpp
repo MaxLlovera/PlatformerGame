@@ -127,20 +127,20 @@ bool Scene::Update(float dt)
 	cameraY = app->render->camera.y;
 
 	// L02: DONE 3: Request Load / Save when pressing L/S
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadGameRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN && !paused && !pausedSettings) app->LoadGameRequest();
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveGameRequest();
 
 
 	//restart from first level
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && !paused && !pausedSettings)
 	{
 		restart = true;
 		app->render->RestartValues();
 	}
 
 	//restart the current level
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && !paused && !pausedSettings)
 	{
 		restart = true;
 		app->render->RestartValues();
@@ -165,7 +165,7 @@ bool Scene::Update(float dt)
 		app->render->RestartValues();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN && !paused && !pausedSettings)
 	{
 		if (player->position.x <= 938 && app->scene->player->position.x >= 851 && app->scene->player->position.y <= 171 && app->scene->player->position.y >= 81)
 		{
