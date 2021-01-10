@@ -46,7 +46,7 @@ bool SceneWin::Start()
 		app->scene->enemy->active = false;
 		app->scene->flyingEnemy->active = false;
 		app->map->Disable();
-		app->audio->PlayMusic("Assets/Audio/Music/victory.ogg");
+		app->audio->PlayMusic("Assets/Audio/Music/win.ogg");
 		app->map->checkpointTaken = false;
 		app->scene->player->dead = false;
 		app->render->camera.x = 0;
