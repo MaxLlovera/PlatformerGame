@@ -66,27 +66,15 @@ public:
 		section = { 0, 0, 0, 0 };
 	}
 
-	//observer for SceneIntro
 	void SetObserver(Module* module)
 	{
 		observer = module;
 	}
-	
-	//observer for Scenelos
-	/*void SetObserverSceneLose(SceneLose* module)
-	{
-		observer2 = module;
-	}*/
 
 	void NotifyObserver()
 	{
 		observer->OnGuiMouseClickEvent(this);
 	}
-	
-   /* void NotifyObserverSceneLose()
-	{
-		observer2->OnGuiMouseClickEvent(this);
-	}*/
 
 public:
 
@@ -94,18 +82,15 @@ public:
 	GuiControlType type;
 	GuiControlState state;
 
-	SString text;		   // Control text (if required)
+	SString text;		// Control text (if required)
 	SDL_Rect bounds;		// Position and size
 	SDL_Rect boundsSlider;
 	SDL_Color color;		// Tint color
 
-	SDL_Texture* texture;   // Texture atlas reference
-	SDL_Rect section;	   // Texture atlas base section
+	SDL_Texture* texture;	// Texture atlas reference
+	SDL_Rect section;		// Texture atlas base section
 
-	//Font font;			  // Text font
-
-	Module* observer;		// Observer module (it should probably be an array/list)
-	//SceneLose* observer2;		// Observer module (it should probably be an array/list)
+	Module* observer;		// Observer module
 };
 
 #endif // __GUICONTROL_H__

@@ -25,6 +25,7 @@ bool GuiSlider::Update(float dt)
 {
 	this->minValue = bounds.x - (this->value);
 	this->maxValue = bounds.x + ((280 - this->value));
+
 	if (state != GuiControlState::DISABLED)
 	{
 		int mouseX, mouseY;
@@ -33,13 +34,11 @@ bool GuiSlider::Update(float dt)
 		mouseX += -app->render->camera.x / app->win->GetScale();
 		mouseY += -app->render->camera.y / app->win->GetScale();
 
-		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
-			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
+		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && (mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
 		{
 			state = GuiControlState::FOCUSED;
 
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
-				state = GuiControlState::PRESSED;
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT) state = GuiControlState::PRESSED;
 		}
 		else if (state == GuiControlState::PRESSED)
 		{

@@ -40,12 +40,9 @@ public:
 
 	EntityType type;
 	bool active = true;
-	SString name;		 // Entity name identifier?
-	//uint32 id;			// Entity identifier?
+	SString name;
 
-	// Possible properties, it depends on how generic we
-	// want our Entity class, maybe it's not renderable...
-	iPoint position;		// Use a float instead?
+	iPoint position;
 	bool renderable = false;
 	SDL_Texture* texture;
 };

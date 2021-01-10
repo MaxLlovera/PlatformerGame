@@ -28,8 +28,7 @@ bool GuiCheckBox::Update(float dt)
 		mouseX += -app->render->camera.x / app->win->GetScale();
 		mouseY += -app->render->camera.y / app->win->GetScale();
 
-		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
-			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
+		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && (mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
 		{
 			state = GuiControlState::FOCUSED;
 			if (!soundDone)
@@ -38,10 +37,7 @@ bool GuiCheckBox::Update(float dt)
 				soundDone = true;
 			}
 
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
-			{
-				state = GuiControlState::PRESSED;
-			}
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT) state = GuiControlState::PRESSED;
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
 			{
@@ -80,7 +76,6 @@ bool GuiCheckBox::Draw()
 
 		if (app->vSync && id == 2) app->render->DrawRectangle(bounds, 0, 255, 0, 255);
 		else if (!app->vSync && id == 2) app->render->DrawRectangle(bounds, 255, 0, 0, 255);
-
 
 	} break;
 	case GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 200, 100, 220, 255);

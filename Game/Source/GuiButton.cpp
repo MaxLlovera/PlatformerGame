@@ -31,8 +31,7 @@ bool GuiButton::Update(float dt)
 		mouseX += -app->render->camera.x / app->win->GetScale();
 		mouseY += -app->render->camera.y / app->win->GetScale();
 
-		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
-			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
+		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && (mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
 		{
 			state = GuiControlState::FOCUSED;
 			if (!soundDone)
@@ -41,13 +40,8 @@ bool GuiButton::Update(float dt)
 				soundDone = true;
 			}
 
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
-			{
-				
-				state = GuiControlState::PRESSED;
-			}
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT) state = GuiControlState::PRESSED;
 
-			// If mouse button pressed -> Generate event!
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
 			{
 				app->audio->PlayFx(guiButtonFx, 0);
@@ -71,13 +65,9 @@ bool GuiButton::Update(float dt)
 		mouseY += -app->render->camera.y / app->win->GetScale();
 
 		// Check collision between mouse and button bounds
-		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
-			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
+		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && (mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
 		{
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
-			{
-				app->audio->PlayFx(guiButtonErrorFx, 0);
-			}
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP) app->audio->PlayFx(guiButtonErrorFx, 0);
 		}
 	}
 

@@ -294,7 +294,7 @@ bool Player::Update(float dt)
 		currentAnimation = &deathAnim;
 		if (deathAnim.HasFinished())
 		{
-			app->fadeToBlack->FadeToBlk(app->scene, app->sceneLose, 1 / dt);
+			app->fadeToBlack->FadeToBlk(app->scene, app->sceneLose, 30);
 			app->render->RestartValues();
 		}
 	}

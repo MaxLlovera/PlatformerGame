@@ -65,8 +65,8 @@ public:
 	int sceneCounterCheckpoint;
 	int sceneCounterHeart;
 	int sceneCounterPuzzle;
-
-
+	bool restart = false;
+	uint timer = 0;
 private:
 	SDL_Texture* background;
 	SDL_Texture* debugTex;
@@ -112,7 +112,7 @@ private:
 
 	int whiteFont = -1;
 	char timerText[10] = { "\0" };
-	uint timer = 0;
+	
 	int seconds = 0;
 };
 

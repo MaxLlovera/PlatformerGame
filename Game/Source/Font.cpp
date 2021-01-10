@@ -57,9 +57,9 @@ int Font::Load(const char* texture_path, const char* characters, uint rows)
 	app->tex->GetSize(font.texture, font.char_w, font.char_h);
 	// totalLength ---	length of the lookup table
 	font.totalLength = strlen(characters);
-	// table ---------  All characters displayed in the same order as the texture
+	// table ---------	All characters displayed in the same order as the texture
 	strcpy_s(fonts[id].table, characters);
-	// columns -------  Amount of chars per row of the texture
+	// columns -------	Amount of chars per row of the texture
 	font.columns = fonts[id].totalLength / rows;
 	// char_w --------	Width of each character
 	font.char_w /= fonts[id].totalLength / rows;

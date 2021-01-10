@@ -149,10 +149,8 @@ bool SceneIntro::PostUpdate()
 	bool ret = true;
 	if (exit == true) ret = false;
 
-	if (count <= 240)
-	{
-		app->render->DrawTexture(logoText, 0, 555, NULL);
-	}
+	if (count <= 240) app->render->DrawTexture(logoText, 0, 555, NULL);
+
 	else if (count > 240)
 	{
 		app->render->DrawTexture(introText, 0, 555, NULL);
@@ -226,10 +224,8 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 			app->fadeToBlack->FadeToBlk(this, app->scene, 30);
 			playClicked = true;
 		}
-		else if (control->id == 2)
-		{
-			app->fadeToBlack->FadeToBlk(this, app->scene, 30);
-		}
+		else if (control->id == 2) app->fadeToBlack->FadeToBlk(this, app->scene, 30);
+
 		else if (control->id == 3)
 		{
 			btnCredits->state = GuiControlState::DISABLED;
@@ -249,7 +245,6 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 				app->scene->player->position.x = 350;
 				app->scene->player->position.y = 875;
 				app->SaveGameRequest();
-
 			}
 			exit = true;
 		}
@@ -303,16 +298,6 @@ bool SceneIntro::OnGuiMouseClickEvent(GuiControl* control)
 
 bool SceneIntro::CleanUp()
 {
-	//delete btnPlay;
-	//delete btnContinue;
-	//delete btnSettings;
-	//delete btnCredits;
-	//delete btnExit;
-	//delete btnBackSettings;
-	//delete btnBackCredits;
-	//delete sliderMusicVolume;
-	//delete sliderFxVolume;
-
 	app->tex->UnLoad(introText);
 	app->tex->UnLoad(creditText);
 	app->tex->UnLoad(logoText);

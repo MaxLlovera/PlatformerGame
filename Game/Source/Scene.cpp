@@ -86,12 +86,12 @@ bool Scene::Start()
 		creditText = app->tex->Load("Assets/Textures/settings_paused.png");
 		clockText = app->tex->Load("Assets/Textures/timer.png");
 		player->spiked = false;
-		//app->map->checkpointTaken = false;
 
 		char lookupTable[] = { "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ:/,!+-%  " };
 		whiteFont = app->font->Load("Assets/Textures/white_font.png", lookupTable, 9);
 
-		timer = 0;
+
+		if(!app->sceneIntro->posContinue) timer = 0;
 
 		// L03: DONE: Load map
 		if (app->map->Load("world_meta.tmx") == true)
@@ -135,14 +135,14 @@ bool Scene::Update(float dt)
 	//restart from first level
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		app->fadeToBlack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
+		restart = true;
 		app->render->RestartValues();
 	}
 
 	//restart the current level
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		app->fadeToBlack->FadeToBlk(this, (Module*)app->scene, 1 / dt);
+		restart = true;
 		app->render->RestartValues();
 	}
 
@@ -160,12 +160,12 @@ bool Scene::Update(float dt)
 	{
 		app->sceneWin->won = true;
 		player->win = true;
-		app->fadeToBlack->FadeToBlk(this, (Module*)app->sceneWin, 1 / dt);
+		app->fadeToBlack->FadeToBlk(this, app->sceneWin, 30);
 
 		app->render->RestartValues();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN/*&&app->map->checkpointTaken*/)
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
 		if (player->position.x <= 938 && app->scene->player->position.x >= 851 && app->scene->player->position.y <= 171 && app->scene->player->position.y >= 81)
 		{
@@ -358,11 +358,6 @@ bool Scene::CleanUp()
 	app->entityManager->DestroyEntity(enemy);
 	app->entityManager->DestroyEntity(flyingEnemy);
 	app->entityManager->DestroyEntity(particles);
-	//delete btnResume;
-	//delete btnSettings;
-	//delete btnBackIntro;
-	//delete btnExit;
-	//delete btnBackSettings;
 
 	return true;
 }

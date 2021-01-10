@@ -109,16 +109,13 @@ void Render::RestartValues()
 {
 	if (app->scene->player != nullptr)
 	{
-		if (app->map->checkpointTaken && !app->sceneWin->won && !app->sceneLose->lost)
+		if (app->map->checkpointTaken && !app->sceneWin->won && !app->sceneLose->lost && !app->scene->restart)
 		{
 			app->scene->player->position.x = 938;
 			app->scene->player->position.y = 171;
 
 			app->render->camera.x = -588;
 			app->render->camera.y = -99;
-
-			//app->render->camera.x = app->scene->player->position.x - (app->render->camera.w)-1526/* - 250*/;
-			//app->render->camera.y = app->scene->player->position.y - (app->render->camera.h)-282/*+ 450*/;
 		}
 		if (!app->map->checkpointTaken)
 		{
@@ -127,7 +124,29 @@ void Render::RestartValues()
 
 			app->render->camera.x = app->scene->player->position.x - app->scene->player->position.x;
 			app->render->camera.y = app->scene->player->position.y - (app->render->camera.h * 2) + 10-1440;
+			
 		}
+		if (app->scene->restart)
+		{
+			app->scene->player->position.x = 350;
+			app->scene->player->position.y = 875;
+
+			app->render->camera.x = app->scene->player->position.x - app->scene->player->position.x;
+			app->render->camera.y = app->scene->player->position.y - (app->render->camera.h * 2) + 10 - 1440;
+			app->map->keyTaken = false;
+			app->map->chestTaken = false;
+			app->map->heartTaken = false;
+			app->map->puzzleTaken = false;
+			app->map->checkpointTaken = false;
+			app->scene->player->lifes = 3;
+			app->scene->player->counterKey = 0;
+			app->scene->player->counterCheckpoint = 0;
+			app->scene->player->counterHeart = 0;
+			app->scene->player->counterPuzzle = 0;
+			app->scene->restart = false;
+			app->scene->timer = 0;
+		}
+
 		if (app->scene->player->dead || app->scene->player->win) app->render->camera.y = -2000;
 
 		app->scene->enemy->active = true;
