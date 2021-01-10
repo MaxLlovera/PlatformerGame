@@ -25,6 +25,10 @@ He needs to find the keys to open the exit doors.
 - Game collectable items
 - Checkpoint autosave with feedback on passing
 - Map checkpoints teleportation
+- Entity System
+- GUI: Title Screen Main Menu
+- GUI: Gameplay Screen HUD
+- GUI: Gameplay Screen Pause Menu
 
 
 ## Controls
@@ -44,11 +48,11 @@ He needs to find the keys to open the exit doors.
 
  Debug keys:
 - F1  -> Restart to start
-- F2  -> Restart level
+- F3  -> Restart level
 - F5  -> Save
 - F6  -> Load
-- F7  -> Instant Win
-- F8  -> Instant Lose
+- F7  -> Move Between the different checkpoints(checkpoint and start)
+- F8  -> View GUI bounds rectangles and state in different colours
 - F9  -> Show Colliders / Paths
 - F10 -> God Mode
 - F11 -> Enable / Disable FPS cap to 30
